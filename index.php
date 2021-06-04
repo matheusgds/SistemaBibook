@@ -49,6 +49,13 @@ and open the template in the editor.
                 </form>
             </div>
 
+            <div class="row">
+                <div class="col-12">
+                    <p><strong>Matheus Giacomelli Dos Santos</strong></p>
+                    <p> ► Copyright © 2021 - Direitos Autorais </p>
+                </div>
+            </div>
+
         </div>
 
         <?php
