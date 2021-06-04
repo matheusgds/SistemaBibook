@@ -15,6 +15,42 @@ and open the template in the editor.
         <title>SISTEMA BIBOOK</title>
     </head>
     <body>
+
+        <div class="container-fluid">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-2" >
+                <figure>
+                    <br>
+                    <img alt="Sistema Bibook" src="IMG\livro96x96p.png" id="img1">
+                    <br><br>
+                    <h1> BIBOOK </h1>
+                    <br>
+                </figure>
+            </div>
+            <div>
+                <form method="POST" action="./arquivosPHP/Entrar2.php" name="formContato">
+                    <br>
+
+                    <label class="ml-2">Informe seu Login: </label>
+                    <br>
+                    <input type="text" name="txtLog" placeholder="Digite Aqui Seu Login" class="form-control ml-2" required>
+                    <br>
+                    <label class="ml-2">Informe sua Senha: </label>
+                    <br>
+                    <input type="password" name="txtPass" placeholder="Digite Aqui Sua Senha" class="form-control ml-2" required>
+
+                    <br><br>
+                    <div style="text-align:center">
+                        <input class="btn btn-primary" type="reset" value="Limpar">
+                        <input class="btn btn-primary" type="submit" value="Entrar">
+                        <!--<img src="GIFIcon/icon-refresh.gif"/> -->
+                    </div>
+                    <br>
+
+                </form>
+            </div>
+
+        </div>
+
         <?php
         // put your code here
         ?>
