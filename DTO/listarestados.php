@@ -17,55 +17,116 @@ and open the template in the editor.
         <title>Listar Estados</title>
     </head>
     <body>
-        
-        
-        
-        <?php
-        include_once "confs/inc.php";
-        require_once "confs/Conexao.php";
-        $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
-        $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <a class="navbar-brand" href="index.php">Sistema Bibook</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        /* <?php echo $procurar; ?> */
-        ?>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="JanelaPrincipal.php">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Cadastrar
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item  bg-light" href="DTO/CadastroEstado.php">Cadastrar um Estado</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li> 
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pesquisar
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="DTO/listarestados.php">Pesquisar Estados</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>       
+
+                    </ul>
+                    <nav class="navbar navbar-light bg-light">
+                        <span>
+                            <img src="../IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                            BEM VINDO <?php /* $logado */ ?>
+                        </span>
+                    </nav> 
+
+                </div>
+            </nav>
 
 
-        <form method="post">
-            <input type="radio" name="tipo" id="tipo" value="1" <?php
+            <div>
+                <?php /*
+
+                  session_start();
+
+                  if ((!isset($_SESSION['loginextra']) == true) and ( !isset($_SESSION['senhaextra']) == true)) {
+                  unset($_SESSION['loginextra']);
+                  unset($_SESSION['senhaextra']);
+                  header('location:index.php');
+                  } else {
+                  $logado = $_SESSION['loginextra'];
+                  } */
+                ?>
+            </div>
+
+
+
+            <?php
+            include_once "confs/inc.php";
+            require_once "confs/Conexao.php";
+            $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
+            $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
+
+            /* <?php echo $procurar; ?> */
+            ?>
+
+
+            <form method="post">
+                <input type="radio" name="tipo" id="tipo" value="1" <?php
+                if ($tipo == 1) {
+                    echo "checked";
+                }
+                ?>>Código<br>  
+                <input type="radio" name="tipo" id="tipo" value="2" <?php
+                if ($tipo == 2) {
+                    echo "checked";
+                }
+                ?>>Nome<br>
+                <input type="radio" name="tipo" id="tipo" value="3" <?php
+                if ($tipo == 3) {
+                    echo "checked";
+                }
+                ?>>Sigla<br>
+                <input type="text" name="procurar" id="procurar" value=""> 
+                <input type="submit" value="Consultar">
+            </form>
+            <br>
+            <?php
+            $sql = "";
             if ($tipo == 1) {
-                echo "checked";
+                $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
+            } else if ($tipo == 2) {
+                $sql = "SELECT * FROM estado WHERE nome LIKE '$procurar%' ORDER BY nome";
+            } else {
+                $sql = "SELECT * FROM estado WHERE sigla LIKE '$procurar%' ORDER BY sigla";
             }
-            ?>>Código<br>  
-            <input type="radio" name="tipo" id="tipo" value="2" <?php
-            if ($tipo == 2) {
-                echo "checked";
+            $pdo = Conexao::getInstance();
+            $consulta = $pdo->query($sql);
+            //Código: {$linha['codigo']} -
+            while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+                echo "Código: {$linha['idEstado']} - Nome: {$linha['nome']} - Sigla: {$linha['sigla']} <br />";
             }
-            ?>>Nome<br>
-            <input type="radio" name="tipo" id="tipo" value="3" <?php
-            if ($tipo == 3) {
-                echo "checked";
-            }
-            ?>>Sigla<br>
-            <input type="text" name="procurar" id="procurar" value=""> 
-            <input type="submit" value="Consultar">
-        </form>
-        <br>
-        <?php
-        $sql = "";
-        if ($tipo == 1) {
-            $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
-        } else if ($tipo == 2) {
-            $sql = "SELECT * FROM estado WHERE nome LIKE '$procurar%' ORDER BY nome";
-        } else {
-            $sql = "SELECT * FROM estado WHERE sigla LIKE '$procurar%' ORDER BY sigla";
-        }
-        $pdo = Conexao::getInstance();
-        $consulta = $pdo->query($sql);
-        //Código: {$linha['codigo']} -
-        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
-            echo "Código: {$linha['idEstado']} - Nome: {$linha['nome']} - Sigla: {$linha['sigla']} <br />";
-        }
-        ?>
-
+            ?>
+        </div>
     </body>
 </html>
