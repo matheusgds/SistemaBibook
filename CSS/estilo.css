@@ -1,8 +1,7 @@
 #divform{
     border:1px solid black;
-    width:240px;
+    width:50%;
     height:300px;
     text-align: center;
-    margin-left:20px;
-    margin-top:10px;
+    margin:0 auto;
 }

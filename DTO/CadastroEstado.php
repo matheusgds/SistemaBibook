@@ -14,17 +14,17 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
         <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
-        <title>SISTEMA BIBOOK</title>
+        <title>Cadastro De Estado</title>
     </head>
     <body>
-        <?php /* navbar-light bg-light */ ?>
+
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
                 <a class="navbar-brand" href="index.php">Sistema Bibook</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-           
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -32,7 +32,7 @@ and open the template in the editor.
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               Cadastrar
+                                Cadastrar
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item  bg-light" href="DTO/CadastroEstado.php">Cadastrar um Estado</a>
@@ -56,7 +56,7 @@ and open the template in the editor.
                     </ul>
                     <nav class="navbar navbar-light bg-light">
                         <span>
-                            <img src="IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                            <img src="../IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
                             BEM VINDO <?php /* $logado */ ?>
                         </span>
                     </nav> 
@@ -79,7 +79,29 @@ and open the template in the editor.
                   } */
                 ?>
             </div>
+
+
+            <div class="divform"id="divform">
+                <form action="acaoestado.php" id="form" method="post">
+
+                    <fieldset>
+                        <legend>
+                            Cadastro De Estado
+                        </legend>
+                        <label for="nome">Nome:</label>
+                        <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
+                        <br><br>
+                        <label for="Sigla">Sigla:</label>
+                        <input type="text" name="sigla" id="sigla" placeholder="Sigla" MAXLENGTH=2 required="true">
+                        <br><br>
+                        <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
+                        <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
+                    </fieldset> 
+                </form>
+            </div>
         </div>
-        <?php ?>
+        <?php
+        // put your code here
+        ?>
     </body>
 </html>
