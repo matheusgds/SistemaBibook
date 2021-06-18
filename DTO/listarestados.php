@@ -82,8 +82,8 @@ and open the template in the editor.
 
 
             <?php
-            include_once "confs/inc.php";
-            require_once "confs/Conexao.php";
+            include_once "../confs/inc.php";
+            require_once "../confs/Conexao.php";
             $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
             $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
 
@@ -106,7 +106,7 @@ and open the template in the editor.
                 if ($tipo == 3) {
                     echo "checked";
                 }
-                ?>>Sigla<br>
+                ?>>Sigla<br><br>
                 <input type="text" name="procurar" id="procurar" value=""> 
                 <input type="submit" value="Consultar">
             </form>
@@ -114,7 +114,11 @@ and open the template in the editor.
             <?php
             $sql = "";
             if ($tipo == 1) {
-                $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
+                if ($procurar != "") {
+                    $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
+                }else{
+                    $sql = "SELECT * FROM estado ORDER BY idEstado";
+                }
             } else if ($tipo == 2) {
                 $sql = "SELECT * FROM estado WHERE nome LIKE '$procurar%' ORDER BY nome";
             } else {

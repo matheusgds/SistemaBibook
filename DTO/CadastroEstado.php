@@ -82,7 +82,7 @@ and open the template in the editor.
 
 
             <div class="divform"id="divform">
-                <form action="acaoestado.php" id="form" method="post">
+                <form action="insercaoestado.php" id="form" method="post">
 
                     <fieldset>
                         <legend>
