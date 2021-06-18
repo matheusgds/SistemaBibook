@@ -63,7 +63,7 @@ and open the template in the editor.
 
                 </div>
             </nav>
-
+           
 
             <div>
                 <?php /*
@@ -80,8 +80,9 @@ and open the template in the editor.
                 ?>
             </div>
 
-
+            
             <div class="divform"id="divform">
+                
                 <form action="insercaoestado.php" id="form" method="post">
 
                     <fieldset>

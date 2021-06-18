@@ -28,7 +28,14 @@ $stmt2 = $pdo->prepare('commit;');
 $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 $stmt->bindParam(':sigla', $sigla, PDO::PARAM_STR);
 $nome = $_POST['nome'];
+if (strpos($nome, "")===TRUE) {
+    $nome = ucwords($nome);
+} else {
+    $nome = ucfirst($nome);
+}
+
 $sigla = $_POST['sigla'];
+$sigla =  mb_strtoupper($sigla,"utf-8" );
 //verificar se já nao existe.
 $verifica = $pdo->prepare('SELECT * FROM Estado WHERE nome = :nome2');
 $verifica->bindParam(':nome2', $nome, PDO::PARAM_STR);
@@ -55,7 +62,7 @@ if ($exists == FALSE) {
     if ($doc == TRUE) {
         $url = "CadastroEstado.php";
         redirect($url);
-    } else if($doc==FALSE) {
+    } else if ($doc == FALSE) {
         $url = "JanelaPrincipal.php";
         redirect($url);
     }

@@ -116,7 +116,7 @@ and open the template in the editor.
             if ($tipo == 1) {
                 if ($procurar != "") {
                     $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
-                }else{
+                } else {
                     $sql = "SELECT * FROM estado ORDER BY idEstado";
                 }
             } else if ($tipo == 2) {
@@ -126,11 +126,30 @@ and open the template in the editor.
             }
             $pdo = Conexao::getInstance();
             $consulta = $pdo->query($sql);
-            //Código: {$linha['codigo']} -
-            while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
-                echo "Código: {$linha['idEstado']} - Nome: {$linha['nome']} - Sigla: {$linha['sigla']} <br />";
-            }
             ?>
+            <br><br>
+            <h1>Dados:</h1>
+            <br><br>
+            <table class="table table-striped table-hover" border="1px" bgcolor="#9dff8c">
+                <thead>
+                    <tr> 
+                        <th scope="col" bgcolor="#78ad6f">Código</th>
+                        <th scope="col" bgcolor="#78ad6f">Nome</th>
+                        <th scope="col" bgcolor="#78ad6f">Sigla</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
+                        <tr>
+                            <td class="table-success"><?php echo $linha['idEstado']; ?></td>
+                            <td class="table-success"><?php echo $linha['nome']; ?></td>
+                            <td class="table-success"><?php echo $linha['sigla']; ?></td>
+                        </tr>
+
+                    <?php } ?>
+                </tbody>
+            </table> 
+
         </div>
     </body>
 </html>
