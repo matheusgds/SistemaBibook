@@ -223,39 +223,6 @@ CREATE TABLE IF NOT EXISTS `SistemaBibook`.`Cidade_has_Bairro` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `SistemaBibook`.`Administrador`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SistemaBibook`.`Administrador` (
-  `idAdministrador` INT NOT NULL AUTO_INCREMENT,
-  `Cliente_idCliente` INT NOT NULL,
-  PRIMARY KEY (`idAdministrador`),
-  INDEX `fk_Administrador_Cliente1_idx` (`Cliente_idCliente` ASC) ,
-  CONSTRAINT `fk_Administrador_Cliente1`
-    FOREIGN KEY (`Cliente_idCliente`)
-    REFERENCES `SistemaBibook`.`Cliente` (`idCliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `SistemaBibook`.`Bibliotecario`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `SistemaBibook`.`Bibliotecario` (
-  `idBibliotecario` INT NOT NULL AUTO_INCREMENT,
-  `Cliente_idCliente` INT NOT NULL,
-  PRIMARY KEY (`idBibliotecario`),
-  INDEX `fk_Bibliotecario_Cliente1_idx` (`Cliente_idCliente` ASC) ,
-  CONSTRAINT `fk_Bibliotecario_Cliente1`
-    FOREIGN KEY (`Cliente_idCliente`)
-    REFERENCES `SistemaBibook`.`Cliente` (`idCliente`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
 -- -----------------------------------------------------
 -- Table `SistemaBibook`.`Biblioteca`
 -- -----------------------------------------------------
