@@ -14,7 +14,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
         <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
-        <title>Listar Cidades</title>
+        <title>Listar Bairros</title>
     </head>
     <body>
         <div class="container-fluid">
@@ -110,12 +110,12 @@ and open the template in the editor.
             $sql = "";
             if ($tipo == 1) {
                 if ($procurar != "") {
-                    $sql = "SELECT * FROM cidade WHERE idCidade = $procurar ORDER BY idCidade";
+                    $sql = "SELECT * FROM bairro WHERE idBairro = $procurar ORDER BY idBairro";
                 } else {
-                    $sql = "SELECT * FROM cidade ORDER BY idCidade";
+                    $sql = "SELECT * FROM bairro ORDER BY idBairro";
                 }
             } else if ($tipo == 2) {
-                $sql = "SELECT * FROM cidade WHERE nome LIKE '$procurar%' ORDER BY nome";
+                $sql = "SELECT * FROM bairro WHERE nome LIKE '$procurar%' ORDER BY nome";
             }
             $pdo = Conexao::getInstance();
             $consulta = $pdo->query($sql);
@@ -136,7 +136,7 @@ and open the template in the editor.
                 <tbody>
                     <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
                         <tr>
-                            <td class="table-success"><?php echo $linha['idCidade']; ?></td>
+                            <td class="table-success"><?php echo $linha['idBairro']; ?></td>
                             <td class="table-success"><?php echo $linha['nome']; ?></td>
                           
                         </tr>

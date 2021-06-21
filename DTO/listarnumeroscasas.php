@@ -14,7 +14,7 @@ and open the template in the editor.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
         <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
-        <title>Listar Cidades</title>
+        <title>Listar NumerosCasas</title>
     </head>
     <body>
         <div class="container-fluid">
@@ -110,12 +110,12 @@ and open the template in the editor.
             $sql = "";
             if ($tipo == 1) {
                 if ($procurar != "") {
-                    $sql = "SELECT * FROM cidade WHERE idCidade = $procurar ORDER BY idCidade";
+                    $sql = "SELECT * FROM numerocasa WHERE idNumeroCasa = $procurar ORDER BY idNumeroCasa";
                 } else {
-                    $sql = "SELECT * FROM cidade ORDER BY idCidade";
+                    $sql = "SELECT * FROM numerocasa ORDER BY idNumeroCasa";
                 }
             } else if ($tipo == 2) {
-                $sql = "SELECT * FROM cidade WHERE nome LIKE '$procurar%' ORDER BY nome";
+                $sql = "SELECT * FROM numerocasa WHERE numero LIKE '$procurar%' ORDER BY numero";
             }
             $pdo = Conexao::getInstance();
             $consulta = $pdo->query($sql);
@@ -127,7 +127,7 @@ and open the template in the editor.
                 <thead>
                     <tr> 
                         <th scope="col" bgcolor="#78ad6f">Código</th>
-                        <th scope="col" bgcolor="#78ad6f">Nome</th>
+                        <th scope="col" bgcolor="#78ad6f">Numero</th>
                         <th scope="col" bgcolor="#78ad6f">Alterar</th>
                         <th scope="col" bgcolor="#78ad6f">Excluir</th>
                         
@@ -136,8 +136,8 @@ and open the template in the editor.
                 <tbody>
                     <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
                         <tr>
-                            <td class="table-success"><?php echo $linha['idCidade']; ?></td>
-                            <td class="table-success"><?php echo $linha['nome']; ?></td>
+                            <td class="table-success"><?php echo $linha['idNumeroCasa']; ?></td>
+                            <td class="table-success"><?php echo $linha['numero']; ?></td>
                           
                         </tr>
 

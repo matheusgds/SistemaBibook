@@ -136,6 +136,8 @@ and open the template in the editor.
                         <th scope="col" bgcolor="#78ad6f">Código</th>
                         <th scope="col" bgcolor="#78ad6f">Nome</th>
                         <th scope="col" bgcolor="#78ad6f">Sigla</th>
+                        <th scope="col" bgcolor="#78ad6f">Alterar</th>
+                        <th scope="col" bgcolor="#78ad6f">Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
