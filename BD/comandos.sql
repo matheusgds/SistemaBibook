@@ -2,9 +2,13 @@
 delete from cidade where idcidade>=1;
 alter table cidade auto_increment =1;
 
+DROP TABLE bibliotecario;
+DROP TABLE administrador;
+
 select * from estado;
 select * from cidade;
 select * from estado_has_cidade;
+select * from contadeacesso;
 
 SELECT sigla FROM estado;
 
@@ -31,4 +35,7 @@ END LOOP loop_teste;
 
 END//
 DELIMITER ;
+
+
+
 
