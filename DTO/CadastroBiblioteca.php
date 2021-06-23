@@ -66,7 +66,8 @@ and open the template in the editor.
 
 
             <div>
-                <?php /*
+                <?php
+                /*
 
                   session_start();
 
@@ -77,22 +78,137 @@ and open the template in the editor.
                   } else {
                   $logado = $_SESSION['loginextra'];
                   } */
+
+                $nomeestado = "";
                 ?>
             </div>
 
 
             <div class="divform"id="divform">
 
-                <form action="insercaobairro.php" id="form" method="post">
+                <form action="insercaobiblioteca.php" id="form" method="post">
 
                     <fieldset>
                         <legend>
-                            Cadastro De Bairro
+                            Cadastro De Biblioteca
                         </legend>
-                        <label for="nome">Nome:</label>
-                        <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
                         <br><br>
+                        <div  style="border-style:double; margin:20px;width: 320px">
+                            <legend>
+                                Dados Pessoais:
+                            </legend>
+                            <label for="nome">Nome:</label>
+                            <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
+                        </div>
+                        <br><br>
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc">
+                            <legend>
+                                Localização:
+                            </legend>
+                            <label for="estado">Selecione O Estado:</label>
+                            <select name="select" id="selectest">
+                                <?php
+                                $lista = retornarEstados();
+                                foreach ($lista as $row) {
+                                    ?>
+                                    <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
+                                <?php } ?>
+                            </select>
 
+                            <button  type="button" id="btn1" onclick="Mudarestado('div1')" >>>></button>
+                            <div id="teste1"></div>
+                            <br><br>
+
+
+                            <div id="div1" style="display:none;">
+
+
+                                <label for="cidade">Selecione A Cidade:</label>
+                                <?php echo "aqui" . $nomeestado . "FINAL"; ?>    
+                                <select name="select">
+                                    <?php
+                                    if (strlen($nomeestado) == 0) {
+                                        $nomeestado = "SC";
+                                        $nomeestado = "'" . $nomeestado . "'";
+                                        echo "teste1" . $nomeestado;
+                                        $Estado = retornarEstadoPorNome($nomeestado); // lista
+                                        foreach ($Estado as $row) {
+                                            
+                                        }
+
+                                        $lista = retornarCidadesDoEstado($row['idEstado']); // tem q passar ID DO ESTADO
+                                        foreach ($lista as $row) {
+                                            ?>
+                                            <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
+                                        <?php
+                                        }
+                                    } else {
+                                        echo 'NOMEEE1:' . $nomeestado;
+                                        var_dump($nomeestado);
+                                        if (strlen($nomeestado) == 0) { // se tem tamanho de string 0
+                                            $nomeestado = "SC";
+                                        }
+
+                                        $nomeestado = "'" . $nomeestado . "'";
+
+                                        $Estado = retornarEstadoPorNome($nomeestado); // lista
+                                        foreach ($Estado as $row) {
+                                            
+                                        }
+
+                                        $lista = retornarCidadesDoEstado($row['idEstado']); // tem q passar ID DO ESTADO
+                                        foreach ($lista as $row) {
+                                            ?>
+                                            <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
+                                        <?php }
+                                    } ?>
+                                </select>
+                            </div>
+
+                            <br><br>
+                            <label for="bairro">Selecione O Bairro:</label>
+
+                            <select name="select">
+                                <?php
+                                $lista = retornarBairros();
+                                foreach ($lista as $row) {
+                                    ?>
+                                    <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
+                                <?php } ?>
+                            </select>
+
+                            <br><br>
+                            <label for="rua">Selecione A Rua:</label>
+
+                            <select name="select">
+                                <?php
+                                $lista = retornarRuas();
+                                foreach ($lista as $row) {
+                                    ?>
+                                    <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
+                                <?php } ?>
+                            </select>
+                            <br><br>
+                            <label for="numero">Selecione o Numero Do Local:</label>
+
+                            <select name="select">
+                                <?php
+                                $lista = retornarNumeros();
+                                foreach ($lista as $row) {
+                                    ?>
+                                    <option value=<?php echo $row['numero'] ?>><?php echo $row['numero'] ?></option>
+                                <?php } ?>
+                            </select>
+
+                        </div>
+                        <br><br>
+                        <div style="border-style:double; margin:20px;width: 320px">
+                            <legend>
+                                Contato:
+                            </legend>
+
+                        </div>
+                        <br><br>
                         <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
                         <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
                     </fieldset> 
@@ -101,6 +217,102 @@ and open the template in the editor.
         </div>
         <?php
 
+        function retornarNumeros() {
+            include_once "../confs/inc.php";
+            require_once "../confs/Conexao.php";
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('SELECT numero FROM numerocasa');
+            $stmt->execute();
+
+            return $stmt;
+        }
+
+        function retornarRuas() {
+            include_once "../confs/inc.php";
+            require_once "../confs/Conexao.php";
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('SELECT nome FROM rua');
+            $stmt->execute();
+
+            return $stmt;
+        }
+
+        function retornarBairros() {
+            include_once "../confs/inc.php";
+            require_once "../confs/Conexao.php";
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('SELECT nome FROM bairro');
+            $stmt->execute();
+
+            return $stmt;
+        }
+
+        function retornarEstados() {
+            include_once "../confs/inc.php";
+            require_once "../confs/Conexao.php";
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('SELECT sigla FROM estado');
+            $stmt->execute();
+
+            return $stmt;
+        }
+
+        function retornarEstadoPorNome($nomeestado) {
+
+            include_once "../confs/inc.php";
+            require_once "../confs/Conexao.php";
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('select idEstado from estado where sigla = ' . $nomeestado . ';');
+            $stmt->execute();
+            // pegue pelo nome e retorne codigo
+
+            return $stmt;
+        }
+
+        function retornarCidadesDoEstado($Estado) {
+
+            include_once "../confs/inc.php";
+            require_once "../confs/Conexao.php";
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('select nome from cidade c inner join estado_has_cidade ehc where ' . $Estado . '=ehc.Estado_idEstado');
+            $stmt->execute();
+
+
+            return $stmt;
+        }
         ?>
     </body>
+
+    <script>
+        var vezes = 0;
+        function Mudarestado(el) {
+            vezes = vezes + 1;
+
+            if (vezes <= 3) {
+                var select = document.getElementById("selectest");
+                var opcaoTexto = select.options[select.selectedIndex].text;
+                console.log("sera".opcaoTexto);
+<?php $nomeestado = $variavelphp = "<script>document.write(opcaoTexto)</script>"; ?>// aqui nao esta recebendo a variavel javascript
+<?php var_dump($nomeestado); ?>
+                document.getElementById('teste1').innerHTML = opcaoTexto; // aqui esta pegando MG certinho
+                var display = document.getElementById(el).style.display;
+
+                if (display == "none")
+                    document.getElementById(el).style.display = 'block';
+                else
+                    document.getElementById(el).style.display = 'none';
+            } else {
+                document.getElementById(el).style.display = 'none';
+            }
+
+        }
+
+
+    </script>
 </html>

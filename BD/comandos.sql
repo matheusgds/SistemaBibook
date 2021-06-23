@@ -12,6 +12,8 @@ select * from contadeacesso;
 
 SELECT sigla FROM estado;
 
+select * from estado e inner join estado_has_cidade ehc where 1=ehc.Estado_idEstado;  
+
 select max(idCidade) from cidade;
 
 SELECT idEstado FROM estado WHERE sigla= 'sc';
