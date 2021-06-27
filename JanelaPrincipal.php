@@ -35,7 +35,7 @@ and open the template in the editor.
                                Cadastrar
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item  bg-light" href="DTO/CadastroEstado.php">Cadastrar um Estado</a>
+                                <a class="dropdown-item  bg-light" href="InterfaceGrafica/CadastroEstado.php">Cadastrar um Estado</a>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a>
@@ -46,7 +46,7 @@ and open the template in the editor.
                                 Pesquisar
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="DTO/listarestados.php">Pesquisar Estados</a>
+                                <a class="dropdown-item" href="InterfaceGrafica/listarestados.php">Pesquisar Estados</a>
                                 <a class="dropdown-item" href="#">Another action</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a>

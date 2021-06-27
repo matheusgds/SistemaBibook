@@ -105,26 +105,29 @@ and open the template in the editor.
                             <legend>
                                 Localização:
                             </legend>
-                            <label for="estado">Selecione O Estado:</label>
-                            <select name="select" id="selectest">
-                                <?php
-                                $lista = retornarEstados();
-                                foreach ($lista as $row) {
-                                    ?>
-                                    <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
-                                <?php } ?>
-                            </select>
+                           
+                                <label for="estado">Selecione O Estado:</label>
+                                <select name="select" id="selectest">
+                                    <?php
+                                    $lista = retornarEstados();
+                                    foreach ($lista as $row) {
+                                        ?>
+                                        <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
+                                    <?php } ?>
+                                </select>
 
-                            <button  type="button" id="btn1" onclick="Mudarestado('div1')" >>>></button>
-                            <div id="teste1"></div>
+                                <button  type="button" id="btn1" onclick="Mudarestado('div1')" >>>></button>
+                            
+                            
                             <br><br>
-
+                             <?php $nomeestado = $_POST['select'] ?>
 
                             <div id="div1" style="display:none;">
 
 
                                 <label for="cidade">Selecione A Cidade:</label>
-                                <?php echo "aqui" . $nomeestado . "FINAL"; ?>    
+                               
+                                <?php echo "aqui" . $nomeestado . "FINAL"; ?>  
                                 <select name="select">
                                     <?php
                                     if (strlen($nomeestado) == 0) {
@@ -140,7 +143,7 @@ and open the template in the editor.
                                         foreach ($lista as $row) {
                                             ?>
                                             <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
-                                        <?php
+                                            <?php
                                         }
                                     } else {
                                         echo 'NOMEEE1:' . $nomeestado;
@@ -160,8 +163,10 @@ and open the template in the editor.
                                         foreach ($lista as $row) {
                                             ?>
                                             <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
-                                        <?php }
-                                    } ?>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </select>
                             </div>
 
@@ -293,14 +298,13 @@ and open the template in the editor.
         var vezes = 0;
         function Mudarestado(el) {
             vezes = vezes + 1;
-
+            
             if (vezes <= 3) {
                 var select = document.getElementById("selectest");
                 var opcaoTexto = select.options[select.selectedIndex].text;
-                console.log("sera".opcaoTexto);
-<?php $nomeestado = $variavelphp = "<script>document.write(opcaoTexto)</script>"; ?>// aqui nao esta recebendo a variavel javascript
-<?php var_dump($nomeestado); ?>
-                document.getElementById('teste1').innerHTML = opcaoTexto; // aqui esta pegando MG certinho
+                // estava aqui
+
+<?php $nomeestado = "<script>document.write(opcaoTexto)</script>" ?>
                 var display = document.getElementById(el).style.display;
 
                 if (display == "none")
@@ -313,6 +317,6 @@ and open the template in the editor.
 
         }
 
-
     </script>
+    <script src="../js/script.js"></script>
 </html>

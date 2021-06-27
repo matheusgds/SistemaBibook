@@ -84,6 +84,7 @@ and open the template in the editor.
             <?php
             include_once "../confs/inc.php";
             require_once "../confs/Conexao.php";
+
             $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
             $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
 
@@ -146,6 +147,8 @@ and open the template in the editor.
                             <td class="table-success"><?php echo $linha['idEstado']; ?></td>
                             <td class="table-success"><?php echo $linha['nome']; ?></td>
                             <td class="table-success"><?php echo $linha['sigla']; ?></td>
+                            <td class="table-success"><a href=""> <img src="../IMG/Edit.png"> </a></td>
+                            <td class="table-success"><a href=javascript:excluirRegistro('ExclusaoEstado.php?id={$linha['idEstado']}')> <img src="../IMG/Erase.png"> </a></td>
                         </tr>
 
                     <?php } ?>
@@ -154,4 +157,5 @@ and open the template in the editor.
 
         </div>
     </body>
+    
 </html>
