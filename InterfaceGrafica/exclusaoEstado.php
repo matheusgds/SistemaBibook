@@ -2,26 +2,22 @@
 
 include_once "../confs/inc.php";
 require_once "../confs/Conexao.php";
-include("./listarestados.php");
+
+$doc = false;
+$id = $_GET['estado'];
 
 
-$id = $_GET['id'];
+    $pdo = Conexao::getInstance();
+    $stmt = $pdo->prepare('delete from estado where idEstado = :id ');
+    $stmt2 = $pdo->prepare('commit;');
+    $stmt->bindParam(':id', $ide, PDO::PARAM_INT);
+    $ide = $id;
+    $stmt->execute();
+    $stmt2->execute();
 
-echo $id;
-/*$pdo = Conexao::getInstance();
-$stmt = $pdo->prepare('delete * from estado where nome = ');
-$stmt2 = $pdo->prepare('commit;');
-$verifica->bindParam(':nome', $nome, PDO::PARAM_STR);
-$nome = $_POST['nome'];
-$verifica->execute();
+     $url = "listarestados.php";
+     redirect($url);
 
-function alert() {
-    echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
-}
-
-function alert2() {
-    echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
-}
 
 
 function redirect($url) {
@@ -34,5 +30,5 @@ function redirect($url) {
     echo "</BODY>\n";
     echo "</HTML>\n";
 }
- 
- */
+
+

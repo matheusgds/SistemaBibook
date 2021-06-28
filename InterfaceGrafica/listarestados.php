@@ -147,8 +147,10 @@ and open the template in the editor.
                             <td class="table-success"><?php echo $linha['idEstado']; ?></td>
                             <td class="table-success"><?php echo $linha['nome']; ?></td>
                             <td class="table-success"><?php echo $linha['sigla']; ?></td>
-                            <td class="table-success"><a href=""> <img src="../IMG/Edit.png"> </a></td>
-                            <td class="table-success"><a href=javascript:excluirRegistro('ExclusaoEstado.php?id={$linha['idEstado']}')> <img src="../IMG/Erase.png"> </a></td>
+                            <?php $number = $linha['idEstado']; ?>
+                            <?php $link = "exclusaoEstado.php?estado=" . $number; ?>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditState(<?php echo $number ?>)" ><img src="../IMG/Edit.png"> </button></td>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeState(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
                         </tr>
 
                     <?php } ?>
@@ -157,5 +159,30 @@ and open the template in the editor.
 
         </div>
     </body>
-    
+    <script type='text/javascript'>
+
+        function ExcludeState(valor) {
+
+            var a = confirm('Deseja Mesmo Excluir?');
+
+            if (a === true) {
+                var link = "exclusaoEstado.php?estado=";
+                link = link + valor;
+
+                window.location.href = link;
+            } else {
+                window.location.href = "listarestados.php";
+            }
+
+        }
+
+        function EditState(valor) {
+            var link = "edicaoestado.php?estado=";
+            link = link + valor;
+            window.location.href = link;
+        }
+
+
+    </script>
+
 </html>
