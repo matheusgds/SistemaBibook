@@ -85,18 +85,18 @@ class Estado implements ICrud {
             $stmt2->execute();
             //mensagem de inserido com sucesso!
             $url = "listarestados.php";
-            alert2();
-            redirect($url);
+            $this->alert2();
+            $this->redirect($url);
         } else {
             //mensagem de confirmação
-            alert();
+            $this->alert();
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroEstado.php";
-                redirect($url);
+                $this->redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
-                redirect($url);
+                $this->redirect($url);
             }
         }
     }
@@ -123,7 +123,5 @@ class Estado implements ICrud {
         echo "</BODY>\n";
         echo "</HTML>\n";
     }
-
-    
 
 }
