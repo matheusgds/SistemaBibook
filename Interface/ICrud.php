@@ -12,7 +12,7 @@
  */
 interface ICrud {
    public function Inserir($vetDados);
-   public function Excluir();
-   public function Editar();
+   public function Excluir($vetDados);
+   public function Editar($vetDados);
    public function PesquisarTodos();
 }
