@@ -1,7 +1,5 @@
 <?php
 
-include_once "../confs/inc.php";
-require_once "../confs/Conexao.php";
 require_once "../autoload.php";
 
 $Estado = new Estado();

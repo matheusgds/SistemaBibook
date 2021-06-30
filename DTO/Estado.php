@@ -1,8 +1,6 @@
 <?php
 
-include_once "../confs/inc.php";
-require_once "../confs/Conexao.php";
-require_once "../Interface/ICrud.php";
+require_once "../autoload.php";
 
 class Estado implements ICrud {
 
@@ -38,8 +36,38 @@ class Estado implements ICrud {
         return "ID: " . $this->id . "<br/>Nome: " . $this->nome . "<br/>Sigla: " . $this->sigla;
     }
 
-    public function Editar() {
+    public function Editar($vetDados) {
         
+        $id = $vetDados[0];
+        $nome = $vetDados[1];
+        $sigla = $vetDados[2];
+        
+        $nome2 = $this->retornaNome($id);
+        $sigla2 = $this->retornaSigla($id);
+
+
+        if (!comparacao($nome, $nome2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update estado set nome =:novonome where idEstado = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novonome', $nome, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt2->execute();
+        }
+
+        if (!comparacao($sigla, $sigla2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update estado set sigla =:novosigla where idEstado = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novosigla', $sigla, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt2->execute();
+        }
+
+        $url = "listarestados.php";
+        redirect($url);
     }
 
     public function Excluir() {
@@ -52,24 +80,11 @@ class Estado implements ICrud {
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt->bindParam(':sigla', $sigla, PDO::PARAM_STR);
-        /* $nome = $_POST['nome'];
-          if (strpos($nome, "") === TRUE) {
-          $nome = ucwords($nome);
-          } else {
-          $nome = ucfirst($nome);
-          }
-
-          $sigla = $_POST['sigla'];
-          $sigla = mb_strtoupper($sigla, "utf-8");*?
-         * 
-         */
 
         $nome = $vetDados[0];
         $sigla = $vetDados[1];
 
-
-
-//verificar se já nao existe.
+        //verificar se já nao existe.
         $verifica = $pdo->prepare('SELECT * FROM Estado WHERE nome = :nome2');
         $verifica->bindParam(':nome2', $nome, PDO::PARAM_STR);
         $verifica->execute();
@@ -122,6 +137,34 @@ class Estado implements ICrud {
         echo "<BODY>\n";
         echo "</BODY>\n";
         echo "</HTML>\n";
+    }
+
+    function comparacao($valor1, $valor2) {
+        if ($valor1 == $valor2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function retornaNome($valor) {
+   
+        $pdo = Conexao::getInstance();
+        $sql = "select nome from estado where idEstado= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['nome'];
+        }
+    }
+
+    function retornaSigla($valor) {
+   
+        $pdo = Conexao::getInstance();
+        $sql = "select sigla from estado where idEstado= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['sigla'];
+        }
     }
 
 }
