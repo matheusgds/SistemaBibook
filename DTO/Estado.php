@@ -1,6 +1,10 @@
 <?php
 
-require_once "../autoload.php";
+//require_once ".." . DIRECTORY_SEPARATOR . "confs" . DIRECTORY_SEPARATOR . "Conexao.php";
+//include_once(".." . DIRECTORY_SEPARATOR . "confs" . DIRECTORY_SEPARATOR . "inc.php");
+//require_once ".." . DIRECTORY_SEPARATOR . "Interface" . DIRECTORY_SEPARATOR . "ICrud.php";
+echo "..". DIRECTORY_SEPARATOR . "autoload.php";
+require_once "..". DIRECTORY_SEPARATOR . "autoload.php";
 
 class Estado implements ICrud {
 
@@ -37,16 +41,16 @@ class Estado implements ICrud {
     }
 
     public function Editar($vetDados) {
-        
+
         $id = $vetDados[0];
         $nome = $vetDados[1];
         $sigla = $vetDados[2];
-        
+
         $nome2 = $this->retornaNome($id);
         $sigla2 = $this->retornaSigla($id);
 
 
-        if (!comparacao($nome, $nome2)) {
+        if (!$this->comparacao($nome, $nome2)) {
             $pdo = Conexao::getInstance();
             $stmt = $pdo->prepare('update estado set nome =:novonome where idEstado = :id');
             $stmt2 = $pdo->prepare('commit;');
@@ -56,7 +60,7 @@ class Estado implements ICrud {
             $stmt2->execute();
         }
 
-        if (!comparacao($sigla, $sigla2)) {
+        if (!$this->comparacao($sigla, $sigla2)) {
             $pdo = Conexao::getInstance();
             $stmt = $pdo->prepare('update estado set sigla =:novosigla where idEstado = :id');
             $stmt2 = $pdo->prepare('commit;');
@@ -67,11 +71,20 @@ class Estado implements ICrud {
         }
 
         $url = "listarestados.php";
-        redirect($url);
+       $this-> redirect($url);
     }
 
-    public function Excluir() {
-        
+    public function Excluir($vetDados) {
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('delete from estado where idEstado = :id ');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':id', $ide, PDO::PARAM_INT);
+        $ide = $vetDados[0];
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = "listarestados.php";
+        $this->redirect($url);
     }
 
     public function Inserir($vetDados) {
@@ -148,7 +161,7 @@ class Estado implements ICrud {
     }
 
     function retornaNome($valor) {
-   
+
         $pdo = Conexao::getInstance();
         $sql = "select nome from estado where idEstado= '$valor' ";
         $consulta = $pdo->query($sql);
@@ -158,7 +171,7 @@ class Estado implements ICrud {
     }
 
     function retornaSigla($valor) {
-   
+
         $pdo = Conexao::getInstance();
         $sql = "select sigla from estado where idEstado= '$valor' ";
         $consulta = $pdo->query($sql);

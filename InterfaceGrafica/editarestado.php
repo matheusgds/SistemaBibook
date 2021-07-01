@@ -1,6 +1,7 @@
 <?php
 
-require_once "../autoload.php";
+//require_once "..".DIRECTORY_SEPARATOR."DTO".DIRECTORY_SEPARATOR."Estado.php";
+require_once (".." . DIRECTORY_SEPARATOR . "autoload.php");
 
 $Estado = new Estado();
 $id = $_POST['codigo'];

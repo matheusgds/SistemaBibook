@@ -81,52 +81,56 @@ and open the template in the editor.
 
 
 
-            <?php
-            require_once "../autoload.php";
+<?php
 
-            $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
-            $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
+$tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
+$procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
 
-            /* <?php echo $procurar; ?> */
-            ?>
+/* <?php echo $procurar; ?> */
+?>
 
 
             <form method="post">
                 <input type="radio" name="tipo" id="tipo" value="1" <?php
-                if ($tipo == 1) {
-                    echo "checked";
-                }
-                ?>>Código<br>  
+            if ($tipo == 1) {
+                echo "checked";
+            }
+?>>Código<br>  
                 <input type="radio" name="tipo" id="tipo" value="2" <?php
-                if ($tipo == 2) {
-                    echo "checked";
-                }
-                ?>>Nome<br>
+                       if ($tipo == 2) {
+                           echo "checked";
+                       }
+                       ?>>Nome<br>
                 <input type="radio" name="tipo" id="tipo" value="3" <?php
-                if ($tipo == 3) {
-                    echo "checked";
-                }
-                ?>>Sigla<br><br>
+                       if ($tipo == 3) {
+                           echo "checked";
+                       }
+                       ?>>Sigla<br><br>
                 <input type="text" name="procurar" id="procurar" value=""> 
                 <input type="submit" value="Consultar">
             </form>
             <br>
-            <?php
-            $sql = "";
-            if ($tipo == 1) {
-                if ($procurar != "") {
-                    $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
-                } else {
-                    $sql = "SELECT * FROM estado ORDER BY idEstado";
-                }
-            } else if ($tipo == 2) {
-                $sql = "SELECT * FROM estado WHERE nome LIKE '$procurar%' ORDER BY nome";
-            } else {
-                $sql = "SELECT * FROM estado WHERE sigla LIKE '$procurar%' ORDER BY sigla";
-            }
-            $pdo = Conexao::getInstance();
-            $consulta = $pdo->query($sql);
-            ?>
+<?php
+$sql = "";
+if ($tipo == 1) {
+    if ($procurar != "") {
+        $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
+    } else {
+        $sql = "SELECT * FROM estado ORDER BY idEstado";
+    }
+} else if ($tipo == 2) {
+    $sql = "SELECT * FROM estado WHERE nome LIKE '$procurar%' ORDER BY nome";
+} else {
+    $sql = "SELECT * FROM estado WHERE sigla LIKE '$procurar%' ORDER BY sigla";
+}
+
+
+require_once "..". DIRECTORY_SEPARATOR . "autoload.php";
+//include_once(".." . DIRECTORY_SEPARATOR . "confs" . DIRECTORY_SEPARATOR . "inc.php");
+
+$pdo = Conexao::getInstance();
+$consulta = $pdo->query($sql);
+?>
             <br><br>
             <h1>Dados:</h1>
             <br><br>
@@ -141,18 +145,18 @@ and open the template in the editor.
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
+<?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
                         <tr>
                             <td class="table-success"><?php echo $linha['idEstado']; ?></td>
                             <td class="table-success"><?php echo $linha['nome']; ?></td>
                             <td class="table-success"><?php echo $linha['sigla']; ?></td>
-                            <?php $number = $linha['idEstado']; ?>
-                            <?php $link = "exclusaoEstado.php?estado=" . $number; ?>
+    <?php $number = $linha['idEstado']; ?>
+    <?php $link = "exclusaoEstado.php?estado=" . $number; ?>
                             <td class="table-success"><button  type="button" id="btn1" onclick="EditState(<?php echo $number ?>)" ><img src="../IMG/Edit.png"> </button></td>
                             <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeState(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
                         </tr>
 
-                    <?php } ?>
+<?php } ?>
                 </tbody>
             </table> 
 

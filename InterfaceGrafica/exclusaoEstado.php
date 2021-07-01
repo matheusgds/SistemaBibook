@@ -1,34 +1,16 @@
 <?php
 
-include_once "../confs/inc.php";
-require_once "../confs/Conexao.php";
+require_once "..". DIRECTORY_SEPARATOR . "autoload.php";
 
-$doc = false;
+
+$Estado = new Estado();
 $id = $_GET['estado'];
 
+$vetDados = array(
+    $id
+);
 
-    $pdo = Conexao::getInstance();
-    $stmt = $pdo->prepare('delete from estado where idEstado = :id ');
-    $stmt2 = $pdo->prepare('commit;');
-    $stmt->bindParam(':id', $ide, PDO::PARAM_INT);
-    $ide = $id;
-    $stmt->execute();
-    $stmt2->execute();
+$Estado->Excluir($vetDados);
 
-     $url = "listarestados.php";
-     redirect($url);
-
-
-
-function redirect($url) {
-    echo "<HTML>\n";
-    echo "<HEAD>\n";
-    echo "<TITLE></TITLE>\n";
-    echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
-    echo "</HEAD>\n";
-    echo "<BODY>\n";
-    echo "</BODY>\n";
-    echo "</HTML>\n";
-}
-
+   
 
