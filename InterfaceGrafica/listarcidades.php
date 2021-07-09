@@ -117,8 +117,12 @@ and open the template in the editor.
             } else if ($tipo == 2) {
                 $sql = "SELECT * FROM cidade WHERE nome LIKE '$procurar%' ORDER BY nome";
             }
-            $pdo = Conexao::getInstance();
-            $consulta = $pdo->query($sql);
+
+            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+            $cidade = new Cidade();
+
+            $vet = $cidade->PesquisarTodos($sql);
+            $count = count($vet);
             ?>
             <br><br>
             <h1>Dados:</h1>
@@ -130,15 +134,19 @@ and open the template in the editor.
                         <th scope="col" bgcolor="#78ad6f">Nome</th>
                         <th scope="col" bgcolor="#78ad6f">Alterar</th>
                         <th scope="col" bgcolor="#78ad6f">Excluir</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
+                    <?php for ($index = 0; $index < $count; $index++) {
+                        ?>
                         <tr>
-                            <td class="table-success"><?php echo $linha['idCidade']; ?></td>
-                            <td class="table-success"><?php echo $linha['nome']; ?></td>
-                          
+                            <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getNome(); ?></td>
+                                                      <?php $number = $vet[$index]->getId(); ?>
+                            <?php $link = "exclusaoCidade.php?cidade=" . $number; ?>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditCity(<?php echo $number ?>)" ><img src="../IMG/Edit.png"> </button></td>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeCity(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
                         </tr>
 
                     <?php } ?>
@@ -147,4 +155,29 @@ and open the template in the editor.
 
         </div>
     </body>
+    <script type='text/javascript'>
+
+        function ExcludeCity(valor) {
+
+            var a = confirm('Deseja Mesmo Excluir?');
+
+            if (a === true) {
+                var link = "exclusaoCidade.php?cidade=";
+                link = link + valor;
+
+                window.location.href = link;
+            } else {
+                window.location.href = "listarcidades.php";
+            }
+
+        }
+
+        function EditCity(valor) {
+            var link = "edicaocidade.php?cidade=";
+            link = link + valor;
+            window.location.href = link;
+        }
+
+
+    </script>
 </html>

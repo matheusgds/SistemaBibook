@@ -79,7 +79,18 @@ and open the template in the editor.
                   $logado = $_SESSION['loginextra'];
                   } */
 
-                $nomeestado = "";
+                function redirect($url) {
+                    echo "<HTML>\n";
+                    echo "<HEAD>\n";
+                    echo "<TITLE></TITLE>\n";
+                    echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
+                    echo "</HEAD>\n";
+                    echo "<BODY>\n";
+                    echo "</BODY>\n";
+                    echo "</HTML>\n";
+                }
+
+                $nomeestado;
                 ?>
             </div>
 
@@ -105,115 +116,25 @@ and open the template in the editor.
                             <legend>
                                 Localização:
                             </legend>
-                           
-                                <label for="estado">Selecione O Estado:</label>
-                                <select name="select" id="selectest">
-                                    <?php
-                                    $lista = retornarEstados();
-                                    foreach ($lista as $row) {
-                                        ?>
-                                        <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
-                                    <?php } ?>
-                                </select>
 
-                                <button  type="button" id="btn1" onclick="Mudarestado('div1')" >>>></button>
-                            
-                            
-                            <br><br>
-                             <?php $nomeestado = $_POST['select'] ?>
-
-                            <div id="div1" style="display:none;">
-
-
-                                <label for="cidade">Selecione A Cidade:</label>
-                               
-                                <?php echo "aqui" . $nomeestado . "FINAL"; ?>  
-                                <select name="select">
-                                    <?php
-                                    if (strlen($nomeestado) == 0) {
-                                        $nomeestado = "SC";
-                                        $nomeestado = "'" . $nomeestado . "'";
-                                        echo "teste1" . $nomeestado;
-                                        $Estado = retornarEstadoPorNome($nomeestado); // lista
-                                        foreach ($Estado as $row) {
-                                            
-                                        }
-
-                                        $lista = retornarCidadesDoEstado($row['idEstado']); // tem q passar ID DO ESTADO
-                                        foreach ($lista as $row) {
-                                            ?>
-                                            <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
-                                            <?php
-                                        }
-                                    } else {
-                                        echo 'NOMEEE1:' . $nomeestado;
-                                        var_dump($nomeestado);
-                                        if (strlen($nomeestado) == 0) { // se tem tamanho de string 0
-                                            $nomeestado = "SC";
-                                        }
-
-                                        $nomeestado = "'" . $nomeestado . "'";
-
-                                        $Estado = retornarEstadoPorNome($nomeestado); // lista
-                                        foreach ($Estado as $row) {
-                                            
-                                        }
-
-                                        $lista = retornarCidadesDoEstado($row['idEstado']); // tem q passar ID DO ESTADO
-                                        foreach ($lista as $row) {
-                                            ?>
-                                            <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-
-                            <br><br>
-                            <label for="bairro">Selecione O Bairro:</label>
-
-                            <select name="select">
+                            <label for="estado">Selecione O Estado:</label>
+                            <select name="select" id="selectest">
                                 <?php
-                                $lista = retornarBairros();
+                                $lista = retornarEstados();
                                 foreach ($lista as $row) {
                                     ?>
-                                    <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
+                                    <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
                                 <?php } ?>
                             </select>
 
+
                             <br><br>
-                            <label for="rua">Selecione A Rua:</label>
 
-                            <select name="select">
-                                <?php
-                                $lista = retornarRuas();
-                                foreach ($lista as $row) {
-                                    ?>
-                                    <option value=<?php echo $row['nome'] ?>><?php echo $row['nome'] ?></option>
-                                <?php } ?>
-                            </select>
+
+
+
                             <br><br>
-                            <label for="numero">Selecione o Numero Do Local:</label>
-
-                            <select name="select">
-                                <?php
-                                $lista = retornarNumeros();
-                                foreach ($lista as $row) {
-                                    ?>
-                                    <option value=<?php echo $row['numero'] ?>><?php echo $row['numero'] ?></option>
-                                <?php } ?>
-                            </select>
-
                         </div>
-                        <br><br>
-                        <div style="border-style:double; margin:20px;width: 320px">
-                            <legend>
-                                Contato:
-                            </legend>
-
-                        </div>
-                        <br><br>
                         <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
                         <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
                     </fieldset> 
@@ -295,28 +216,9 @@ and open the template in the editor.
     </body>
 
     <script>
-        var vezes = 0;
-        function Mudarestado(el) {
-            vezes = vezes + 1;
-            
-            if (vezes <= 3) {
-                var select = document.getElementById("selectest");
-                var opcaoTexto = select.options[select.selectedIndex].text;
-                // estava aqui
 
-<?php $nomeestado = "<script>document.write(opcaoTexto)</script>" ?>
-                var display = document.getElementById(el).style.display;
 
-                if (display == "none")
-                    document.getElementById(el).style.display = 'block';
-                else
-                    document.getElementById(el).style.display = 'none';
-            } else {
-                document.getElementById(el).style.display = 'none';
-            }
-
-        }
 
     </script>
-    <script src="../js/script.js"></script>
+
 </html>

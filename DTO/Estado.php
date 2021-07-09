@@ -3,8 +3,8 @@
 //require_once ".." . DIRECTORY_SEPARATOR . "confs" . DIRECTORY_SEPARATOR . "Conexao.php";
 //include_once(".." . DIRECTORY_SEPARATOR . "confs" . DIRECTORY_SEPARATOR . "inc.php");
 //require_once ".." . DIRECTORY_SEPARATOR . "Interface" . DIRECTORY_SEPARATOR . "ICrud.php";
-echo "..". DIRECTORY_SEPARATOR . "autoload.php";
-require_once "..". DIRECTORY_SEPARATOR . "autoload.php";
+
+require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
 class Estado implements ICrud {
 
@@ -71,7 +71,7 @@ class Estado implements ICrud {
         }
 
         $url = "listarestados.php";
-       $this-> redirect($url);
+        $this->redirect($url);
     }
 
     public function Excluir($vetDados) {
@@ -129,8 +129,19 @@ class Estado implements ICrud {
         }
     }
 
-    public function PesquisarTodos() {
-        
+    public function PesquisarTodos($sql) {
+        $pdo = Conexao::getInstance();
+        $consulta = $pdo->query($sql);
+        $vetDados = array();
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            $est = new Estado();
+            $est->setId($linha['idEstado']);
+            $est->setNome($linha['nome']);
+            $est->setSigla($linha['sigla']);
+            $vetDados[] = $est;
+        }
+        return $vetDados;
     }
 
     function alert() {
@@ -179,5 +190,6 @@ class Estado implements ICrud {
             return $linha['sigla'];
         }
     }
+    
 
 }

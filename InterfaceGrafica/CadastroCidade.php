@@ -95,12 +95,19 @@ and open the template in the editor.
 
                         <select name="select">
 
-                            <?php $lista = retornarEstados();
+                            <?php
+                            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+                            $cid = new Cidade();
+
+                            $lista = $cid->retornarEstados();
+
                             foreach ($lista as $row) {
                                 ?>
                                 <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
-<?php } ?>
+                            <?php } ?>
                         </select>
+
+
                         <br><br>
 
                         <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
@@ -110,17 +117,6 @@ and open the template in the editor.
             </div>
         </div>
         <?php
-
-        function retornarEstados() {
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
-
-            $pdo = Conexao::getInstance();
-            $stmt = $pdo->prepare('SELECT sigla FROM estado');
-            $stmt->execute();
-            
-            return $stmt;
-        }
         ?>
     </body>
 </html>
