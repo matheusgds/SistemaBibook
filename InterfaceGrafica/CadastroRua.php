@@ -93,6 +93,10 @@ and open the template in the editor.
                         <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
                         <br><br>
 
+                        <label for="nome">Nome do Bairro:</label>
+                        <input type="text" name="nomeBairro" id="nomeBairro" placeholder="Nome Do Bairro" required="true">
+                        <br><br>
+
                         <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
                         <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
                     </fieldset> 
@@ -100,7 +104,6 @@ and open the template in the editor.
             </div>
         </div>
         <?php
-
         ?>
     </body>
 </html>
