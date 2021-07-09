@@ -92,6 +92,10 @@ and open the template in the editor.
                         <label for="nome">Nome:</label>
                         <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
                         <br><br>
+                        
+                         <label for="nome">Cidade:</label>
+                        <input type="text" name="nomeCidade" id="nomeCidade" placeholder="Nome da Cidade" required="true">
+                        <br><br>
 
                         <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
                         <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>

@@ -107,9 +107,6 @@ and open the template in the editor.
     $id = $_GET['cidade'];
 
     function retornaNome($valor) {
-        include_once "../confs/inc.php";
-        require_once "../confs/Conexao.php";
-
         $pdo = Conexao::getInstance();
         $sql = "select nome from estado where idEstado= '$valor' ";
         $consulta = $pdo->query($sql);
@@ -119,8 +116,6 @@ and open the template in the editor.
     }
 
     function retornaSigla($valor) {
-        include_once "../confs/inc.php";
-        require_once "../confs/Conexao.php";
 
         $pdo = Conexao::getInstance();
         $sql = "select sigla from estado where idEstado= '$valor' ";

@@ -117,8 +117,13 @@ and open the template in the editor.
             } else if ($tipo == 2) {
                 $sql = "SELECT * FROM bairro WHERE nome LIKE '$procurar%' ORDER BY nome";
             }
-            $pdo = Conexao::getInstance();
-            $consulta = $pdo->query($sql);
+
+            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+
+            $Bairro = new Bairro();
+
+            $vet = $Bairro->PesquisarTodos($sql);
+            $count = count($vet);
             ?>
             <br><br>
             <h1>Dados:</h1>
@@ -130,15 +135,19 @@ and open the template in the editor.
                         <th scope="col" bgcolor="#78ad6f">Nome</th>
                         <th scope="col" bgcolor="#78ad6f">Alterar</th>
                         <th scope="col" bgcolor="#78ad6f">Excluir</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
+                    <?php for ($index = 0; $index < $count; $index++) {
+                        ?>
                         <tr>
-                            <td class="table-success"><?php echo $linha['idBairro']; ?></td>
-                            <td class="table-success"><?php echo $linha['nome']; ?></td>
-                          
+                            <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getNome(); ?></td>
+                            <?php $number = $vet[$index]->getId(); ?>
+                            <?php $link = "exclusaoBairro.php?bairro=" . $number; ?>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditBairro(<?php echo $number ?>)" ><img src="../IMG/Edit.png"> </button></td>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeBairro(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
                         </tr>
 
                     <?php } ?>
@@ -147,4 +156,29 @@ and open the template in the editor.
 
         </div>
     </body>
+    <script type='text/javascript'>
+
+        function ExcludeBairro(valor) {
+
+            var a = confirm('Deseja Mesmo Excluir?');
+
+            if (a === true) {
+                var link = "exclusaoBairro.php?bairro=";
+                link = link + valor;
+
+                window.location.href = link;
+            } else {
+                window.location.href = "listarbairros.php";
+            }
+
+        }
+
+        function EditBairro(valor) {
+            var link = "edicaobairro.php?bairro=";
+            link = link + valor;
+            window.location.href = link;
+        }
+
+
+    </script>
 </html>

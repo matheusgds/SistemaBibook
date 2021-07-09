@@ -84,21 +84,17 @@ and open the template in the editor.
 
         <div class="divform"id="divform">
 
-            <form action="editarestado.php" id="form" method="post">
+            <form action="editarbairro.php" id="form" method="post">
 
                 <fieldset>
                     <legend>
                         Editar Estado
                     </legend>
                     <label for="codigo">Codigo:</label>
-                    <input  readonly="" type="text" name="codigo" id="codigo" value="<?php echo $_GET['estado'] ?>">
+                    <input  readonly="" type="text" name="codigo" id="codigo" value="<?php echo $_GET['bairro'] ?>">
                     <br><br>
                     <label for="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome"  required="true" value="<?php retornaNome($_GET['estado']) ?>"> 
-                    <br><br>
-                    <label for="Sigla">Sigla:</label>
-                    <input type="text" name="sigla" id="sigla"  MAXLENGTH=2 required="true" value="<?php retornaSigla($_GET['estado']) ?>">
-                    <br><br>
+                    <input type="text" name="nome" id="nome"  required="true" value="<?php retornaNome($_GET['bairro']) ?>"> 
                     <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
                     <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
                 </fieldset> 
@@ -108,29 +104,17 @@ and open the template in the editor.
     <?php
     require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
-    $id = $_GET['estado'];
+    $id = $_GET['bairro'];
 
     function retornaNome($valor) {
-        
+
         $pdo = Conexao::getInstance();
-        $sql = "select nome from estado where idEstado= '$valor' ";
+        $sql = "select nome from bairro where idBairro= '$valor' ";
         $consulta = $pdo->query($sql);
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
             echo $linha['nome'];
         }
     }
-    
-    function retornaSigla($valor) {
-      
-        $pdo = Conexao::getInstance();
-        $sql = "select sigla from estado where idEstado= '$valor' ";
-        $consulta = $pdo->query($sql);
-        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
-            echo $linha['sigla'];
-        }
-    }
-    
-    
     ?>
 </body>
 </html>
