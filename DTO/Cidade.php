@@ -29,11 +29,36 @@ class Cidade implements ICrud {
 
     //put your code here
     public function Editar($vetDados) {
+        $id = $vetDados[0];
+        $nome = $vetDados[1];
         
+        $nome2 = $this->retornaNome($id);
+       
+        if (!$this->comparacao($nome, $nome2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update cidade set nome =:novonome where idCidade = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novonome', $nome, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt2->execute();
+        }
+
+        $url = "listarestados.php";
+        $this->redirect($url);
     }
 
     public function Excluir($vetDados) {
-        
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('delete from cidade where idCidade = :id ');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':id', $ide, PDO::PARAM_INT);
+        $ide = $vetDados[0];
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = "listarestados.php";
+        $this->redirect($url);
     }
 
     public function Inserir($vetDados) {
@@ -94,7 +119,7 @@ class Cidade implements ICrud {
             $cit = new Cidade();
             $cit->setId($linha['idCidade']);
             $cit->setNome($linha['nome']);
-           
+
             $vetDados[] = $cit;
         }
         return $vetDados;
@@ -162,5 +187,22 @@ class Cidade implements ICrud {
         $stmt->bindParam(':idc', $idcidade, PDO::PARAM_INT);
         $stmt->execute();
     }
+    
+     function retornaNome($valor) {
 
+        $pdo = Conexao::getInstance();
+        $sql = "select nome from cidade where idCidade= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['nome'];
+        }
+    }
+
+    function comparacao($valor1, $valor2) {
+        if ($valor1 == $valor2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
