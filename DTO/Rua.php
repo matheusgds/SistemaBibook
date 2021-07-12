@@ -28,11 +28,36 @@ class Rua implements ICrud {
     }
 
     public function Editar($vetDados) {
+         $id = $vetDados[0];
+        $nome = $vetDados[1];
         
+        $nome2 = $this->retornaNome($id);
+       
+        if (!$this->comparacao($nome, $nome2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update rua set nome =:novonome where idRua = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novonome', $nome, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt2->execute();
+        }
+
+        $url = "listarruas.php";
+        $this->redirect($url);
     }
 
     public function Excluir($vetDados) {
-        
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('delete from rua where idRua = :id ');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':id', $ide, PDO::PARAM_INT);
+        $ide = $vetDados[0];
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = "listarruas.php";
+        $this->redirect($url);
     }
 
     public function Inserir($vetDados) {
@@ -60,19 +85,18 @@ class Rua implements ICrud {
             //mensagem de inserido com sucesso!
             $url = "listarruas.php";
 
-asdasdas
-            $idestado = $this->pegarIDEstado($vetDados[1]);
+            $idBairro = $this->pegarIDBairro($vetDados[1]);
 
-            $idcidade = $this->pegarIDCidade();
+            $idRua = $this->pegarIDRua();
 
-            $this->vincularEstado_Cidade($idcidade, $idestado);
+            $this->vincularRua_Bairro($idRua, $idBairro);
 
-            alert2();
-            redirect($url);
+            $this->alert2();
+            $this->redirect($url);
             //header("location:listarestados.php");
         } else {
             //mensagem de confirmação
-            alert();
+            $this->alert();
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroRua.php";
@@ -85,7 +109,18 @@ asdasdas
     }
 
     public function PesquisarTodos($sql) {
-        
+        $pdo = Conexao::getInstance();
+        $consulta = $pdo->query($sql);
+        $vetDados = array();
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            $Bairro = new Bairro();
+            $Bairro->setId($linha['idRua']);
+            $Bairro->setNome($linha['nome']);
+
+            $vetDados[] = $Bairro;
+        }
+        return $vetDados;
     }
 
     function alert() {
@@ -106,8 +141,8 @@ asdasdas
         echo "</BODY>\n";
         echo "</HTML>\n";
     }
-    
-     function pegarIDBairro($sig) {
+
+    function pegarIDBairro($sig) {
 
         $pdo = Conexao::getInstance();
         $sig = substr_replace($sig, '"', 0, 0);
@@ -116,7 +151,7 @@ asdasdas
         $stmt = $pdo->prepare('SELECT idBairro FROM bairro WHERE nome=' . $sig);
         $stmt->execute();
         foreach ($stmt as $row) {
-            return $row['idEstado'];
+            return $row['idBairro'];
         }
     }
 
@@ -131,16 +166,33 @@ asdasdas
         }
     }
 
-    function vincularEstado_Cidade($idcidade, $idestado) {
-        $idcidade = intval($idcidade);
-        $idestado = intval($idestado);
+    function vincularRua_Bairro($idRua, $idBairro) {
+        $idRua = intval($idRua);
+        $idBairro = intval($idBairro);
 
 
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO estado_has_cidade (Estado_idEstado,Cidade_idCidade) VALUES(:ide,:idc)');
-        $stmt->bindParam(':ide', $idestado, PDO::PARAM_INT);
-        $stmt->bindParam(':idc', $idcidade, PDO::PARAM_INT);
+        $stmt = $pdo->prepare('INSERT INTO rua_has_bairro (Rua_idRua,Bairro_idBairro) VALUES(:idr,:idb)');
+        $stmt->bindParam(':idr', $idRua, PDO::PARAM_INT);
+        $stmt->bindParam(':idb', $idBairro, PDO::PARAM_INT);
         $stmt->execute();
+    }
+      function retornaNome($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select nome from Rua where idRua= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['nome'];
+        }
+    }
+
+    function comparacao($valor1, $valor2) {
+        if ($valor1 == $valor2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

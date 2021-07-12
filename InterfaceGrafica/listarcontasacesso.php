@@ -107,7 +107,7 @@ and open the template in the editor.
                     echo "checked";
                 }
                 ?>>Tipo De Acesso<br><br>
-                
+
                 <input type="text" name="procurar" id="procurar" value=""> 
                 <input type="submit" value="Consultar">
             </form>
@@ -122,7 +122,7 @@ and open the template in the editor.
                 }
             } else if ($tipo == 2) {
                 $sql = "SELECT * FROM contadeacesso WHERE login LIKE '$procurar%' ORDER BY login";
-            }else if ($tipo == 3){
+            } else if ($tipo == 3) {
                 if ($procurar != "") {
                     $sql = "SELECT * FROM contadeacesso WHERE tipodeacesso = $procurar ORDER BY tipodeacesso";
                 } else {
@@ -131,6 +131,13 @@ and open the template in the editor.
             }
             $pdo = Conexao::getInstance();
             $consulta = $pdo->query($sql);
+            
+             require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+           
+             $Conta = new ContaDeAcesso();
+
+            $vet = $Conta->PesquisarTodos($sql);
+            $count = count($vet);
             ?>
             <br><br>
             <h1>Dados:</h1>
@@ -141,24 +148,48 @@ and open the template in the editor.
                         <th scope="col" bgcolor="#78ad6f">Código</th>
                         <th scope="col" bgcolor="#78ad6f">Login</th>
                         <th scope="col" bgcolor="#78ad6f">Tipo De Acesso</th>
-                        <th scope="col" bgcolor="#78ad6f">Alterar</th>
                         <th scope="col" bgcolor="#78ad6f">Excluir</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
+                    <?php for ($index = 0; $index < $count; $index++) {
+                        ?>
                         <tr>
-                            <td class="table-success"><?php echo $linha['idContaDeAcesso']; ?></td>
-                            <td class="table-success"><?php echo $linha['login']; ?></td>
-                            <td class="table-success"><?php echo $linha['tipodeacesso']; ?></td>
-                          
+                            <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getLogin(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getTipoacesso(); ?></td>
+                            <?php $number = $vet[$index]->getId(); ?>
+                            <?php $link = "exclusaoContaDeAcesso?conta=" . $number; ?>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeContaDeAcesso(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
                         </tr>
 
                     <?php } ?>
                 </tbody>
+
             </table> 
 
         </div>
     </body>
+    <script type='text/javascript'>
+
+        function ExcludeContaDeAcesso(valor) {
+
+            var a = confirm('Deseja Mesmo Desativar?');
+
+            if (a === true) {
+                var link = "exclusaoContaDeAcesso.php?conta=";
+                link = link + valor;
+
+                window.location.href = link;
+            } else {
+                window.location.href = "listarcontasacesso.php";
+            }
+
+        }
+
+
+
+
+    </script>
 </html>

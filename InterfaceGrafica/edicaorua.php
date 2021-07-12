@@ -84,17 +84,17 @@ and open the template in the editor.
 
         <div class="divform"id="divform">
 
-            <form action="editarcidade.php" id="form" method="post">
+            <form action="editarrua.php" id="form" method="post">
 
                 <fieldset>
                     <legend>
-                        Editar Estado
+                        Editar Rua
                     </legend>
                     <label for="codigo">Codigo:</label>
-                    <input  readonly="" type="text" name="codigo" id="codigo" value="<?php echo $_GET['cidade'] ?>">
+                    <input  readonly="" type="text" name="codigo" id="codigo" value="<?php echo $_GET['rua'] ?>">
                     <br><br>
                     <label for="nome">Nome:</label>
-                    <input type="text" name="nome" id="nome"  required="true" value="<?php retornaNome($_GET['cidade']) ?>"> 
+                    <input type="text" name="nome" id="nome"  required="true" value="<?php retornaNome($_GET['rua']) ?>"> 
                     <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
                     <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
                 </fieldset> 
@@ -104,19 +104,18 @@ and open the template in the editor.
     <?php
     require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
-    $id = $_GET['cidade'];
+    $id = $_GET['rua'];
 
     function retornaNome($valor) {
         $pdo = Conexao::getInstance();
-        $sql = "select nome from cidade where idCidade= '$valor' ";
+        $sql = "select nome from rua where idRua= '$valor' ";
         $consulta = $pdo->query($sql);
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
             echo $linha['nome'];
         }
     }
 
-   
-    
+  
     ?>
 </body>
 </html>

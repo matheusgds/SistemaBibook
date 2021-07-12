@@ -44,7 +44,7 @@ class Cidade implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listarestados.php";
+        $url = "listarcidades.php";
         $this->redirect($url);
     }
 
@@ -57,7 +57,7 @@ class Cidade implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarestados.php";
+        $url = "listarcidades.php";
         $this->redirect($url);
     }
 

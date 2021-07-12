@@ -18,7 +18,7 @@ if (strpos($nome, " ") === TRUE) {
 $nomeBairro = $_POST['nomeBairro'];
 
 $vetDados = array(
-    $nome, $nomeCidade
+    $nome, $nomeBairro
 );
 
 $Rua->Inserir($vetDados);
