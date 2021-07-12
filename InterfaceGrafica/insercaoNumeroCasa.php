@@ -1,7 +1,6 @@
 <?php
 
-include_once "../confs/inc.php";
-require_once "../confs/Conexao.php";
+ require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
 function alert() {
     echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";

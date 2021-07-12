@@ -129,9 +129,11 @@ and open the template in the editor.
 
 
                             <br><br>
-
-
-
+                            <label for="cidade">Cidade:</label>
+                            <input type="text" name="cidade" id="cidade" placeholder="Nome Cidade" required="true">
+                            <br><br>
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" name="bairro" id="bairro" placeholder="Nome Bairro" required="true">
 
                             <br><br>
                         </div>

@@ -82,8 +82,8 @@ and open the template in the editor.
 
 
             <?php
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
+             require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+             
             $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
             $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
 
