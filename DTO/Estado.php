@@ -190,6 +190,30 @@ class Estado implements ICrud {
             return $linha['sigla'];
         }
     }
-    
 
+    function buscaSigla($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select idEstado from estado where sigla= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['idEstado'];
+        }
+    }
+
+    public function Existe($valor) {
+        $pdo = Conexao::getInstance();
+        $sql = "select idEstado from estado where sigla= '$valor' ";
+        $consulta = $pdo->query($sql);
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            if (empty($linha)) {
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+    }
+
+// null
 }

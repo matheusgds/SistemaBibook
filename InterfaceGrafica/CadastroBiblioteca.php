@@ -89,8 +89,6 @@ and open the template in the editor.
                     echo "</BODY>\n";
                     echo "</HTML>\n";
                 }
-
-                $nomeestado;
                 ?>
             </div>
 
@@ -111,7 +109,7 @@ and open the template in the editor.
                             <label for="nome">Nome:</label>
                             <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
                         </div>
-                        <br><br>
+                        
                         <div style="border-style:double; margin:20px;width: 320px" id="divloc">
                             <legend>
                                 Localização:
@@ -134,8 +132,34 @@ and open the template in the editor.
                             <br><br>
                             <label for="bairro">Bairro:</label>
                             <input type="text" name="bairro" id="bairro" placeholder="Nome Bairro" required="true">
+                            <br><br>
+                            <label for="rua">Rua:</label>
+                            <input type="text" name="rua" id="rua" placeholder="Nome Rua" required="true">
+                            <br><br>
+                            <label for="numeroCasa">Numero Da Residencia:</label>
+                            <input type="text" name="numerocasa" id="numerocasa" placeholder="Numero Da Casa" required="true">
 
                             <br><br>
+                        </div>
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc">
+                            <legend>
+                                Contato:
+                            </legend>
+
+                            <label for="Email">Email:</label>
+                            <input type="text" name="email" id="email" class="form-control" placeholder="Ex.: aaaaaa@aaaa.com">
+                            <br><br>
+                            <label for="Telefone1">Telefone 1:</label>
+                            <input type="text" id="telefone1" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <br><br>
+                            <label for="Telefone2">Telefone 2:</label>
+                            <input type="text" name="Telefone2" id="telefone2" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <br><br>
+                            <label for="Celular">Celular:</label>
+                            <input type="text" name="celular" id="celular" class="form-control" placeholder="Ex.: (00) 00000-0000" >
+                            <br><br>
+
+
                         </div>
                         <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
                         <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>

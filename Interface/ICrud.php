@@ -15,4 +15,5 @@ interface ICrud {
    public function Excluir($vetDados);
    public function Editar($vetDados);
    public function PesquisarTodos($sql);
+    public function Existe($vetDados);
 }

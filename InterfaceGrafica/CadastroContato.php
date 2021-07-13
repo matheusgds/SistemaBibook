@@ -11,18 +11,14 @@ and open the template in the editor.
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
         <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
         <title>Cadastro De Contato</title>
 
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#telefone1').mask('(00) 0000-0000');
-            });
-        </script>
     </head>
     <body>
 
@@ -91,40 +87,24 @@ and open the template in the editor.
 
             <div class="divform"id="divform">
 
-                <form action="insercaocidade.php" id="form" method="post">
+                <form action="insercaocontato.php" id="form" method="post">
 
 
                     <legend>
                         Cadastro De Contato
                     </legend>
                     <label for="Email">Email:</label>
-                    <input type="text" name="email" id="email" placeholder="E-Mail">
+                    <input type="text" name="email" id="email" class="form-control" placeholder="Ex.: aaaaaa@aaaa.com">
                     <br><br>
                     <label for="Telefone1">Telefone 1:</label>
-                    <input type="text" class="form-control" placeholder="Ex.: (00) 0000-0000">
+                    <input type="text" id="telefone1" class="form-control" placeholder="Ex.: (00) 0000-0000" >
                     <br><br>
                     <label for="Telefone2">Telefone 2:</label>
-                    <input type="text" name="Telefone2" id="Telefone2" placeholder="Telefone 2" >
+                    <input type="text" name="Telefone2" id="telefone2" class="form-control" placeholder="Ex.: (00) 0000-0000" >
                     <br><br>
                     <label for="Celular">Celular:</label>
-                    <input type="text" name="email" id="email" placeholder="E-Mail" >
+                    <input type="text" name="celular" id="celular" class="form-control" placeholder="Ex.: (00) 00000-0000" >
                     <br><br>
-
-
-                    <select name="select">
-
-                        <?php
-                        require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
-                        $cid = new Cidade();
-
-                        $lista = $cid->retornarEstados();
-
-                        foreach ($lista as $row) {
-                            ?>
-                            <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
-                        <?php } ?>
-                    </select>
-
 
                     <br><br>
 
@@ -137,5 +117,10 @@ and open the template in the editor.
         <?php
         ?>
     </body>
+
+    <script type="text/javascript">
+        $("#telefone1,#telefone2").mask("(00) 0000-0000");
+        $("#celular").mask("(00) 00000-0000");
+    </script>
 
 </html>

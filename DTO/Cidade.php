@@ -197,6 +197,17 @@ class Cidade implements ICrud {
             return $linha['nome'];
         }
     }
+    
+     function buscaIDpeloNome($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select idCidade from cidade where nome= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['idCidade'];
+        }
+    }
+    
 
     function comparacao($valor1, $valor2) {
         if ($valor1 == $valor2) {

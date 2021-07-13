@@ -186,6 +186,16 @@ class Rua implements ICrud {
             return $linha['nome'];
         }
     }
+    
+     function buscaIDpeloNome($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select idRua from rua where nome= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['idRua'];
+        }
+    }
 
     function comparacao($valor1, $valor2) {
         if ($valor1 == $valor2) {

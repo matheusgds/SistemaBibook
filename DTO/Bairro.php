@@ -189,6 +189,16 @@ class Bairro implements ICrud {
             return $linha['nome'];
         }
     }
+    
+     function buscaIDpeloNome($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select idBairro from bairro where nome= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['idBairro'];
+        }
+    }
 
     function comparacao($valor1, $valor2) {
         if ($valor1 == $valor2) {
