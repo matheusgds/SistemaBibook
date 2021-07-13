@@ -150,10 +150,10 @@ and open the template in the editor.
                             <input type="text" name="email" id="email" class="form-control" placeholder="Ex.: aaaaaa@aaaa.com">
                             <br><br>
                             <label for="Telefone1">Telefone 1:</label>
-                            <input type="text" id="telefone1" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <input type="text" name="telefone1"id="telefone1" class="form-control" placeholder="Ex.: (00) 0000-0000" >
                             <br><br>
                             <label for="Telefone2">Telefone 2:</label>
-                            <input type="text" name="Telefone2" id="telefone2" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <input type="text" name="telefone2" id="telefone2" class="form-control" placeholder="Ex.: (00) 0000-0000" >
                             <br><br>
                             <label for="Celular">Celular:</label>
                             <input type="text" name="celular" id="celular" class="form-control" placeholder="Ex.: (00) 00000-0000" >

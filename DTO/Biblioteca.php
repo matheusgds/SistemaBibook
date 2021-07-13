@@ -128,11 +128,9 @@ class Biblioteca implements ICrud {
             //mensagem de inserido com sucesso!
             //$url = "listarcidades.php";
 
-            $this->vincularEstado_Cidade($idCidade, $idEstado);
-            $this->vincularCidade_Bairro($idCidade, $idBairro);
-            $this->vincularCidade_Bairro($idBairro, $idRua);
-            
-            
+     
+
+
             $this->alert2();
             //  $this->redirect($url);
         } else {
@@ -171,42 +169,9 @@ class Biblioteca implements ICrud {
         echo "</HTML>\n";
     }
 
-    function vincularEstado_Cidade($idcidade, $idestado) {
-        $idcidade = intval($idcidade);
-        $idestado = intval($idestado);
 
-
-        $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO estado_has_cidade (Estado_idEstado,Cidade_idCidade) VALUES(:ide,:idc)');
-        $stmt->bindParam(':ide', $idestado, PDO::PARAM_INT);
-        $stmt->bindParam(':idc', $idcidade, PDO::PARAM_INT);
-        $stmt->execute();
+    public function Existe($vetDados) {
+        
     }
-    
-    function vincularCidade_Bairro($idCidade, $idBairro) {
-        $idCidade = intval($idCidade);
-        $idBairro = intval($idBairro);
-
-
-        $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO cidade_has_bairro (Cidade_idCidade,Bairro_idBairro) VALUES(:idc,:idb)');
-        $stmt->bindParam(':idb', $idBairro, PDO::PARAM_INT);
-        $stmt->bindParam(':idc', $idCidade, PDO::PARAM_INT);
-        $stmt->execute();
-    }
-    
-    function vincularRua_Bairro($idRua, $idBairro) {
-        $idRua = intval($idRua);
-        $idBairro = intval($idBairro);
-
-
-        $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO rua_has_bairro (Rua_idRua,Bairro_idBairro) VALUES(:idr,:idb)');
-        $stmt->bindParam(':idr', $idRua, PDO::PARAM_INT);
-        $stmt->bindParam(':idb', $idBairro, PDO::PARAM_INT);
-        $stmt->execute();
-    }
-    
-    
 
 }

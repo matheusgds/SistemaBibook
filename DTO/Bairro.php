@@ -86,15 +86,12 @@ class Bairro implements ICrud {
             //mensagem de inserido com sucesso!
             $url = "listarbairros.php";
 
-            $idBairro = $this->pegarIDBairro();
-
-            $idCidade = $this->pegarIDCidade($nomeCidade);
-
-
-            $this->vincularCidade_Bairro($idCidade, $idBairro);
+            //  $idBairro = $this->pegarIDBairro();
+            //  $idCidade = $this->pegarIDCidade($nomeCidade);
+            //$this->vincularCidade_Bairro($idCidade, $idBairro);
 
             $this->alert2();
-            $this->redirect($url);
+            // $this->redirect($url);
             //header("location:listarestados.php");
         } else {
             //mensagem de confirmação
@@ -102,10 +99,10 @@ class Bairro implements ICrud {
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroBairro.php";
-                $this->redirect($url);
+                //     $this->redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
-                $this->redirect($url);
+                //     $this->redirect($url);
             }
         }
     }
@@ -171,13 +168,14 @@ class Bairro implements ICrud {
     function vincularCidade_Bairro($idCidade, $idBairro) {
         $idCidade = intval($idCidade);
         $idBairro = intval($idBairro);
-
-
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO cidade_has_bairro (Cidade_idCidade,Bairro_idBairro) VALUES(:idc,:idb)');
-        $stmt->bindParam(':idb', $idBairro, PDO::PARAM_INT);
-        $stmt->bindParam(':idc', $idCidade, PDO::PARAM_INT);
-        $stmt->execute();
+
+        if (!$this->ExisteEsp($idCidade, $idBairro)) {
+            $stmt = $pdo->prepare('INSERT INTO cidade_has_bairro (Cidade_idCidade,Bairro_idBairro) VALUES(:idc,:idb)');
+            $stmt->bindParam(':idb', $idBairro, PDO::PARAM_INT);
+            $stmt->bindParam(':idc', $idCidade, PDO::PARAM_INT);
+            $stmt->execute();
+        }
     }
 
     function retornaNome($valor) {
@@ -189,8 +187,8 @@ class Bairro implements ICrud {
             return $linha['nome'];
         }
     }
-    
-     function buscaIDpeloNome($valor) {
+
+    function buscaIDpeloNome($valor) {
 
         $pdo = Conexao::getInstance();
         $sql = "select idBairro from bairro where nome= '$valor' ";
@@ -205,6 +203,34 @@ class Bairro implements ICrud {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function Existe($valor) {
+        $pdo = Conexao::getInstance();
+        $sql = "select idBairro from bairro where nome= '$valor' ";
+        $consulta = $pdo->query($sql);
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            if (empty($linha)) {
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+    }
+
+    public function ExisteEsp($valor, $valor2) {
+        $pdo = Conexao::getInstance();
+        $sql = "select * from Cidade_has_Bairro where Cidade_idCidade= '$valor' and Bairro_idBairro= '$valor2'";
+        $consulta = $pdo->query($sql);
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            if (empty($linha)) {
+                return FALSE;
+            } else {
+                return TRUE;
+            }
         }
     }
 

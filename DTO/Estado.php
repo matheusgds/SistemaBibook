@@ -114,17 +114,17 @@ class Estado implements ICrud {
             //mensagem de inserido com sucesso!
             $url = "listarestados.php";
             $this->alert2();
-            $this->redirect($url);
+          //  $this->redirect($url);
         } else {
             //mensagem de confirmação
             $this->alert();
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroEstado.php";
-                $this->redirect($url);
+            //    $this->redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
-                $this->redirect($url);
+             //   $this->redirect($url);
             }
         }
     }

@@ -31,9 +31,9 @@ class Cidade implements ICrud {
     public function Editar($vetDados) {
         $id = $vetDados[0];
         $nome = $vetDados[1];
-        
+
         $nome2 = $this->retornaNome($id);
-       
+
         if (!$this->comparacao($nome, $nome2)) {
             $pdo = Conexao::getInstance();
             $stmt = $pdo->prepare('update cidade set nome =:novonome where idCidade = :id');
@@ -89,23 +89,21 @@ class Cidade implements ICrud {
             $url = "listarcidades.php";
 
 
-            $idestado = $this->pegarIDEstado($vetDados[1]);
-
-            $idcidade = $this->pegarIDCidade();
-
-            $this->vincularEstado_Cidade($idcidade, $idestado);
+            //  $idestado = $this->pegarIDEstado($vetDados[1]);
+            //   $idcidade = $this->pegarIDCidade();
+            //$this->vincularEstado_Cidade($idcidade, $idestado);
 
             $this->alert2();
-            $this->redirect($url);
+            //$this->redirect($url);
         } else {
             $this->alert();
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroCidade.php";
-                $this->redirect($url);
+                //        $this->redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
-                $this->redirect($url);
+                //    $this->redirect($url);
             }
         }
     }
@@ -179,16 +177,19 @@ class Cidade implements ICrud {
     function vincularEstado_Cidade($idcidade, $idestado) {
         $idcidade = intval($idcidade);
         $idestado = intval($idestado);
-
-
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO estado_has_cidade (Estado_idEstado,Cidade_idCidade) VALUES(:ide,:idc)');
-        $stmt->bindParam(':ide', $idestado, PDO::PARAM_INT);
-        $stmt->bindParam(':idc', $idcidade, PDO::PARAM_INT);
-        $stmt->execute();
+
+
+        // nome?
+        if (!$this->ExisteEsp($idestado,$idcidade)) {
+            $stmt = $pdo->prepare('INSERT INTO estado_has_cidade (Estado_idEstado,Cidade_idCidade) VALUES(:ide,:idc)');
+            $stmt->bindParam(':ide', $idestado, PDO::PARAM_INT);
+            $stmt->bindParam(':idc', $idcidade, PDO::PARAM_INT);
+            $stmt->execute();
+        }
     }
-    
-     function retornaNome($valor) {
+
+    function retornaNome($valor) {
 
         $pdo = Conexao::getInstance();
         $sql = "select nome from cidade where idCidade= '$valor' ";
@@ -197,8 +198,8 @@ class Cidade implements ICrud {
             return $linha['nome'];
         }
     }
-    
-     function buscaIDpeloNome($valor) {
+
+    function buscaIDpeloNome($valor) {
 
         $pdo = Conexao::getInstance();
         $sql = "select idCidade from cidade where nome= '$valor' ";
@@ -207,7 +208,6 @@ class Cidade implements ICrud {
             return $linha['idCidade'];
         }
     }
-    
 
     function comparacao($valor1, $valor2) {
         if ($valor1 == $valor2) {
@@ -216,4 +216,43 @@ class Cidade implements ICrud {
             return false;
         }
     }
+
+    public function retornaMaxID() {
+        $pdo = Conexao::getInstance(); //select max(idCidade) from cidade;
+        $stmt = $pdo->prepare('select max(idCidade) from cidade');
+        $stmt->execute();
+
+        foreach ($stmt as $row) {
+            return $row['max(idCidade)'];
+        }
+    }
+
+    public function ExisteEsp($valor, $valor2) {
+        $pdo = Conexao::getInstance();
+        $sql = "select * from Estado_has_Cidade where Estado_idEstado= '$valor' and Cidade_idCidade= '$valor2'";
+        $consulta = $pdo->query($sql);
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            if (empty($linha)) {
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+    }
+
+    public function Existe($valor) {
+        $pdo = Conexao::getInstance();
+        $sql = "select idCidade from cidade where nome= '$valor' ";
+        $consulta = $pdo->query($sql);
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            if (empty($linha)) {
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+    }
+
 }

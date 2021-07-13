@@ -13,40 +13,136 @@ if (strpos($nome, " ") === TRUE) {
 
 //se todos os dados existirem segue esse processo
 
-$estado  = new Estado();
+$estado = new Estado();
 $cidade = new Cidade();
 $bairro = new Bairro();
 $rua = new Rua();
+$NumeroCasa = new NumeroCasa();
+$contato = new Contato();
 
-$dadoest = $_POST['selectest']; 
-$estado = $estado->buscaSigla($dadoest);
-
+$dadoest = $_POST['select'];
 $dadocid = $_POST['cidade'];
-$cidade = $cidade->buscaIDpeloNome($dadocid);
-
 $dadob = $_POST['bairro'];
-$bairro  = $bairro->buscaIDpeloNome($dadob);
-
 $dador = $_POST['rua'];
-$rua = $rua->buscaIDpeloNome($dador);
-
 $numero = $_POST['numerocasa'];
 
+$teste = FALSE;
 
-//verificar se existe algum tipo deste contato abaixo:
+if ($estado->Existe($dadoest)) {
+    if ($cidade->Existe($dadocid)) {
+        if ($bairro->Existe($dadob)) {
+            if ($rua->Existe($dador)) {
+                if ($NumeroCasa->Existe($numero)) {
+                    // é pq existem todos os dados
+                    $teste = TRUE;
+
+                    $estado = $estado->buscaSigla($dadoest);
+                    $cidade = $cidade->buscaIDpeloNome($dadocid);
+                    $bairro = $bairro->buscaIDpeloNome($dadob);
+                    $rua = $rua->buscaIDpeloNome($dador);
+                    $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
 
 
-$dadoemail = $_POST['email'];
-$dadotelefone1 = $_POST['telefone1'];
-$dadotelefone2 = $_POST['telefone2'];
-$dadocelular = $_POST['celular'];
+                    //dados do contato
+                    $dadoemail = $_POST['email'];
+                    $dadotelefone1 = $_POST['telefone1'];
+                    $dadotelefone2 = $_POST['telefone2'];
+                    $dadocelular = $_POST['celular'];
+
+                    $vetDados = array(
+                        $dadoemail, $dadotelefone1, $dadotelefone2, $dadocelular
+                    );
+
+                    $contato->Inserir($vetDados);
+                    $contatonovo = $contato->retornaMaxID();
+
+                    $bib = new Biblioteca();
+
+                    $vetDados2 = array(
+                        $nome, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo
+                    );
+
+                    $bib->Inserir($vetDados2);
+                } else { // se nao existe numero de casa
+                    $NumeroCasa = new NumeroCasa();
+
+                    $vetDados = array(
+                        $numero
+                    );
+
+                    $NumeroCasa->Inserir($vetDados);
+
+                    $numero = $NumeroCasa->buscaIDpeloNome($numero);
+                }
+            } else {// se nao existe rua
+                $ruanova = new Rua();
+
+                $vetDados = array(
+                    $dador
+                );
+
+                $ruanova->Inserir($vetDados);
+
+                $rua = $ruanova->buscaIDpeloNome($dador);
+            }
+        } else { // se nao existe bairro
+            $bairronovo = new Bairro();
+
+            $vetDados = array(
+                $dadob
+            );
+
+            $bairronovo->Inserir($vetDados);
+
+            $bairro = $bairronovo->buscaIDpeloNome($dadob);
+        }
+    } else {  // se nao existe a cidade.
+        $cidadenova = new Cidade();
+        $vetDados = array(
+            $dadocid
+        );
+
+        $cidadenova->Inserir($vetDados);
+
+        $cidade = $cidadenova->buscaIDpeloNome($dadocid);
+    }
+
+    if ($teste == FALSE) {
+        $estado = $estado->buscaSigla($dadoest);
+        $cidade = $cidade->buscaIDpeloNome($dadocid);
+        $bairro = $bairro->buscaIDpeloNome($dadob);
+        $rua = $rua->buscaIDpeloNome($dador);
+        $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
 
 
+        //dados do contato
+        $dadoemail = $_POST['email'];
+        $dadotelefone1 = $_POST['telefone1'];
+        $dadotelefone2 = $_POST['telefone2'];
+        $dadocelular = $_POST['celular'];
 
-$vetDados = array(
-    $nome, $estado,$cidade,$bairro,$rua,$numero,$contato
-);
+        $vetDados = array(
+            $dadoemail, $dadotelefone1, $dadotelefone2, $dadocelular
+        );
+
+        $contato->Inserir($vetDados);
+        $contatonovo = $contato->retornaMaxID();
+
+        $bib = new Biblioteca();
+
+        $vetDados2 = array(
+            $nome, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo
+        );
 
 
+        $city = new Cidade();
+        $city->vincularEstado_Cidade($cidade, $estado);
+        $bai = new Bairro();
+        $bai->vincularCidade_Bairro($cidade, $bairro);
+        $ru = new Rua();
+        $ru->vincularRua_Bairro($rua, $bairro);
 
+        $bib->Inserir($vetDados2);
+    }
+}
 ?>
