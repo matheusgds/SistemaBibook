@@ -138,10 +138,10 @@ class Biblioteca implements ICrud {
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroBiblioteca.php";
-                $this->redirect($url);
+               // $this->redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
-                $this->redirect($url);
+             //   $this->redirect($url);
             }
         }
     }
