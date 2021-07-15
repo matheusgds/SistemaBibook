@@ -10,6 +10,7 @@ spl_autoload_register(function ($nomeClasse) {
     } else {
         require_once("DTO" . DIRECTORY_SEPARATOR . $nomeClasse . ".php");
     }
+    
 });
 ?>
 

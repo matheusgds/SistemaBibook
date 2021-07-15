@@ -148,7 +148,7 @@ class Cliente implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarcidades.php";
+        $url = "listarclientes.php";
         $this->redirect($url);
     }
 

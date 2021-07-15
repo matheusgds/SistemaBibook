@@ -12,8 +12,11 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
-        <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
+        <?php $dir = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
+        <?php $dircss = ".." . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
+        <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
+        <link rel="shortcut icon" href=<?php echo $dirshort ?> >
         <title>Cadastro De Cliente</title>
     </head>
     <body>
@@ -56,7 +59,7 @@ and open the template in the editor.
                     </ul>
                     <nav class="navbar navbar-light bg-light">
                         <span>
-                            <img src="../IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                            <img src=<?php echo $dir ?> width="30" height="30" class="d-inline-block align-top" alt="">
                             BEM VINDO <?php /* $logado */ ?>
                         </span>
                     </nav> 
@@ -108,10 +111,34 @@ and open the template in the editor.
                             </legend>
                             <label for="nome">Nome:</label>
                             <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
-                            
-                            
+                            <br><br>
+
+                            <label for="cpf">CPF:</label>
+                            <input type="text" name="cpf" id="cpf" placeholder="CPF" required="true">
+                            <br><br>
+
+                            <label for="rg">RG:</label>
+                            <input type="text" name="rg" id="rg" placeholder="RG" required="true">
+                            <br><br>
+
+                            <label for="rg">Data De Nascimento:</label>
+                            <input type="date" name="datanasc" id="datanasc" required="true">
+                            <br><br>
+
+                            <label for="sexo">Selecione Seu Sexo: </label>
+                            <br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="opcao1" name="sexo">
+                                <label class="form-check-label" for="inlineCheckbox1">Masculino</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="opcao2" name="sexo">
+                                <label class="form-check-label" for="inlineCheckbox1">Feminino</label>
+                            </div>
+                            <br><br>
+                   
                         </div>
-                        
+
                         <div style="border-style:double; margin:20px;width: 320px" id="divloc">
                             <legend>
                                 Localização:
@@ -171,42 +198,8 @@ and open the template in the editor.
         </div>
         <?php
 
-        function retornarNumeros() {
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
-
-            $pdo = Conexao::getInstance();
-            $stmt = $pdo->prepare('SELECT numero FROM numerocasa');
-            $stmt->execute();
-
-            return $stmt;
-        }
-
-        function retornarRuas() {
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
-
-            $pdo = Conexao::getInstance();
-            $stmt = $pdo->prepare('SELECT nome FROM rua');
-            $stmt->execute();
-
-            return $stmt;
-        }
-
-        function retornarBairros() {
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
-
-            $pdo = Conexao::getInstance();
-            $stmt = $pdo->prepare('SELECT nome FROM bairro');
-            $stmt->execute();
-
-            return $stmt;
-        }
-
         function retornarEstados() {
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
+            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
             $pdo = Conexao::getInstance();
             $stmt = $pdo->prepare('SELECT sigla FROM estado');
@@ -214,37 +207,70 @@ and open the template in the editor.
 
             return $stmt;
         }
-
-        function retornarEstadoPorNome($nomeestado) {
-
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
-
-            $pdo = Conexao::getInstance();
-            $stmt = $pdo->prepare('select idEstado from estado where sigla = ' . $nomeestado . ';');
-            $stmt->execute();
-            // pegue pelo nome e retorne codigo
-
-            return $stmt;
-        }
-
-        function retornarCidadesDoEstado($Estado) {
-
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
-
-            $pdo = Conexao::getInstance();
-            $stmt = $pdo->prepare('select nome from cidade c inner join estado_has_cidade ehc where ' . $Estado . '=ehc.Estado_idEstado');
-            $stmt->execute();
-
-
-            return $stmt;
-        }
         ?>
     </body>
 
-    <script>
+    <script type="text/javascript">
+        /* Máscaras ER */
+        function mascara(o, f) {
+            v_obj = o
+            v_fun = f
+            setTimeout("execmascara()", 1)
+        }
+        function execmascara() {
+            v_obj.value = v_fun(v_obj.value)
+        }
+        function mtel(v) {
+            v = v.replace(/\D/g, ""); //Remove tudo o que não é dígito
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+            v = v.replace(/(\d)(\d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+            return v;
+        }
 
+        function mcel(v) {
+            v = v.replace(/\D/g, ""); //Remove tudo o que não é dígito
+            v = v.replace(/^(\d{2})(\d)/g, "($1) $2"); //Coloca parênteses em volta dos dois primeiros dígitos
+            v = v.replace(/(\d)(\d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+            return v;
+        }
+
+
+        function mcpf(v) {
+            v = v.replace(/\D/g, ""); //Remove tudo o que não é dígito
+            v = v.replace(/(\d)(\d{8})$/, "$1.$2");
+            v = v.replace(/(\d)(\d{5})$/, "$1.$2");
+            v = v.replace(/(\d)(\d{2})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
+            return v;
+        }
+
+
+        function id(el) {
+            return document.getElementById(el);
+        }
+
+        window.onload = function () {
+            id('telefone1').onkeyup = function () {
+                mascara(this, mtel);
+            }
+        }
+
+        window.onload = function () {
+            id('telefone2').onkeyup = function () {
+                mascara(this, mtel);
+            }
+        }
+
+        window.onload = function () {
+            id('celular').onkeyup = function () {
+                mascara(this, mcel);
+            }
+        }
+
+        window.onload = function () {
+            id('cpf').onkeyup = function () {
+                mascara(this, mcpf);
+            }
+        }
 
 
     </script>
