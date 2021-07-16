@@ -13,7 +13,8 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <?php $dir = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
-        <?php $dircss = ".." . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        <?php $dircss = ".." . DIRECTORY_SEPARATOR . "CSS" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        
         <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
         <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
         <link rel="shortcut icon" href=<?php echo $dirshort ?> >
@@ -105,7 +106,7 @@ and open the template in the editor.
                             Cadastro De Cliente
                         </legend>
                         <br><br>
-                        <div  style="border-style:double; margin:20px;width: 320px;">
+                        <div style="border-style:double; margin:20px;width: 320px;">
                             <legend>
                                 Dados Pessoais:
                             </legend>
@@ -121,25 +122,25 @@ and open the template in the editor.
                             <input type="text" name="rg" id="rg" placeholder="RG" required="true">
                             <br><br>
 
-                            <label for="rg">Data De Nascimento:</label>
+                            <label for="data">Data De Nascimento:</label>
                             <input type="date" name="datanasc" id="datanasc" required="true">
                             <br><br>
 
                             <label for="sexo">Selecione Seu Sexo: </label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="opcao1" name="sexo">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="M" name="sexo">
                                 <label class="form-check-label" for="inlineCheckbox1">Masculino</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="opcao2" name="sexo">
+                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="F" name="sexo">
                                 <label class="form-check-label" for="inlineCheckbox1">Feminino</label>
                             </div>
                             <br><br>
-                   
+
                         </div>
 
-                        <div style="border-style:double; margin:20px;width: 320px" id="divloc">
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc" position:absolute>
                             <legend>
                                 Localização:
                             </legend>
@@ -170,7 +171,7 @@ and open the template in the editor.
 
                             <br><br>
                         </div>
-                        <div style="border-style:double; margin:20px;width: 320px" id="divloc">
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc" position:absolute>
                             <legend>
                                 Contato:
                             </legend>
@@ -190,8 +191,32 @@ and open the template in the editor.
 
 
                         </div>
-                        <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
-                        <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
+
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc" position:absolute>
+                            <legend>
+                                Cadastro De Conta De Acesso
+                            </legend>
+                            <label for="login">Login:</label>
+                            <input type="text" name="login" id="login" placeholder="Login" required="true">
+                            <br><br>
+
+                            <label for="senha">Senha:</label>
+                            <input type="password" name="senha" id="senha" placeholder="Senha" required="true">
+                            <br><br>
+
+                            <label for="acesso">Defina Tipo De Acesso:</label>
+                            <br>
+                            <INPUT TYPE="RADIO" NAME="acesso" VALUE="1"> Administrador(a)
+                            <br>
+                            <INPUT TYPE="RADIO" NAME="acesso" VALUE="2"> Bibliotecario(a)
+                            <br>
+                            <INPUT TYPE="RADIO" NAME="acesso" VALUE="3"> Cliente
+                            <br><br>
+
+                        </div>
+                        <button name="acao" value="Salvar" id="acao" type="submit" class="btn btn-primary">Salvar</button>
+                        <button name="acao" value="Limpar" id="acao" type="reset" class="btn btn-primary">Limpar Campos</button>
+                        <br><br>
                     </fieldset> 
                 </form>
             </div>
