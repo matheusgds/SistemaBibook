@@ -104,19 +104,19 @@ class ContaDeAcesso implements ICrud {
             //mensagem de inserido com sucesso!
             $url = "listarcontasacesso.php";
 
-            alert2();
-            redirect($url);
+            $this->alert2();
+            //redirect($url);
             //header("location:listarestados.php");
         } else {
             //mensagem de confirmação
-            alert();
+            $this->alert();
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroContaDeAcesso.php";
-                redirect($url);
+             //   redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
-                redirect($url);
+           //     redirect($url);
             }
         }
     }
@@ -172,6 +172,40 @@ class ContaDeAcesso implements ICrud {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function Existe($valor) {
+        $pdo = Conexao::getInstance();
+        $sql = "select login from ContaDeAcesso where login= '$valor' ";
+        $consulta = $pdo->query($sql);
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            if (empty($linha)) {
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        }
+    }
+
+    function buscaIDpeloNome($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select idContaDeAcesso from ContaDeAcesso where login= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['idContaDeAcesso'];
+        }
+    }
+
+    public function retornaMaxID() {
+        $pdo = Conexao::getInstance(); //select max(idCidade) from cidade;
+        $stmt = $pdo->prepare('select max(idContaDeAcesso) from ContaDeAcesso');
+        $stmt->execute();
+
+        foreach ($stmt as $row) {
+            return $row['max(idContaDeAcesso)'];
         }
     }
 

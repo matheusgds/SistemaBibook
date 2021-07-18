@@ -90,7 +90,7 @@ class Contato implements ICrud {
         $verifica->execute();
         $exists = FALSE;
         foreach ($verifica as $row) {
-            if ($row['email'] == $nome) {
+            if ($row['email'] == $vetDados[0]) {
                 $exists = TRUE;
             }
         }

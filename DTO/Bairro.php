@@ -68,7 +68,7 @@ class Bairro implements ICrud {
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 
         $nome = $vetDados[0];
-        $nomeCidade = $vetDados[1];
+        //$nomeCidade = $vetDados[1];
 
         $verifica = $pdo->prepare('SELECT * FROM bairro WHERE nome = :nome2');
         $verifica->bindParam(':nome2', $nome, PDO::PARAM_STR);
