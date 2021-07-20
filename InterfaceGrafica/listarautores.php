@@ -109,19 +109,19 @@ and open the template in the editor.
             $sql = "";
             if ($tipo == 1) {
                 if ($procurar != "") {
-                    $sql = "SELECT * FROM bairro WHERE idBairro = $procurar ORDER BY idBairro";
+                    $sql = "SELECT * FROM Autor WHERE idAutor = $procurar ORDER BY idAutor";
                 } else {
-                    $sql = "SELECT * FROM bairro ORDER BY idBairro";
+                    $sql = "SELECT * FROM Autor ORDER BY idAutor";
                 }
             } else if ($tipo == 2) {
-                $sql = "SELECT * FROM bairro WHERE nome LIKE '$procurar%' ORDER BY nome";
+                $sql = "SELECT * FROM Autor WHERE nome LIKE '$procurar%' ORDER BY nome";
             }
 
             require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
-            $Bairro = new Bairro();
+            $Autor = new Autor();
 
-            $vet = $Bairro->PesquisarTodos($sql);
+            $vet = $Autor->PesquisarTodos($sql);
             $count = count($vet);
             ?>
             <br><br>
@@ -144,9 +144,9 @@ and open the template in the editor.
                             <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
                             <td class="table-success"><?php echo $vet[$index]->getNome(); ?></td>
                             <?php $number = $vet[$index]->getId(); ?>
-                            <?php $link = "exclusaoBairro.php?bairro=" . $number; ?>
-                            <td class="table-success"><button  type="button" id="btn1" onclick="EditBairro(<?php echo $number ?>)" ><img src="../IMG/Edit.png"> </button></td>
-                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeBairro(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
+                            <?php $link = "exclusaoBairro.php?autor=" . $number; ?>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditAutor(<?php echo $number ?>)" ><img src="../IMG/Edit.png"> </button></td>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeAutor(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
                         </tr>
 
                     <?php } ?>
@@ -157,23 +157,23 @@ and open the template in the editor.
     </body>
     <script type='text/javascript'>
 
-        function ExcludeBairro(valor) {
+        function ExcludeAutor(valor) {
 
             var a = confirm('Deseja Mesmo Excluir?');
 
             if (a === true) {
-                var link = "exclusaoBairro.php?bairro=";
+                var link = "exclusaoBairro.php?autor=";
                 link = link + valor;
 
                 window.location.href = link;
             } else {
-                window.location.href = "listarbairros.php";
+                window.location.href = "listarautores.php";
             }
 
         }
 
-        function EditBairro(valor) {
-            var link = "edicaobairro.php?bairro=";
+        function EditAutor(valor) {
+            var link = "edicaoautor.php?autor=";
             link = link + valor;
             window.location.href = link;
         }

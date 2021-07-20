@@ -37,11 +37,39 @@ class TipoDeLivro implements ICrud {
     }
 
     public function Editar($vetDados) {
-        
+        $id = $vetDados[0];
+        $tipo = $vetDados[1];
+        $codigotipo = $vetDados[2];
+
+        $nome2 = $this->retornaNome($id);
+
+        if (!$this->comparacao($nome, $nome2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update TipoDeLivro set tipo =:novotipo where idTipoDeLivro = :id');
+            $stmt2 = $pdo->prepare('update TipoDeLivro set codigotipo =:novocodigo where idTipoDeLivro = :id');
+            $stmt3 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novocodigo', $codigotipo, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt2->execute();
+            $stmt3->execute();
+        }
+
+        $url = "listartiposdelivro.php";
+        $this->redirect($url);
     }
 
     public function Excluir($vetDados) {
-        
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('delete from TipoDeLivro where idTipoDeLivro = :id ');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':id', $ida, PDO::PARAM_INT);
+        $ida = $vetDados[0];
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = "listartiposdelivro.php";
+        $this->redirect($url);
     }
 
     public function Existe($valor) {
@@ -113,7 +141,7 @@ class TipoDeLivro implements ICrud {
             $TipoDeLivro->setId($linha['idTipoDeLivro']);
             $TipoDeLivro->setTipo($linha['tipo']);
             $TipoDeLivro->setCodigotipo($linha['codigo']);
-            
+
             $vetDados[] = $TipoDeLivro;
         }
         return $vetDados;

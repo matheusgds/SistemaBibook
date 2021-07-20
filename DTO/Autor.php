@@ -28,11 +28,36 @@ class Autor implements ICrud {
     }
 
     public function Editar($vetDados) {
-        
+        $id = $vetDados[0];
+        $nome = $vetDados[1];
+
+        $nome2 = $this->retornaNome($id);
+
+        if (!$this->comparacao($nome, $nome2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update Autor set nome =:novonome where idAutor = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novonome', $nome, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt2->execute();
+        }
+
+        $url = "listarautores.php";
+        $this->redirect($url);
     }
 
     public function Excluir($vetDados) {
-        
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('delete from Autor where idAutor = :id ');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':id', $ida, PDO::PARAM_INT);
+        $ida = $vetDados[0];
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = "listarautores.php";
+        $this->redirect($url);
     }
 
     public function Existe($valor) {
@@ -106,6 +131,43 @@ class Autor implements ICrud {
             $vetDados[] = $autor;
         }
         return $vetDados;
+    }
+
+    function alert() {
+        echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
+    }
+
+    function alert2() {
+        echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
+    }
+
+    function redirect($url) {
+        echo "<HTML>\n";
+        echo "<HEAD>\n";
+        echo "<TITLE></TITLE>\n";
+        echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
+        echo "</HEAD>\n";
+        echo "<BODY>\n";
+        echo "</BODY>\n";
+        echo "</HTML>\n";
+    }
+
+    function retornaNome($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select nome from Autor where idAutor= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['nome'];
+        }
+    }
+
+    function comparacao($valor1, $valor2) {
+        if ($valor1 == $valor2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
