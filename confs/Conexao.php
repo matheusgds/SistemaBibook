@@ -1,7 +1,7 @@
 <?php
   include_once "inc.php";
 
-  class Conexao {  
+    class Conexao {  
   
     private static $pdo;
   

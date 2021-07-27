@@ -8,6 +8,7 @@ class Livro implements ICrud {
     private $nome;
     private $subtitulo;
     private $isbn;
+    private $quantidade;
     private $idlocalpublicacao;
     private $ideditora;
     private $idedicao;
@@ -85,7 +86,16 @@ class Livro implements ICrud {
     function setIdtipolivro($idtipolivro) {
         $this->idtipolivro = $idtipolivro;
     }
+    
+    function getQuantidade() {
+        return $this->quantidade;
+    }
 
+    function setQuantidade($quantidade) {
+        $this->quantidade = $quantidade;
+    }
+
+    
     public function __toString() {
         return "ID: " . $this->id . "<br/>Nome: " . $this->nome . "<br/>";
     }
@@ -114,11 +124,12 @@ class Livro implements ICrud {
 
     public function Inserir($vetDados) {
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO Livro (nome,subtitulo,isbn,LocalDePublicacao_idLocalDePublicacao,Editora_idEditora,Edicao_idEdicao,AnoDePublicacao_idAnoDePublicacao,TipoDeLivro_idTipoDeLivro) VALUES(:nome,:subtitulo,:isbn,:idlocal,:ideditora,:idedicao,:idanopublicacao,:idtipodelivro)');
+        $stmt = $pdo->prepare('INSERT INTO Livro (nome,subtitulo,isbn,quantidade,LocalDePublicacao_idLocalDePublicacao,Editora_idEditora,Edicao_idEdicao,AnoDePublicacao_idAnoDePublicacao,TipoDeLivro_idTipoDeLivro) VALUES(:nome,:subtitulo,:isbn,:qtnd,:idlocal,:ideditora,:idedicao,:idanopublicacao,:idtipodelivro)');
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt->bindParam(':subtitulo', $subtitulo, PDO::PARAM_STR);
         $stmt->bindParam(':isbn', $isbn, PDO::PARAM_STR);
+        $stmt->bindParam(':qtnd', $qtnd, PDO::PARAM_INT);
         $stmt->bindParam(':idlocal', $idlocal, PDO::PARAM_INT);
         $stmt->bindParam(':ideditora', $ideditora, PDO::PARAM_INT);
         $stmt->bindParam(':idedicao', $idedicao, PDO::PARAM_INT);
@@ -128,11 +139,12 @@ class Livro implements ICrud {
         $nome = $vetDados[0];
         $subtitulo = $vetDados[1];
         $isbn = $vetDados[2];
-        $idlocal = $vetDados[3];
-        $ideditora = $vetDados[4];
-        $idedicao = $vetDados[5];
-        $idano = $vetDados[6];
-        $idtipo = $vetDados[7];
+        $qtnd=$vetDados[3];
+        $idlocal = $vetDados[4];
+        $ideditora = $vetDados[5];
+        $idedicao = $vetDados[6];
+        $idano = $vetDados[7];
+        $idtipo = $vetDados[8];
 
 
         $verifica = $pdo->prepare('SELECT * FROM Livro WHERE nome = :nome2');
@@ -181,6 +193,7 @@ class Livro implements ICrud {
             $Livro->setNome($linha['nome']);
             $Livro->setSubtitulo($linha['subtitulo']);
             $Livro->setIsbn($linha['isbn']);
+            $Livro->setQuantidade($linha['quantidade']);
             $Livro->setIdlocalpublicacao($linha['LocalDePublicacao_idLocalDePublicacao']);
             $Livro->setIdeditora($linha['Editora_idEditora']);
             $Livro->setIdedicao($linha['Edicao_idEdicao']);

@@ -4,7 +4,7 @@
     define('HOST', 'localhost');  
     define('DBNAME', 'sistemabibook');    
     define('USER', 'root');  
-    define('PASSWORD', '');
+    define('PASSWORD', ''); 
 
 
     

@@ -82,8 +82,8 @@ and open the template in the editor.
 
 
             <div class="divform"id="divform">
-
-                <form action="insercaoAutor.php" id="form" method="post">
+                <?php $link ="..".DIRECTORY_SEPARATOR."arquivosPHP".DIRECTORY_SEPARATOR."insercaoAutor" ?>
+                <form action=<?php echo $link ?> id="form" method="post">
 
                     <fieldset>
                         <legend>
