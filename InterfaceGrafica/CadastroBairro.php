@@ -56,7 +56,8 @@ and open the template in the editor.
                     </ul>
                     <nav class="navbar navbar-light bg-light">
                         <span>
-                            <img src="../IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
+
+                            <img src=<?php echo $dir ?> width="30" height="30" class="d-inline-block align-top" alt="">
                             BEM VINDO <?php /* $logado */ ?>
                         </span>
                     </nav> 
@@ -82,8 +83,8 @@ and open the template in the editor.
 
 
             <div class="divform"id="divform">
-
-                <form action="insercaobairro.php" id="form" method="post">
+                <?php $link = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "insercaobairro.php"; ?>
+                <form action=<?php echo $link ?> id="form" method="post">
 
                     <fieldset>
                         <legend>
@@ -92,8 +93,8 @@ and open the template in the editor.
                         <label for="nome">Nome:</label>
                         <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
                         <br><br>
-                        
-                         <label for="nome">Cidade:</label>
+
+                        <label for="nome">Cidade:</label>
                         <input type="text" name="nomeCidade" id="nomeCidade" placeholder="Nome da Cidade" required="true">
                         <br><br>
 
@@ -104,7 +105,6 @@ and open the template in the editor.
             </div>
         </div>
         <?php
-
         ?>
     </body>
 </html>

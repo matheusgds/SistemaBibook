@@ -280,4 +280,13 @@ class Cliente implements ICrud {
         echo "</HTML>\n";
     }
 
+    function retornaObjeto($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select * from Cliente where idCliente= '$valor' ";
+        $consulta = $pdo->query($sql);
+        $linha = $consulta->fetch(PDO::FETCH_BOTH);
+        return $linha;
+    }
+
 }

@@ -12,8 +12,11 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
-        <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
+        <?php $dir = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
+        <?php $dircss = ".." . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
+        <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
+        <link rel="shortcut icon" href=<?php echo $dirshort ?> >
         <title>Cadastro De Cidade</title>
     </head>
     <body>
@@ -56,7 +59,8 @@ and open the template in the editor.
                     </ul>
                     <nav class="navbar navbar-light bg-light">
                         <span>
-                            <img src="../IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
+
+                            <img src=<?php echo $dir ?> width="30" height="30" class="d-inline-block align-top" alt="">
                             BEM VINDO <?php /* $logado */ ?>
                         </span>
                     </nav> 
@@ -82,8 +86,9 @@ and open the template in the editor.
 
 
             <div class="divform"id="divform">
+                <?php $link = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "insercaocidade.php"; ?>
 
-                <form action="insercaocidade.php" id="form" method="post">
+                <form action=<?php echo $link?> id="form" method="post">
 
                     <fieldset>
                         <legend>

@@ -12,8 +12,11 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
-        <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
+        <?php $dir = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
+        <?php $dircss = ".." . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
+        <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
+        <link rel="shortcut icon" href=<?php echo $dirshort ?> >
         <title>Listar Ruas</title>
     </head>
     <body>
@@ -117,8 +120,12 @@ and open the template in the editor.
             } else if ($tipo == 2) {
                 $sql = "SELECT * FROM rua WHERE nome LIKE '$procurar%' ORDER BY nome";
             }
-            $pdo = Conexao::getInstance();
-            $consulta = $pdo->query($sql);
+            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+
+            $Rua = new Rua();
+
+            $vet = $Rua->PesquisarTodos($sql);
+            $count = count($vet);
             ?>
             <br><br>
             <h1>Dados:</h1>
@@ -130,15 +137,21 @@ and open the template in the editor.
                         <th scope="col" bgcolor="#78ad6f">Nome</th>
                         <th scope="col" bgcolor="#78ad6f">Alterar</th>
                         <th scope="col" bgcolor="#78ad6f">Excluir</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) { ?>
                         <tr>
-                            <td class="table-success"><?php echo $linha['idRua']; ?></td>
-                            <td class="table-success"><?php echo $linha['nome']; ?></td>
-                          
+                            <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getNome(); ?></td>
+                            <?php $number = $vet[$index]->getId(); ?>
+                            <?php $linkimgapagar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Erase.png"; ?>
+                            <?php $linkimgeditar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Edit.png"; ?>
+                            <?php $linkscript = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "exclusaoRua.php?rua=" . $number ?>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditRua(<?php echo $number ?>)" ><img src=<?php echo $linkimgeditar ?>> </button></td>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeRua(<?php echo $linkscript ?>)" > <img src=<?php echo $linkimgapagar ?>></button></td>
+                        </tr>
                         </tr>
 
                     <?php } ?>
@@ -147,4 +160,27 @@ and open the template in the editor.
 
         </div>
     </body>
+
+    <script type='text/javascript'>
+
+        function ExcludeRua(link) {
+
+            var a = confirm('Deseja Mesmo Excluir?');
+
+            if (a === true) {
+                window.location.href = link;
+            } else {
+                window.location.href = "listareditoras.php";
+            }
+
+        }
+
+        function EditRua(valor) {
+            var link = "edicaorua.php?rua=";
+            link = link + valor;
+            window.location.href = link;
+        }
+
+
+    </script>
 </html>

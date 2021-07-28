@@ -32,7 +32,7 @@ class livro_autor implements ICrud {
     }
 
     public function Existe($vetDados) {
-        return false;
+        return false;   
     }
 
     public function Inserir($vetDados) {

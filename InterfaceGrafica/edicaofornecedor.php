@@ -18,7 +18,7 @@ and open the template in the editor.
         <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
         <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
         <link rel="shortcut icon" href=<?php echo $dirshort ?> >
-        <title>Cadastro De Cliente</title>
+        <title>Edição Fornecedor</title>
     </head>
     <body>
 
@@ -87,48 +87,32 @@ and open the template in the editor.
 
 
             <div class="form-row" id="divform">
-                <?php $link = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "insercaocliente.php"; ?>
+                <?php $link = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "editarfornecedor.php"; ?>
 
                 <form action=<?php echo $link ?> id="form" method="post">
 
                     <fieldset>
                         <legend>
-                            Cadastro De Cliente
+                            Edição Fornecedor
                         </legend>
                         <br><br>
                         <div style="border-style:double; margin:20px;width: 320px;">
                             <legend>
                                 Dados Pessoais:
                             </legend>
-                            
-                         
-                            
+                            <?php $id = $_GET['fornecedor'] ?>
+                            <?php
+                            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+                            $Fornecedor = new Fornecedor();
+
+                            $obj = $Fornecedor->retornaObjeto($id);
+                            ?>
+                            <label for="codigo">Código:</label>
+                            <input readonly="" type="text" name="codigo" id="codigo" placeholder="Codigo" value = "<?php echo $id ?>" required="true">
+                            <br><br>
+
                             <label for="nome">Nome:</label>
-                            <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
-                            <br><br>
-
-                            <label for="cpf">CPF:</label>
-                            <input type="text" name="cpf" id="cpf" placeholder="CPF" required="true">
-                            <br><br>
-
-                            <label for="rg">RG:</label>
-                            <input type="text" name="rg" id="rg" placeholder="RG" required="true">
-                            <br><br>
-
-                            <label for="data">Data De Nascimento:</label>
-                            <input type="date" name="datanasc" id="datanasc" required="true">
-                            <br><br>
-
-                            <label for="sexo">Selecione Seu Sexo: </label>
-                            <br>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="M" name="sexo">
-                                <label class="form-check-label" for="inlineCheckbox1">Masculino</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="inlineCheckbox1" value="F" name="sexo">
-                                <label class="form-check-label" for="inlineCheckbox1">Feminino</label>
-                            </div>
+                            <input type="text" name="nome" id="nome" placeholder="Nome" value = "<?php echo $obj[1] ?>" required="true">
                             <br><br>
 
                         </div>
@@ -141,26 +125,57 @@ and open the template in the editor.
                             <label for="estado">Selecione O Estado:</label>
                             <select name="select" id="selectest">
                                 <?php
-                                $lista = retornarEstados();
-                                foreach ($lista as $row) {
+                                $sql = "select * from estado;";
+
+                                $estado = new Estado();
+
+                                $lista = $estado->PesquisarTodos($sql); // array de estados
+
+                                $opc = $obj[2];
+                                $sql = "select * from estado where idEstado = " . $opc;
+                                $opcao = $estado->PesquisarTodos($sql);
+
+                                $opcaosigla = $opcao[0]->getSigla();
+
+                                for ($index = 0; $index < count($lista); $index++) {
                                     ?>
-                                    <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
-                                <?php } ?>
+                                    <option value=<?php echo $lista[$index]->getSigla() ?> <?php
+                                    if ($opcaosigla == $lista[$index]->getSigla()) {
+                                        echo "selected";
+                                    } else {
+                                        echo "";
+                                    }
+                                    ?> ><?php echo $lista[$index]->getSigla() ?></option>
+                                            <?php
+                                        }
+                                        ?>
+
                             </select>
 
 
                             <br><br>
                             <label for="cidade">Cidade:</label>
-                            <input type="text" name="cidade" id="cidade" placeholder="Nome Cidade" required="true">
+                            <?php $city = new Cidade(); ?>
+                            <?php $nomec = $city->retornaNome($obj[3]); ?>
+                            <input type="text" name="cidade" id="cidade" placeholder="Nome Cidade" value="<?php echo $nomec ?>"required="true">
                             <br><br>
                             <label for="bairro">Bairro:</label>
-                            <input type="text" name="bairro" id="bairro" placeholder="Nome Bairro" required="true">
+                            <?php $bairro = new Bairro(); ?>
+                            <?php $nomeb = $bairro->retornaNome($obj[4]); ?>
+
+                            <input type="text" name="bairro" id="bairro" placeholder="Nome Bairro" value="<?php echo $nomeb ?>" required="true">
                             <br><br>
                             <label for="rua">Rua:</label>
-                            <input type="text" name="rua" id="rua" placeholder="Nome Rua" required="true">
+                            <?php $rua = new Rua(); ?>
+                            <?php $nomer = $rua->retornaNome($obj[5]); ?>
+
+                            <input type="text" name="rua" id="rua" placeholder="Nome Rua" value="<?php echo $nomer ?>" required="true">
                             <br><br>
                             <label for="numeroCasa">Numero Da Residencia:</label>
-                            <input type="text" name="numerocasa" id="numerocasa" placeholder="Numero Da Casa" required="true">
+                            <?php $nc = new NumeroCasa(); ?>
+                            <?php $numero = $nc->buscaNomepeloID($obj[6]); ?>
+
+                            <input type="text" name="numerocasa" id="numerocasa" placeholder="Numero Da Casa" value ="<?php echo $numero ?>" required="true">
 
                             <br><br>
                         </div>
@@ -169,44 +184,25 @@ and open the template in the editor.
                                 Contato:
                             </legend>
 
+                            <?php $cont = new Contato(); ?>
+                            <?php $contato = $cont->retornaObj($obj[7]); ?>
+
                             <label for="Email">Email:</label>
-                            <input type="text" name="email" id="email" class="form-control" placeholder="Ex.: aaaaaa@aaaa.com">
+                            <input type="text" namespace="email" id="email" class="form-control" value="<?php echo $contato[1] ?>" placeholder="Ex.: aaaaaa@aaaa.com">
                             <br><br>
                             <label for="Telefone1">Telefone 1:</label>
-                            <input type="text" name="telefone1"id="telefone1" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <input type="text" name="telefone1"id="telefone1" class="form-control" value="<?php echo $contato[2] ?>" placeholder="Ex.: (00) 0000-0000" >
                             <br><br>
                             <label for="Telefone2">Telefone 2:</label>
-                            <input type="text" name="telefone2" id="telefone2" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <input type="text" name="telefone2" id="telefone2" class="form-control" value="<?php echo $contato[3] ?>"placeholder="Ex.: (00) 0000-0000" >
                             <br><br>
                             <label for="Celular">Celular:</label>
-                            <input type="text" name="celular" id="celular" class="form-control" placeholder="Ex.: (00) 00000-0000" >
+                            <input type="text" name="celular" id="celular" class="form-control" value="<?php echo $contato[4] ?>" placeholder="Ex.: (00) 00000-0000" >
                             <br><br>
 
 
                         </div>
 
-                        <div style="border-style:double; margin:20px;width: 320px" id="divloc" position:absolute>
-                            <legend>
-                                Cadastro De Conta De Acesso
-                            </legend>
-                            <label for="login">Login:</label>
-                            <input type="text" name="login" id="login" placeholder="Login" required="true">
-                            <br><br>
-
-                            <label for="senha">Senha:</label>
-                            <input type="password" name="senha" id="senha" placeholder="Senha" required="true">
-                            <br><br>
-
-                            <label for="acesso">Defina Tipo De Acesso:</label>
-                            <br>
-                            <INPUT TYPE="RADIO" NAME="acesso" VALUE="1"> Administrador(a)
-                            <br>
-                            <INPUT TYPE="RADIO" NAME="acesso" VALUE="2"> Bibliotecario(a)
-                            <br>
-                            <INPUT TYPE="RADIO" NAME="acesso" VALUE="3"> Cliente
-                            <br><br>
-
-                        </div>
                         <button name="acao" value="Salvar" id="acao" type="submit" class="btn btn-primary">Salvar</button>
                         <button name="acao" value="Limpar" id="acao" type="reset" class="btn btn-primary">Limpar Campos</button>
                         <br><br>
@@ -214,18 +210,7 @@ and open the template in the editor.
                 </form>
             </div>
         </div>
-        <?php
-
-        function retornarEstados() {
-            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
-
-            $pdo = Conexao::getInstance();
-            $stmt = $pdo->prepare('SELECT sigla FROM estado');
-            $stmt->execute();
-
-            return $stmt;
-        }
-        ?>
+        <?php ?>
     </body>
 
     <script type="text/javascript">

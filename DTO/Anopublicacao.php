@@ -53,16 +53,16 @@ class Anopublicacao implements ICrud {
         $pdo = Conexao::getInstance();
         $stmt = $pdo->prepare('INSERT INTO AnoDePublicacao (ano) VALUES(:ano)');
         $stmt2 = $pdo->prepare('commit;');
-        $stmt->bindParam(':ano', $ano, PDO::PARAM_STR);
+        $stmt->bindParam(':ano', $ano, PDO::PARAM_INT);
 
         $ano = $vetDados[0];
 
         $verifica = $pdo->prepare('SELECT * FROM AnoDePublicacao WHERE ano = :ano2');
-        $verifica->bindParam(':ano2', $ano, PDO::PARAM_STR);
+        $verifica->bindParam(':ano2', $ano, PDO::PARAM_INT);
         $verifica->execute();
         $exists = FALSE;
         foreach ($verifica as $row) {
-            if ($row['nome'] == $nome) {
+            if ($row['ano'] == $ano) {
                 $exists = TRUE;
             }
         }

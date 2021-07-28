@@ -11,14 +11,14 @@ and open the template in the editor.
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
-
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
-        <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
-        <title>Cadastro De Contato</title>
+        <?php $dir = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
+        <?php $dircss = ".." . DIRECTORY_SEPARATOR . "CSS" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
 
+        <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
+        <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
+        <link rel="shortcut icon" href=<?php echo $dirshort ?> >
+        <title>Cadastro De Fornecedor</title>
     </head>
     <body>
 
@@ -60,7 +60,7 @@ and open the template in the editor.
                     </ul>
                     <nav class="navbar navbar-light bg-light">
                         <span>
-                            <img src="../IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                            <img src=<?php echo $dir ?> width="30" height="30" class="d-inline-block align-top" alt="">
                             BEM VINDO <?php /* $logado */ ?>
                         </span>
                     </nav> 
@@ -70,7 +70,8 @@ and open the template in the editor.
 
 
             <div>
-                <?php /*
+                <?php
+                /*
 
                   session_start();
 
@@ -85,37 +86,95 @@ and open the template in the editor.
             </div>
 
 
-            <div class="divform"id="divform">
-                <?php $link = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "insercaocontato.php"; ?>
+            <div class="form-row" id="divform">
+                <?php $link = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "insercaoFornecedor.php"; ?>
 
                 <form action=<?php echo $link ?> id="form" method="post">
 
+                    <fieldset>
+                        <legend>
+                            Cadastro De Fornecedor
+                        </legend>
+                        <br><br>
+                        <div style="border-style:double; margin:20px;width: 320px;">
+                            <legend>
+                                Dados Pessoais:
+                            </legend>
+                            <label for="nome">Nome:</label>
+                            <input type="text" name="nome" id="nome" placeholder="Nome" required="true">
+                            <br><br>
+                        </div>
 
-                    <legend>
-                        Cadastro De Contato
-                    </legend>
-                    <label for="Email">Email:</label>
-                    <input type="text" name="email" id="email" class="form-control" placeholder="Ex.: aaaaaa@aaaa.com">
-                    <br><br>
-                    <label for="Telefone1">Telefone 1:</label>
-                    <input type="text" id="telefone1" class="form-control" placeholder="Ex.: (00) 0000-0000" >
-                    <br><br>
-                    <label for="Telefone2">Telefone 2:</label>
-                    <input type="text" name="telefone2" id="telefone2" class="form-control" placeholder="Ex.: (00) 0000-0000" >
-                    <br><br>
-                    <label for="Celular">Celular:</label>
-                    <input type="text" name="celular" id="celular" class="form-control" placeholder="Ex.: (00) 00000-0000" >
-                    <br><br>
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc" position:absolute>
+                            <legend>
+                                Localização:
+                            </legend>
 
-                    <br><br>
+                            <label for="estado">Selecione O Estado:</label>
+                            <select name="select" id="selectest">
+                                <?php
+                                $lista = retornarEstados();
+                                foreach ($lista as $row) {
+                                    ?>
+                                    <option value=<?php echo $row['sigla'] ?>><?php echo $row['sigla'] ?></option>
+                                <?php } ?>
+                            </select>
 
-                    <button name="acao" value="Salvar" id="acao" type="submit">Salvar</button>
-                    <button name="acao" value="Limpar" id="acao" type="reset">Limpar Campos</button>
 
+                            <br><br>
+                            <label for="cidade">Cidade:</label>
+                            <input type="text" name="cidade" id="cidade" placeholder="Nome Cidade" required="true">
+                            <br><br>
+                            <label for="bairro">Bairro:</label>
+                            <input type="text" name="bairro" id="bairro" placeholder="Nome Bairro" required="true">
+                            <br><br>
+                            <label for="rua">Rua:</label>
+                            <input type="text" name="rua" id="rua" placeholder="Nome Rua" required="true">
+                            <br><br>
+                            <label for="numeroCasa">Numero Da Residencia:</label>
+                            <input type="text" name="numerocasa" id="numerocasa" placeholder="Numero Da Casa" required="true">
+
+                            <br><br>
+                        </div>
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc" position:absolute>
+                            <legend>
+                                Contato:
+                            </legend>
+
+                            <label for="Email">Email:</label>
+                            <input type="text" name="email" id="email" class="form-control" placeholder="Ex.: aaaaaa@aaaa.com">
+                            <br><br>
+                            <label for="Telefone1">Telefone 1:</label>
+                            <input type="text" name="telefone1"id="telefone1" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <br><br>
+                            <label for="Telefone2">Telefone 2:</label>
+                            <input type="text" name="telefone2" id="telefone2" class="form-control" placeholder="Ex.: (00) 0000-0000" >
+                            <br><br>
+                            <label for="Celular">Celular:</label>
+                            <input type="text" name="celular" id="celular" class="form-control" placeholder="Ex.: (00) 00000-0000" >
+                            <br><br>
+
+
+                        </div>
+
+                        <button name="acao" value="Salvar" id="acao" type="submit" class="btn btn-primary">Salvar</button>
+                        <button name="acao" value="Limpar" id="acao" type="reset" class="btn btn-primary">Limpar Campos</button>
+                        <br><br>
+                    </fieldset> 
                 </form>
             </div>
         </div>
         <?php
+
+        function retornarEstados() {
+            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('SELECT sigla FROM estado');
+            $stmt->execute();
+
+            return $stmt;
+        }
         ?>
     </body>
 
@@ -142,9 +201,6 @@ and open the template in the editor.
             v = v.replace(/(\d)(\d{4})$/, "$1-$2"); //Coloca hífen entre o quarto e o quinto dígitos
             return v;
         }
-
-
-        
         function id(el) {
             return document.getElementById(el);
         }
@@ -166,9 +222,6 @@ and open the template in the editor.
                 mascara(this, mcel);
             }
         }
-
-       
-
 
     </script>
 

@@ -2,9 +2,6 @@
 delete from cidade where idcidade>=1;
 alter table cidade auto_increment =1;
 
-DROP TABLE bibliotecario;
-DROP TABLE administrador;
-
 select * from estado;
 select * from cidade;
 select * from estado_has_cidade;
@@ -49,6 +46,46 @@ DELIMITER ;
 
 call InserirNumeroCasa(500);
 
+ALTER TABLE edicao MODIFY nedicao int(4);
+
+DELIMITER //
+CREATE PROCEDURE InserirAnoPublicacao (tam INT)
+BEGIN
+DECLARE contador INT DEFAULT 1800;
+loop_teste: LOOP
+    SET contador = contador + 1;
+	INSERT INTO anodepublicacao (ano) VALUES(contador);
+    IF contador >= tam THEN
+        LEAVE loop_teste;
+    END IF;
+END LOOP loop_teste;
+
+END//
+DELIMITER ;
+
+call InserirAnoPublicacao(2022);
+
+
+DELIMITER //
+CREATE PROCEDURE Inserirnedicao(tam INT)
+BEGIN
+DECLARE contador INT DEFAULT 0;
+loop_teste: LOOP
+    SET contador = contador + 1;
+	INSERT INTO edicao (nedicao) VALUES(contador);
+    IF contador >= tam THEN
+        LEAVE loop_teste;
+    END IF;
+END LOOP loop_teste;
+
+END//
+DELIMITER ;
+
+call Inserirnedicao(50);
+
+select * from anodepublicacao;
+select * from autor;
+select * from cliente;
 select * from estado;
 select * from cidade;
 select * from estado_has_cidade;
@@ -57,6 +94,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 delete from rua where idRua>=1;
 alter table rua auto_increment =1;
 
+delete from anodepublicacao where idAnoDePublicacao>=1;
+alter table anodepublicacao auto_increment =1;
+
+alter table locacao add column dataentrega date after hora;
 
 delete from estado_has_cidade where Cidade_idCidade>=1;
 

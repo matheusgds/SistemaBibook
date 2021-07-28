@@ -78,11 +78,65 @@ class Fornecedor implements ICrud {
     }
 
     public function Editar($vetDados) {
-        
+        $id = $vetDados[0];
+        $nome = $vetDados[1];
+        $estado = $vetDados[2];
+        $cidade = $vetDados[3];
+        $bairro = $vetDados[4];
+        $rua = $vetDados[5];
+        $numero = $vetDados[6];
+        $contato = $vetDados[7];
+
+        $nome2 = $this->retornaNome($id);
+
+        if (!$this->comparacao($nome, $nome2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update fornecedor set nome =:novonome where idFornecedor = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novonome', $nome, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update fornecedor set Estado_idEstado =:novoestado where idFornecedor = :id');
+            $stmt->bindParam(':novoestado', $estado, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update fornecedor set Cidade_idCidade =:novocidade where idFornecedor = :id');
+            $stmt->bindParam(':novocidade', $cidade, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update fornecedor set Bairro_idBairro =:novobairro where idFornecedor = :id');
+            $stmt->bindParam(':novobairro', $bairro, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update fornecedor set Rua_ =:novoestado where idFornecedor = :id');
+            $stmt->bindParam(':novoestado', $estado, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            /// lembrar no editar tem q passar agora um vetor com todos dados mesmo sejam os mesmos
+
+            $stmt2->execute();
+        }
+
+        $url = "listarcidades.php";
+        $this->redirect($url);
     }
 
     public function Excluir($vetDados) {
-        
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('delete from fornecedor where idFornecedor = :id ');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':id', $ide, PDO::PARAM_INT);
+        $ide = $vetDados[0];
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = "listarfornecedores.php";
+        $this->redirect($url);
     }
 
     public function Existe($valor) {
@@ -174,6 +228,23 @@ class Fornecedor implements ICrud {
             $vetDados[] = $Fornecedor;
         }
         return $vetDados;
+    }
+
+    function retornaObjeto($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select * from Fornecedor where idFornecedor= '$valor' ";
+        $consulta = $pdo->query($sql);
+        $linha = $consulta->fetch(PDO::FETCH_BOTH);
+        return $linha;
+    }
+
+    function comparacao($valor1, $valor2) {
+        if ($valor1 == $valor2) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

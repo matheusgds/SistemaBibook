@@ -12,8 +12,11 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
-        <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
+        <?php $dir = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
+        <?php $dircss = ".." . DIRECTORY_SEPARATOR . "css" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
+        <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
+        <link rel="shortcut icon" href=<?php echo $dirshort ?> >
         <title>Listar Bairros</title>
     </head>
     <body>
@@ -82,7 +85,6 @@ and open the template in the editor.
 
 
             <?php
-           
             $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
             $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
 
@@ -144,9 +146,13 @@ and open the template in the editor.
                             <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
                             <td class="table-success"><?php echo $vet[$index]->getNome(); ?></td>
                             <?php $number = $vet[$index]->getId(); ?>
-                            <?php $link = "exclusaoBairro.php?bairro=" . $number; ?>
-                            <td class="table-success"><button  type="button" id="btn1" onclick="EditBairro(<?php echo $number ?>)" ><img src="../IMG/Edit.png"> </button></td>
-                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeBairro(<?php echo $number ?>)" > <img src="../IMG/Erase.png"></button></td>
+                            <?php $linkimgapagar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Erase.png"; ?>
+                            <?php $linkimgeditar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Edit.png"; ?>
+
+                            <?php $linkscript = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "exclusaoBairro.php?bairro=" . $number ?>
+
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditBairro(<?php echo $number ?>)" ><img src=<?php echo $linkimgeditar ?>> </button></td>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeBairro(<?php echo $linkscript ?>)" > <img src=<?php echo $linkimgapagar?>></button></td>
                         </tr>
 
                     <?php } ?>
@@ -157,14 +163,12 @@ and open the template in the editor.
     </body>
     <script type='text/javascript'>
 
-        function ExcludeBairro(valor) {
+        function ExcludeBairro(link) {
 
             var a = confirm('Deseja Mesmo Excluir?');
 
             if (a === true) {
-                var link = "exclusaoBairro.php?bairro=";
-                link = link + valor;
-
+               
                 window.location.href = link;
             } else {
                 window.location.href = "listarbairros.php";

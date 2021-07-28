@@ -76,6 +76,16 @@ class NumeroCasa implements ICrud {
         }
     }
 
+    function buscaNomepeloID($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select numero from numerocasa where idNumeroCasa= '$valor' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['numero'];
+        }
+    }
+    
     function buscaIDpeloNome($valor) {
 
         $pdo = Conexao::getInstance();

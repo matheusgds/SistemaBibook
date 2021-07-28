@@ -113,10 +113,10 @@ class ContaDeAcesso implements ICrud {
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
                 $url = "CadastroContaDeAcesso.php";
-             //   redirect($url);
+                //   redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
-           //     redirect($url);
+                //     redirect($url);
             }
         }
     }
@@ -165,6 +165,15 @@ class ContaDeAcesso implements ICrud {
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
             return $linha['login'];
         }
+    }
+
+    function retornaObj($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select * from contadeacesso where idContaDeAcesso= '$valor' ";
+        $consulta = $pdo->query($sql);
+        $linha = $consulta->fetch(PDO::FETCH_BOTH);
+        return $linha;
     }
 
     function comparacao($valor1, $valor2) {

@@ -2,7 +2,8 @@
 
 spl_autoload_register(function ($nomeClasse) {
 //echo "DTO" . DIRECTORY_SEPARATOR . $nomeClasse . ".php";
-     require_once("arquivosPHP" . DIRECTORY_SEPARATOR . $nomeClasse . ".php");
+    // require_once("arquivosPHP" . DIRECTORY_SEPARATOR . $nomeClasse . ".php");
+    require_once("Datas" . DIRECTORY_SEPARATOR ."FuncoesData.php");
     if ((substr($nomeClasse, 0, 1)) == "I") {
             require_once ("Interface" . DIRECTORY_SEPARATOR . "ICrud.php");
     } else if ($nomeClasse == "Conexao") {

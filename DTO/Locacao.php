@@ -76,7 +76,7 @@ class Locacao implements ICrud {
         $stmt->bindParam(':idcliente', $idCliente, PDO::PARAM_INT);
 
         $data = $vetDados[0];
-        $hora = $vetDados[1];
+        $hora = $vetDados[1];   
         $idcliente = $vetDados[2];
 
         $stmt->execute();

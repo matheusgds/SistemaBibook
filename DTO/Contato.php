@@ -133,8 +133,8 @@ class Contato implements ICrud {
             return $row['max(idContato)'];
         }
     }
-    
-      function buscaIDpeloNome($valor) {
+
+    function buscaIDpeloNome($valor) {
 
         $pdo = Conexao::getInstance();
         $sql = "select idContato from contato where celular= '$valor' ";
@@ -142,6 +142,15 @@ class Contato implements ICrud {
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
             return $linha['idContato'];
         }
+    }
+
+    function retornaObj($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select * from contato where idContato= '$valor' ";
+        $consulta = $pdo->query($sql);
+        $linha = $consulta->fetch(PDO::FETCH_BOTH);
+        return $linha;
     }
 
     function alert() {

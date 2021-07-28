@@ -5,26 +5,27 @@ require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 class Edicao implements ICrud {
 
     private $id;
-    private $nome;
+    private $nedicao;
 
     function getId() {
         return $this->id;
     }
 
-    function getNome() {
-        return $this->nome;
+    function getNedicao() {
+        return $this->nedicao;
     }
 
-    function setId($id) {
+        function setId($id) {
         $this->id = $id;
     }
 
-    function setNome($nome) {
-        $this->nome = $nome;
+    function setNedicao($nedicao) {
+        $this->nedicao = $nedicao;
     }
 
+    
     public function __toString() {
-        return "ID: " . $this->id . "<br/>Nome: " . $this->nome . "<br/>";
+        return "ID: " . $this->id . "<br/>NEdição: " . $this->nedicao . "<br/>";
     }
 
     public function Editar($vetDados) {
@@ -37,7 +38,7 @@ class Edicao implements ICrud {
 
     public function Existe($vetDados) {
         $pdo = Conexao::getInstance();
-        $sql = "select idEdicao from Edicao where nome= '$valor' ";
+        $sql = "select idEdicao from Edicao where nedicao= '$valor' ";
         $consulta = $pdo->query($sql);
 
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
@@ -51,18 +52,18 @@ class Edicao implements ICrud {
 
     public function Inserir($vetDados) {
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO Edicao (nome) VALUES(:nome)');
+        $stmt = $pdo->prepare('INSERT INTO Edicao (nedicao) VALUES(:numero)');
         $stmt2 = $pdo->prepare('commit;');
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+        $stmt->bindParam(':numero', $numero, PDO::PARAM_INT);
 
-        $nome = $vetDados[0];
+        $numero = $vetDados[0];
 
-        $verifica = $pdo->prepare('SELECT * FROM Edicao WHERE nome = :nome2');
-        $verifica->bindParam(':nome2', $nome, PDO::PARAM_STR);
+        $verifica = $pdo->prepare('SELECT * FROM Edicao WHERE nedicao = :nedicao2');
+        $verifica->bindParam(':nedicao2', $numero, PDO::PARAM_INT);
         $verifica->execute();
         $exists = FALSE;
         foreach ($verifica as $row) {
-            if ($row['nome'] == $nome) {
+            if ($row['nedicao'] == $nome) {
                 $exists = TRUE;
             }
         }
@@ -100,7 +101,7 @@ class Edicao implements ICrud {
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
             $Edicao = new Edicao();
             $Edicao->setId($linha['idEdicao']);
-            $Edicao->setNome($linha['nome']);
+            $Edicao->setNedicao($linha['nedicao']);
 
             $vetDados[] = $Edicao;
         }

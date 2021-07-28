@@ -17,7 +17,7 @@ and open the template in the editor.
         <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
         <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
         <link rel="shortcut icon" href=<?php echo $dirshort ?> >
-        <title>Listar Tipos de Livros</title>
+        <title>Listar Fornecedores</title>
     </head>
     <body>
         <div class="container-fluid">
@@ -103,6 +103,9 @@ and open the template in the editor.
                     echo "checked";
                 }
                 ?>>Nome<br><br>
+
+
+
                 <input type="text" name="procurar" id="procurar" value=""> 
                 <input type="submit" value="Consultar">
             </form>
@@ -111,19 +114,19 @@ and open the template in the editor.
             $sql = "";
             if ($tipo == 1) {
                 if ($procurar != "") {
-                    $sql = "SELECT * FROM TipoDeLivro WHERE idTipoDeLivro = $procurar ORDER BY idTipoDeLivro";
+                    $sql = "SELECT * FROM Fornecedor WHERE idFornecedor = $procurar ORDER BY idFornecedor";
                 } else {
-                    $sql = "SELECT * FROM TipoDeLivro ORDER BY idTipoDeLivro";
+                    $sql = "SELECT * FROM Fornecedor ORDER BY idFornecedor";
                 }
             } else if ($tipo == 2) {
-                $sql = "SELECT * FROM TipoDeLivro WHERE nome LIKE '$procurar%' ORDER BY nome";
+                $sql = "SELECT * FROM Fornecedor WHERE nome LIKE '$procurar%' ORDER BY nome";
             }
 
             require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
-            $Tipo = new TipoDeLivro();
+            $Fornecedor = new Fornecedor();
 
-            $vet = $Tipo->PesquisarTodos($sql);
+            $vet = $Fornecedor->PesquisarTodos($sql);
             $count = count($vet);
             ?>
             <br><br>
@@ -133,11 +136,16 @@ and open the template in the editor.
                 <thead>
                     <tr> 
                         <th scope="col" bgcolor="#78ad6f">Código</th>
-                        <th scope="col" bgcolor="#78ad6f">Tipo De Livro</th>
-                        <th scope="col" bgcolor="#78ad6f">Código De Tipo</th>
-                        <th scope="col" bgcolor="#78ad6f">Alterar</th>
+                        <th scope="col" bgcolor="#78ad6f">Nome</th>
+                        <th scope="col" bgcolor="#78ad6f">Estado</th>
+                        <th scope="col" bgcolor="#78ad6f">Cidade</th>
+                        <th scope="col" bgcolor="#78ad6f">Bairro</th>
+                        <th scope="col" bgcolor="#78ad6f">Rua</th>
+                        <th scope="col" bgcolor="#78ad6f">Numero Casa</th>
+                        <th scope="col" bgcolor="#78ad6f">Contato</th>
+                        
+                        <th scope="col" bgcolor="#78ad6f">Editar</th>
                         <th scope="col" bgcolor="#78ad6f">Excluir</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -145,14 +153,19 @@ and open the template in the editor.
                         ?>
                         <tr>
                             <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
-                            <td class="table-success"><?php echo $vet[$index]->getTipo(); ?></td>
-                            <td class="table-success"><?php echo $vet[$index]->getCodigotipo(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getNome(); ?></td>
                             <?php $number = $vet[$index]->getId(); ?>
-                            <?php $linkimgapagar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Erase.png"; ?>
+                            <td class="table-success"><?php echo $vet[$index]->getEstado(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getCidade(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getBairro(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getRua(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getNumeroCasa(); ?></td>
+                            <td class="table-success"><?php echo $vet[$index]->getContato(); ?></td>
+                           <?php $linkimgapagar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Erase.png"; ?>
                             <?php $linkimgeditar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Edit.png"; ?>
-                            <?php $linkscript = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "exclusaoTipo.php?tipo=" . $number ?>
-                            <td class="table-success"><button  type="button" id="btn1" onclick="EditTipo(<?php echo $number ?>)" ><img src=<?php echo $linkimgeditar ?>> </button></td>
-                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeTipo(<?php echo $linkscript ?>)" > <img src=<?php echo $linkimgapagar?>></button></td>
+                            <?php $linkscript = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "exclusaoFornecedor.php?fornecedor=" . $number ?>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditFornecedor(<?php echo $number ?>)" ><img src=<?php echo $linkimgeditar ?>> </button></td>
+                            <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeFornecedor(<?php echo $linkscript ?>)" > <img src=<?php echo $linkimgapagar ?>></button></td>
                         </tr>
 
                     <?php } ?>
@@ -163,20 +176,20 @@ and open the template in the editor.
     </body>
     <script type='text/javascript'>
 
-        function ExcludeTipo(link) {
+        function ExcludeFornecedor(link) {
 
             var a = confirm('Deseja Mesmo Excluir?');
 
             if (a === true) {
-               window.location.href = link;
+                window.location.href = link;
             } else {
-                window.location.href = "listartiposdelivro.php";
+                window.location.href = "listarfornecedores.php";
             }
 
         }
 
-        function EditTipo(valor) {
-            var link = "edicaotipo.php?tipo=";
+        function EditCliente(valor) {
+            var link = "edicaofornecedor.php?fornecedor=";
             link = link + valor;
             window.location.href = link;
         }
