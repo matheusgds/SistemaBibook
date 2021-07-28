@@ -136,7 +136,114 @@ class Cliente implements ICrud {
     }
 
     public function Editar($vetDados) {
-        
+        $id = $vetDados[0];
+        $nome = $vetDados[1];
+        $cpf = $vetDados[2];
+        $rg = $vetDados[3];
+        $datanasc = $vetDados[4];
+        $sexo = $vetDados[5];
+        $situacao = $vetDados[6];
+        $estado = $vetDados[7];
+        $cidade = $vetDados[8];
+        $bairro = $vetDados[9];
+        $rua = $vetDados[10];
+        $numero = $vetDados[11];
+        $contato = $vetDados[12];
+
+        $valor = 1;
+
+        if ($situacao == "Ativo") {
+            $valor = 1;
+        } else {
+            $valor = 0;
+        }
+
+        $nome2 = $this->retornaNome($id);
+
+        if (!$this->comparacao($nome, $nome2)) {
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update cliente set nome =:novonome where idCliente = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novonome', $nome, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update cliente set cpf =:novocpf where idCliente = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novocpf', $cpf, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update cliente set rg =:novorg where idCliente = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novorg', $rg, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update cliente set datanasc =:novodata where idCliente = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novodata', $datanasc, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update cliente set sexo =:novosexo where idCliente = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novosexo', $sexo, PDO::PARAM_STR);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $pdo = Conexao::getInstance();
+            $stmt = $pdo->prepare('update cliente set situacao =:novosituacao where idCliente = :id');
+            $stmt2 = $pdo->prepare('commit;');
+            $stmt->bindParam(':novosituacao', $valor, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update cliente set Estado_idEstado =:novoestado where idCliente = :id');
+            $stmt->bindParam(':novoestado', $estado, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update cliente set Cidade_idCidade =:novocidade where idCliente = :id');
+            $stmt->bindParam(':novocidade', $cidade, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update cliente set Bairro_idBairro =:novobairro where idCliente = :id');
+            $stmt->bindParam(':novobairro', $bairro, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update cliente set Rua_idRua =:novorua where idCliente = :id');
+            $stmt->bindParam(':novorua', $rua, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update cliente set Rua_idRua =:novorua where idCliente = :id');
+            $stmt->bindParam(':novorua', $rua, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update cliente set NumeroCasa_idNumeroCasa =:novonumero where idCliente = :id');
+            $stmt->bindParam(':novonumero', $numero, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update cliente set Contato_idContato =:novocontato where idCliente = :id');
+            $stmt->bindParam(':novocontato', $contato, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            /// lembrar no editar tem q passar agora um vetor com todos dados mesmo sejam os mesmos
+            $stmt2->execute();
+        }
+
+        $url = "listarclientes.php";
+        $this->redirect($url);
     }
 
     public function Excluir($vetDados) {
@@ -287,6 +394,23 @@ class Cliente implements ICrud {
         $consulta = $pdo->query($sql);
         $linha = $consulta->fetch(PDO::FETCH_BOTH);
         return $linha;
+    }
+
+    function comparacao($valor1, $valor2) {
+        if ($valor1 == $valor2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function retornaNome($id) {
+        $pdo = Conexao::getInstance();
+        $sql = "select nome from cliente where idCliente= '$id' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['nome'];
+        }
     }
 
 }

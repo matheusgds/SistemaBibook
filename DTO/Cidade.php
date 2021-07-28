@@ -62,14 +62,16 @@ class Cidade implements ICrud {
     }
 
     public function Inserir($vetDados) {
-
-
         $pdo = Conexao::getInstance();
         $stmt = $pdo->prepare('INSERT INTO cidade (nome) VALUES(:nome)');
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 
         $nome = $vetDados[0];
+        $sigla = $vetDados[1];
+
+        //se ainda nao existe o vinculo agente adiciona
+
 
         $verifica = $pdo->prepare('SELECT * FROM cidade WHERE nome = :nome2');
         $verifica->bindParam(':nome2', $nome, PDO::PARAM_STR);
@@ -85,6 +87,14 @@ class Cidade implements ICrud {
         if ($exists == FALSE) {
             $stmt->execute();
             $stmt2->execute();
+            
+            //passar nome e busca id
+            $valoridcid = $this->buscaIDpeloNome($nome);
+            $valoridest = $this->pegarIDEstado($sigla);
+            
+            
+            $this->vincularEstado_Cidade($valoridcid, $valoridest);
+
             //mensagem de inserido com sucesso!
             $url = "listarcidades.php";
 
@@ -181,7 +191,7 @@ class Cidade implements ICrud {
 
 
         // nome?
-        if (!$this->ExisteEsp($idestado,$idcidade)) {
+        if (!$this->ExisteEsp($idestado, $idcidade)) {
             $stmt = $pdo->prepare('INSERT INTO estado_has_cidade (Estado_idEstado,Cidade_idCidade) VALUES(:ide,:idc)');
             $stmt->bindParam(':ide', $idestado, PDO::PARAM_INT);
             $stmt->bindParam(':idc', $idcidade, PDO::PARAM_INT);

@@ -98,31 +98,45 @@ class Fornecedor implements ICrud {
             $stmt->execute();
 
             $stmt = $pdo->prepare('update fornecedor set Estado_idEstado =:novoestado where idFornecedor = :id');
-            $stmt->bindParam(':novoestado', $estado, PDO::PARAM_STR);
+            $stmt->bindParam(':novoestado', $estado, PDO::PARAM_INT);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             $stmt = $pdo->prepare('update fornecedor set Cidade_idCidade =:novocidade where idFornecedor = :id');
-            $stmt->bindParam(':novocidade', $cidade, PDO::PARAM_STR);
+            $stmt->bindParam(':novocidade', $cidade, PDO::PARAM_INT);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
             $stmt = $pdo->prepare('update fornecedor set Bairro_idBairro =:novobairro where idFornecedor = :id');
-            $stmt->bindParam(':novobairro', $bairro, PDO::PARAM_STR);
+            $stmt->bindParam(':novobairro', $bairro, PDO::PARAM_INT);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
 
-            $stmt = $pdo->prepare('update fornecedor set Rua_ =:novoestado where idFornecedor = :id');
-            $stmt->bindParam(':novoestado', $estado, PDO::PARAM_STR);
+            $stmt = $pdo->prepare('update fornecedor set Rua_idRua =:novorua where idFornecedor = :id');
+            $stmt->bindParam(':novorua', $rua, PDO::PARAM_INT);
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
-            
+
+            $stmt = $pdo->prepare('update fornecedor set Rua_idRua =:novorua where idFornecedor = :id');
+            $stmt->bindParam(':novorua', $rua, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update fornecedor set NumeroCasa_idNumeroCasa =:novonumero where idFornecedor = :id');
+            $stmt->bindParam(':novonumero', $numero, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('update fornecedor set Contato_idContato =:novocontato where idFornecedor = :id');
+            $stmt->bindParam(':novocontato', $contato, PDO::PARAM_INT);
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+
             /// lembrar no editar tem q passar agora um vetor com todos dados mesmo sejam os mesmos
-
             $stmt2->execute();
         }
 
-        $url = "listarcidades.php";
+        $url = "listarfornecedores.php";
         $this->redirect($url);
     }
 
@@ -246,5 +260,16 @@ class Fornecedor implements ICrud {
             return false;
         }
     }
+    
+    function retornaNome($id){
+         $pdo = Conexao::getInstance();
+        $sql = "select nome from fornecedor where idFornecedor= '$id' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['nome'];
+        }
+    }
+    
+    
 
 }

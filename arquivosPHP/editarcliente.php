@@ -9,6 +9,7 @@ $cpf = $_POST['cpf'];
 $rg = $_POST['rg'];
 $datanascimento = $_POST['datanasc']; // ja vem no formato de banco de dados AAAA-MM-DD
 $sexo = $_POST['sexo']; // m ou f
+$situacao = $_POST['situacao']; // vai retornar ativo ou desativo
 //dados localização
 $dadoest = $_POST['select'];
 $dadocid = $_POST['cidade'];
@@ -49,7 +50,6 @@ if ($_POST['senha'] == "") {
                         if ($contaacess->Existe($login)) {
                             // é pq existem todos os dados
                             $teste = TRUE;
-                            echo "ENTRO NO GERAL";
                             $estado = $estado->buscaSigla($dadoest);
                             $cidade = $cidade->buscaIDpeloNome($dadocid);
                             $bairro = $bairro->buscaIDpeloNome($dadob);
@@ -72,14 +72,19 @@ if ($_POST['senha'] == "") {
                             $contatonovo = $contato->retornaMaxID();
 
                             $cli = new Cliente();
+                            $valor = 1;
+                            if ($situacao == "Ativo") {
+                                $valor = 1;
+                            } else {
+                                $valor = 0;
+                            }
 
                             $vetDados2 = array(
-                                $nomecli, $cpf, $rg, $datanascimento, $sexo, 1, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
                             );
 
                             $cli->Editar($vetDados2);
                         } else { // se nao existir conta
-                            echo "1";
                             $contaacesso = new ContaDeAcesso();
 
                             $vetDadosConta = array(
@@ -89,7 +94,6 @@ if ($_POST['senha'] == "") {
                             $contaacesso->Inserir($vetDadosConta);
                         }
                     } else { // se nao existe numero de casa
-                        echo "2";
                         $NumeroCasa = new NumeroCasa();
 
                         $vetDados = array(
@@ -99,7 +103,6 @@ if ($_POST['senha'] == "") {
                         $NumeroCasa->Inserir($vetDados);
                     }
                 } else {// se nao existe rua
-                    echo "3";
                     $ruanova = new Rua();
 
 
@@ -117,7 +120,6 @@ if ($_POST['senha'] == "") {
                     $ruanova->Inserir($vetDados);
                 }
             } else { // se nao existe bairro
-                echo "4";
                 $bairronovo = new Bairro();
 
                 if (strpos($dadob, " ") === TRUE) {
@@ -133,7 +135,6 @@ if ($_POST['senha'] == "") {
                 $bairronovo->Inserir($vetDados);
             }
         } else {  // se nao existe a cidade.
-            echo "5";
             $cidadenova = new Cidade();
 
             if (strpos($dadocid, " ") === TRUE) {
@@ -151,12 +152,10 @@ if ($_POST['senha'] == "") {
 
 
         if ($teste == FALSE) {
-            echo "entro no falso";
             $estado = $estado->buscaSigla($dadoest);
             $cidade = $cidade->buscaIDpeloNome($dadocid);
             $bairro = $bairro->buscaIDpeloNome($dadob);
             $rua = $rua->buscaIDpeloNome($dador);
-            echo "RUA:" . $rua;
             $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
             $contaacess = $contaacesso->buscaIDpeloNome($login);
 
@@ -182,8 +181,15 @@ if ($_POST['senha'] == "") {
                 $nomecli = ucfirst($nomecli);
             }
 
+            $valor = 1;
+            if ($situacao == "Ativo") {
+                $valor = 1;
+            } else {
+                $valor = 0;
+            }
+
             $vetDados2 = array(
-                $nomecli, $cpf, $rg, $datanascimento, $sexo, 1, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
             );
 
             $city = new Cidade();
@@ -207,7 +213,6 @@ if ($_POST['senha'] == "") {
                         if ($contaacess->Existe($login)) {
                             // é pq existem todos os dados
                             $teste = TRUE;
-                            echo "ENTRO NO GERAL";
                             $estado = $estado->buscaSigla($dadoest);
                             $cidade = $cidade->buscaIDpeloNome($dadocid);
                             $bairro = $bairro->buscaIDpeloNome($dadob);
@@ -231,13 +236,19 @@ if ($_POST['senha'] == "") {
 
                             $cli = new Cliente();
 
+                            $valor = 1;
+                            if ($situacao == "Ativo") {
+                                $valor = 1;
+                            } else {
+                                $valor = 0;
+                            }
+
                             $vetDados2 = array(
-                                $nomecli, $cpf, $rg, $datanascimento, $sexo, 1, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
                             );
 
                             $cli->Editar($vetDados2);
                         } else { // se nao existir conta
-                            echo "1";
                             $contaacesso = new ContaDeAcesso();
 
                             $vetDadosConta = array(
@@ -247,7 +258,6 @@ if ($_POST['senha'] == "") {
                             $contaacesso->Inserir($vetDadosConta);
                         }
                     } else { // se nao existe numero de casa
-                        echo "2";
                         $NumeroCasa = new NumeroCasa();
 
                         $vetDados = array(
@@ -257,7 +267,6 @@ if ($_POST['senha'] == "") {
                         $NumeroCasa->Inserir($vetDados);
                     }
                 } else {// se nao existe rua
-                    echo "3";
                     $ruanova = new Rua();
 
 
@@ -275,7 +284,6 @@ if ($_POST['senha'] == "") {
                     $ruanova->Inserir($vetDados);
                 }
             } else { // se nao existe bairro
-                echo "4";
                 $bairronovo = new Bairro();
 
                 if (strpos($dadob, " ") === TRUE) {
@@ -291,7 +299,6 @@ if ($_POST['senha'] == "") {
                 $bairronovo->Inserir($vetDados);
             }
         } else {  // se nao existe a cidade.
-            echo "5";
             $cidadenova = new Cidade();
 
             if (strpos($dadocid, " ") === TRUE) {
@@ -309,12 +316,10 @@ if ($_POST['senha'] == "") {
 
 
         if ($teste == FALSE) {
-            echo "entro no falso";
             $estado = $estado->buscaSigla($dadoest);
             $cidade = $cidade->buscaIDpeloNome($dadocid);
             $bairro = $bairro->buscaIDpeloNome($dadob);
             $rua = $rua->buscaIDpeloNome($dador);
-            echo "RUA:" . $rua;
             $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
             $contaacess = $contaacesso->buscaIDpeloNome($login);
 
@@ -340,8 +345,15 @@ if ($_POST['senha'] == "") {
                 $nomecli = ucfirst($nomecli);
             }
 
+            $valor = 1;
+            if ($situacao == "Ativo") {
+                $valor = 1;
+            } else {
+                $valor = 0;
+            }
+
             $vetDados2 = array(
-                $nomecli, $cpf, $rg, $datanascimento, $sexo, 1, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
             );
 
             $city = new Cidade();

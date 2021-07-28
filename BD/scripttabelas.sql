@@ -520,7 +520,7 @@ CREATE TABLE IF NOT EXISTS `SistemaBibook`.`Multa` (
   `valor` DOUBLE NULL,
   `status` TINYINT NOT NULL,
   `locacao_idlocacao` INT NOT NULL,
-  PRIMARY KEY (`idMulta`, `status`),
+  PRIMARY KEY (`idMulta`),
   INDEX `fk_Multa_locacao1_idx` (`locacao_idlocacao` ASC),
   CONSTRAINT `fk_Multa_locacao1`
     FOREIGN KEY (`locacao_idlocacao`)

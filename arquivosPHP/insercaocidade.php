@@ -22,4 +22,5 @@ $vetDados = array(
 );
 
 $cidade->Inserir($vetDados);
+
 ?>

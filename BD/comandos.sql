@@ -1,4 +1,6 @@
 
+drop schema sistemabibook;
+
 delete from cidade where idcidade>=1;
 alter table cidade auto_increment =1;
 
@@ -89,10 +91,10 @@ select * from cliente;
 select * from estado;
 select * from cidade;
 select * from estado_has_cidade;
-
+	
 SET FOREIGN_KEY_CHECKS = 0;
-delete from rua where idRua>=1;
-alter table rua auto_increment =1;
+delete from cidade where idCidade>=1;
+alter table cidade auto_increment =1;
 
 delete from anodepublicacao where idAnoDePublicacao>=1;
 alter table anodepublicacao auto_increment =1;
