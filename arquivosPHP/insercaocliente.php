@@ -54,7 +54,6 @@ if ($estado->Existe($dadoest)) {
                     if ($contaacess->Existe($login)) {
                         // é pq existem todos os dados
                         $teste = TRUE;
-                        echo "ENTRO NO GERAL";
                         $estado = $estado->buscaSigla($dadoest);
                         $cidade = $cidade->buscaIDpeloNome($dadocid);
                         $bairro = $bairro->buscaIDpeloNome($dadob);
@@ -84,7 +83,6 @@ if ($estado->Existe($dadoest)) {
 
                         $cli->Inserir($vetDados2);
                     } else { // se nao existir conta
-                        echo "1";
                         $contaacesso = new ContaDeAcesso();
 
                         $vetDadosConta = array(
@@ -94,7 +92,6 @@ if ($estado->Existe($dadoest)) {
                         $contaacesso->Inserir($vetDadosConta);
                     }
                 } else { // se nao existe numero de casa
-                     echo "2";
                     $NumeroCasa = new NumeroCasa();
 
                     $vetDados = array(
@@ -104,7 +101,6 @@ if ($estado->Existe($dadoest)) {
                     $NumeroCasa->Inserir($vetDados);
                 }
             } else {// se nao existe rua
-                 echo "3";
                 $ruanova = new Rua();
 
 
@@ -118,11 +114,10 @@ if ($estado->Existe($dadoest)) {
                 $vetDados = array(
                     $dador
                 );
-
-                $ruanova->Inserir($vetDados);
+               
+                $ruanova->inserir2Semvinculo($vetDados);
             }
         } else { // se nao existe bairro
-             echo "4";
             $bairronovo = new Bairro();
 
             if (strpos($dadob, " ") === TRUE) {
@@ -135,10 +130,9 @@ if ($estado->Existe($dadoest)) {
                 $dadob
             );
 
-            $bairronovo->Inserir($vetDados);
+            $bairronovo->inserir2Semvinculo($vetDados);
         }
     } else {  // se nao existe a cidade.
-         echo "5";
         $cidadenova = new Cidade();
 
         if (strpos($dadocid, " ") === TRUE) {
@@ -156,14 +150,12 @@ if ($estado->Existe($dadoest)) {
 
 
     if ($teste == FALSE) {
-        echo "entro no falso";
         $estado = $estado->buscaSigla($dadoest);
         $cidade = $cidade->buscaIDpeloNome($dadocid);
         $bairro = $bairro->buscaIDpeloNome($dadob);
         $rua = $rua->buscaIDpeloNome($dador);
-        echo "RUA:".$rua;
         $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
-        $contaacess = $contaacesso->buscaIDpeloNome($login);
+        $contaacess = $contaacess->buscaIDpeloNome($login);
 
 
         //dados do contato

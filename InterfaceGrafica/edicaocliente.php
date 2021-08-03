@@ -108,7 +108,7 @@ and open the template in the editor.
                             $obj = $cli->retornaObjeto($id);
                             ?>
                             <label for="codigo">Código:</label>
-                            <input readonly="" type="text" name="codigo" id="codigo" placeholder="Codigo" value = "<?php echo $id ?>" required="true">
+                            <input readonly="" type="text" name="codigo" id="codigo" placeholder="Codigo" value = "<?php echo $obj[0] ?>" required="true">
                             <br><br>
 
                             <label for="nome">Nome:</label>
@@ -240,7 +240,7 @@ and open the template in the editor.
                             <?php $contato = $cont->retornaObj($obj[12]); ?>
 
                             <label for="Email">Email:</label>
-                            <input type="text" namespace="email" id="email" class="form-control" value="<?php echo $contato[1] ?>" placeholder="Ex.: aaaaaa@aaaa.com">
+                            <input type="text" name="email" id="email" class="form-control" value="<?php echo $contato[1] ?>" placeholder="Ex.: aaaaaa@aaaa.com">
                             <br><br>
                             <label for="Telefone1">Telefone 1:</label>
                             <input type="text" name="telefone1"id="telefone1" class="form-control" value="<?php echo $contato[2] ?>" placeholder="Ex.: (00) 0000-0000" >

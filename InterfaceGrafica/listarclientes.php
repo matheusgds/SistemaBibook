@@ -164,7 +164,9 @@ and open the template in the editor.
                             <?php $number = $vet[$index]->getId(); ?>
                             <td class="table-success"><?php echo $vet[$index]->getCpf(); ?></td>
                             <td class="table-success"><?php echo $vet[$index]->getRg(); ?></td>
-                            <td class="table-success"><?php echo $vet[$index]->getDatanasc(); ?></td>
+                            <?php require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";?>
+                            <?php $data = new FuncoesData(); ?>
+                            <td class="table-success"><?php echo $data->MySqltoBR($vet[$index]->getDatanasc()); ?></td>
                             <td class="table-success"><?php echo $vet[$index]->getSexo(); ?></td>
                             <td class="table-success"><?php echo $vet[$index]->getSituacao(); ?></td>
                             <td class="table-success"><?php echo $vet[$index]->getEstado(); ?></td>

@@ -68,41 +68,38 @@ class Rua implements ICrud {
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 
         $nome = $vetDados[0];
+        $nomebairro = $vetDados[1];
 
-        $verifica = $pdo->prepare('SELECT * FROM rua WHERE nome = :nome2');
-        $verifica->bindParam(':nome2', $nome, PDO::PARAM_STR);
-        $verifica->execute();
-        $exists = FALSE;
-        foreach ($verifica as $row) {
-            if ($row['nome'] == $nome) {
-                $exists = TRUE;
-            }
-        }
-
-        if ($exists == FALSE) {
+        if ($this->Existe($nome)) {
+            $idRua = $this->pegarIDRuaCentro($nome);
+            $idBairro = $this->pegarIDBairro($nomebairro);
+            $this->vincularRua_Bairro($idRua, $idBairro);
+            $this->alert3();
+        } else {
             $stmt->execute();
             $stmt2->execute();
-            //mensagem de inserido com sucesso!
-            $url = "listarruas.php";
 
-            //$idBairro = $this->pegarIDBairro($vetDados[1]);
-            //$idRua = $this->pegarIDRua();
-            // $this->vincularRua_Bairro($idRua, $idBairro);
+            $idRua = $this->pegarIDRua();
+            $idBairro = $this->pegarIDBairro($nomebairro);
+            $this->vincularRua_Bairro($idRua, $idBairro);
 
             $this->alert2();
-            // $this->redirect($url);
-            //header("location:listarestados.php");
-        } else {
-            //mensagem de confirmação
-            $this->alert();
-            $doc = "<script type='text/javascript'>document.write(a)</script>";
-            if ($doc == TRUE) {
-                $url = "CadastroRua.php";
-                //  redirect($url);
-            } else if ($doc == FALSE) {
-                $url = "JanelaPrincipal.php";
-                //   redirect($url);
-            }
+        }
+    }
+
+    function inserir2Semvinculo($vetDados) {
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('INSERT INTO rua (nome) VALUES(:nome)');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+
+        $nome = $vetDados[0];
+        
+        // retorna falso pois aquela rua nao existe
+
+        if (!$this->Existe($nome)) { // verdadeiro se existe,
+            $stmt->execute();
+            $stmt2->execute();
         }
     }
 
@@ -129,6 +126,10 @@ class Rua implements ICrud {
         echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
     }
 
+    function alert3() {
+        echo "<script type='text/javascript'>alert('Objeto Existente Porém, Vinculação Inserida!');</script>";
+    }
+
     function redirect($url) {
         echo "<HTML>\n";
         echo "<HEAD>\n";
@@ -143,10 +144,7 @@ class Rua implements ICrud {
     function pegarIDBairro($sig) {
 
         $pdo = Conexao::getInstance();
-        $sig = substr_replace($sig, '"', 0, 0);
-        $sig = $sig . '"';
-
-        $stmt = $pdo->prepare('SELECT idBairro FROM bairro WHERE nome=' . $sig);
+        $stmt = $pdo->prepare("SELECT idBairro FROM bairro WHERE nome='$sig'");
         $stmt->execute();
         foreach ($stmt as $row) {
             return $row['idBairro'];
@@ -161,6 +159,16 @@ class Rua implements ICrud {
 
         foreach ($stmt as $row) {
             return $row['max(idRua)'];
+        }
+    }
+
+    function pegarIDRuaCentro($sig) {
+
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare("SELECT idRua FROM rua WHERE nome='$sig'");
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idRua'];
         }
     }
 

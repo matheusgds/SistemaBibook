@@ -3,13 +3,15 @@
 require_once (".." . DIRECTORY_SEPARATOR . "autoload.php");
 
 
-//dados cliente
-$nomecli = $_POST['nome'];
+
+$nomecli = $_POST['nome']; // novo nome e nao antigo nome
+
 $cpf = $_POST['cpf'];
 $rg = $_POST['rg'];
 $datanascimento = $_POST['datanasc']; // ja vem no formato de banco de dados AAAA-MM-DD
 $sexo = $_POST['sexo']; // m ou f
 $situacao = $_POST['situacao']; // vai retornar ativo ou desativo
+
 //dados localização
 $dadoest = $_POST['select'];
 $dadocid = $_POST['cidade'];
@@ -72,15 +74,18 @@ if ($_POST['senha'] == "") {
                             $contatonovo = $contato->retornaMaxID();
 
                             $cli = new Cliente();
-                            $valor = 1;
+                            $valor;
                             if ($situacao == "Ativo") {
                                 $valor = 1;
-                            } else {
+                            } else if ($situacao == "Desativo") {
                                 $valor = 0;
                             }
 
+
+                            $id = $cli->retornaID($cpf);
+
                             $vetDados2 = array(
-                                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                               $id,$nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
                             );
 
                             $cli->Editar($vetDados2);
@@ -181,15 +186,17 @@ if ($_POST['senha'] == "") {
                 $nomecli = ucfirst($nomecli);
             }
 
-            $valor = 1;
+            $valor;
             if ($situacao == "Ativo") {
                 $valor = 1;
-            } else {
+            } else if ($situacao == "Desativo") {
                 $valor = 0;
             }
 
+            $id = $cliente->retornaID($cpf);
+
             $vetDados2 = array(
-                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                $id, $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
             );
 
             $city = new Cidade();
@@ -236,15 +243,18 @@ if ($_POST['senha'] == "") {
 
                             $cli = new Cliente();
 
-                            $valor = 1;
+                            $valor;
                             if ($situacao == "Ativo") {
                                 $valor = 1;
-                            } else {
+                            } else if ($situacao == "Desativo") {
                                 $valor = 0;
                             }
 
+
+                            $id = $cli->retornaID($cpf);
+                            
                             $vetDados2 = array(
-                                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                                $id, $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
                             );
 
                             $cli->Editar($vetDados2);
@@ -346,14 +356,20 @@ if ($_POST['senha'] == "") {
             }
 
             $valor = 1;
+
+            $valor;
             if ($situacao == "Ativo") {
                 $valor = 1;
-            } else {
+            } else if ($situacao == "Desativo") {
                 $valor = 0;
             }
 
+
+            $id = $cliente->retornaID($cpf);
+           
+           
             $vetDados2 = array(
-                $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
+                $id, $nomecli, $cpf, $rg, $datanascimento, $sexo, $valor, $estado, $cidade, $bairro, $rua, $NumeroCasa, $contatonovo, $contaacess
             );
 
             $city = new Cidade();
@@ -362,6 +378,7 @@ if ($_POST['senha'] == "") {
             $bai->vincularCidade_Bairro($cidade, $bairro);
             $ru = new Rua();
             $ru->vincularRua_Bairro($rua, $bairro);
+
 
             $cliente->Editar($vetDados2);
         }

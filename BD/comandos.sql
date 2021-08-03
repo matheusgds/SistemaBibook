@@ -85,16 +85,26 @@ DELIMITER ;
 
 call Inserirnedicao(50);
 
+
+
+
 select * from anodepublicacao;
 select * from autor;
 select * from cliente;
 select * from estado;
-select * from cidade;
 select * from estado_has_cidade;
+select * from cidade;
+select * from bairro;
+select * from cidade_has_bairro;
 	
+
+    
 SET FOREIGN_KEY_CHECKS = 0;
-delete from cidade where idCidade>=1;
-alter table cidade auto_increment =1;
+delete from bairro where idBairro>=1;
+alter table bairro auto_increment =1;
+
+delete from cidade_has_bairro where Bairro_idBairro>=1;
+
 
 delete from anodepublicacao where idAnoDePublicacao>=1;
 alter table anodepublicacao auto_increment =1;
