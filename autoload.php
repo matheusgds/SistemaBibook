@@ -14,6 +14,7 @@ spl_autoload_register(function ($nomeClasse) {
         require_once("Graficos" . DIRECTORY_SEPARATOR . $nomeClasse . ".php");
     } else {
         require_once("DTO" . DIRECTORY_SEPARATOR . $nomeClasse . ".php");
+         require_once("json" . DIRECTORY_SEPARATOR . "metodosJson" . ".php");
     }
 });
 ?>

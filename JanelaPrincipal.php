@@ -12,8 +12,11 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
-        <link rel="shortcut icon" href="IMG/livro32x32i.ico" >
+        <?php $dir = "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
+        <?php $dircss = "css" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        <?php $dirshort = "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
+        <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
+        <link rel="shortcut icon" href=<?php echo $dirshort ?> >
         <title>SISTEMA BIBOOK</title>
     </head>
     <body>
@@ -24,7 +27,7 @@ and open the template in the editor.
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-           
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -32,11 +35,14 @@ and open the template in the editor.
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                               Cadastrar
+                                Cadastrar
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item  bg-light" href="InterfaceGrafica/CadastroEstado.php">Cadastrar um Estado</a>
-                                <a class="dropdown-item" href="#">Another action</a>
+                                <?php $url1 = "InterfaceGrafica". DIRECTORY_SEPARATOR ."CadastroCliente.php" ?>
+                                <a class="dropdown-item  bg-light" href=<?php echo $url1 ?>>Cadastrar Cliente</a>
+                                <?php $url2 = "" ?>
+                                 <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Cadastrar Livro</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">Something else here</a>
                             </div>

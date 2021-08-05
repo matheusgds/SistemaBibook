@@ -87,7 +87,6 @@ and open the template in the editor.
             <?php
             $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
             $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
-           
             ?>
 
 
@@ -112,8 +111,9 @@ and open the template in the editor.
             </form>
             <br>
             <?php
-            
             $sql = "";
+            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+            $estado = new Estado();
             if ($tipo == 1) {
                 if ($procurar != "") {
                     $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
@@ -121,20 +121,23 @@ and open the template in the editor.
                     $sql = "SELECT * FROM estado ORDER BY idEstado";
                 }
             } else if ($tipo == 2) {
-                $sql = "SELECT * FROM estado WHERE nome LIKE '$procurar%' ORDER BY nome";
+                $sql = "SELECT * FROM estado WHERE nome LIKE '$procurar%' ORDER BY nome;";
             } else {
                 $sql = "SELECT * FROM estado WHERE sigla LIKE '$procurar%' ORDER BY sigla";
             }
+            $vet = $estado->PesquisarTodos($sql); // o vetor da pesquisa esta aqui
+            
+            $metodos = new metodosJson();
+            
+            $metodos->ObjParaJson($sql);
 
 
-            require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
-           
-             $estado = new Estado();
-
-            $vet = $estado->PesquisarTodos($sql);
             $count = count($vet);
             ?>
             <br><br>
+
+            <br><br>
+
             <h1>Dados:</h1>
             <br><br>
             <table class="table table-striped table-hover" border="1px" bgcolor="#9dff8c">
@@ -158,25 +161,34 @@ and open the template in the editor.
                             <?php $linkimgapagar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Erase.png"; ?>
                             <?php $linkimgeditar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "Edit.png"; ?>
                             <?php $linkscript = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "exclusaoEstado.php?estado=" . $number ?>
-                            
-                             <td class="table-success"><button  type="button" id="btn1" onclick="EditState(<?php echo $number ?>)" ><img src=<?php echo $linkimgeditar ?>> </button></td>
+
+                            <td class="table-success"><button  type="button" id="btn1" onclick="EditState(<?php echo $number ?>)" ><img src=<?php echo $linkimgeditar ?>> </button></td>
                             <td class="table-success"><button  type="button" id="btn1" onclick="ExcludeState(<?php echo $linkscript ?>)" > <img src=<?php echo $linkimgapagar ?>></button></td>
                         </tr>
 
-<?php } ?>
+                    <?php } ?>
                 </tbody>
             </table> 
 
+            <div style="border:1px solid black">
+                <legend>Exportar Dados</legend>
+                <?php $linkimg = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgpdf.png"; ?>
+
+                <a href="downloadrelatestados.php" target="_blank"> <img src="../IMG/imgpdf.png"><img></a>
+
+            </div>
+            <br><br>
         </div>
     </body>
     <script type='text/javascript'>
+
 
         function ExcludeState(link) {
 
             var a = confirm('Deseja Mesmo Excluir?');
 
             if (a === true) {
-               window.location.href = link;
+                window.location.href = link;
             } else {
                 window.location.href = "listarestados.php";
             }

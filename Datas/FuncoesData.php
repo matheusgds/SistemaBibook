@@ -20,7 +20,7 @@ class FuncoesData {
     }
     
     public function retornoHora() {
-       return $hoje = date('H:i:s');
+        return $hoje = date('H:i:s');
     }
 
 }
