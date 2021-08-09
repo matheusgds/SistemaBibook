@@ -96,11 +96,16 @@ select * from estado_has_cidade;
 select * from cidade;
 select * from bairro;
 select * from cidade_has_bairro;
+select * from rua;
+select * from rua_has_bairro;
 	
 
+SET FOREIGN_KEY_CHECKS = 0;
+delete from rua where idRua>=1;
+alter table rua auto_increment =1;
     
 SET FOREIGN_KEY_CHECKS = 0;
-delete from bairro where idBairro>=1;
+delete from cliente where idCliente>2;
 alter table bairro auto_increment =1;
 
 delete from cidade_has_bairro where Bairro_idBairro>=1;

@@ -126,9 +126,9 @@ and open the template in the editor.
                 $sql = "SELECT * FROM estado WHERE sigla LIKE '$procurar%' ORDER BY sigla";
             }
             $vet = $estado->PesquisarTodos($sql); // o vetor da pesquisa esta aqui
-            
+
             $metodos = new metodosJson();
-            
+
             $metodos->ObjParaJson($sql);
 
 
@@ -172,9 +172,19 @@ and open the template in the editor.
 
             <div style="border:1px solid black">
                 <legend>Exportar Dados</legend>
-                <?php $linkimg = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgpdf.png"; ?>
-
-                <a href="downloadrelatestados.php" target="_blank"> <img src="../IMG/imgpdf.png"><img></a>
+                <?php $linkimgpdf = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgpdf.png"; ?>
+                <?php $linkimgjson = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgjson.png"; ?>
+                <?php $linkimgword = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgword.png"; ?>
+                <?php $linkimgexcel = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgexcel.png"; ?>
+                <?php $linkimgxml = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgxml.png"; ?>
+                
+                
+                <a href="downloadrelatestadospdf.php" target="_blank"> <img src=<?php echo $linkimgpdf ?>><img></a>
+                <a href="downloadrelatestadosjson.php" target="_blank"> <img src=<?php echo $linkimgjson ?>><img></a>
+                <a href="downloadrelatestadosdoc.php" target="_blank"> <img src=<?php echo $linkimgword ?>><img></a>
+                <a href="downloadrelatestadosxls.php" target="_blank"> <img src=<?php echo $linkimgexcel ?>><img></a>
+                <a href="downloadrelatestadosxml.php" target="_blank"> <img src=<?php echo $linkimgxml ?>><img></a>
+                
 
             </div>
             <br><br>

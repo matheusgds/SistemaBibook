@@ -11,7 +11,6 @@ class Estado implements ICrud {
     private $id;
     private $nome;
     private $sigla;
-    static $vetorPesquisa;
 
     function getId() {
         return $this->id;
@@ -217,7 +216,7 @@ class Estado implements ICrud {
         }
     }
 
-    public function RelatEstados() {
+    public function RelatEstadosPDF() {
 
 //Ligar o buffer de sa�da evitando erros de espa�os e print
         ob_start();
@@ -275,7 +274,7 @@ class Estado implements ICrud {
         $sql = $metodos->JsonParaObj();
         $vetorpdf = $this->PesquisarTodos($sql);
 
-   
+
         $altura = 4;
         $pdf->SetFont('arial', '', 11);
 // largura,altura,conteudo,borda,quebra de linha,alinhamento
@@ -334,6 +333,209 @@ class Estado implements ICrud {
         $nomeArq = $nomeArq . "relatorioDeEstados.pdf";
 //imprime a saida do arquivo..
         $pdf->Output($nomeArq, "I");
+    }
+
+    public function RelatEstadosJson() {
+        $metodos = new metodosJson();
+
+
+        $nomeArq = date("Ymd-H-i-s");
+        $nomeArq = $nomeArq . "relatorioDeEstados";
+        $nomeArq = $nomeArq . ".json";
+
+        $sql = $metodos->JsonParaObj();
+        $vetorpdf = $this->PesquisarTodos($sql);
+
+        $id;
+        $nome;
+        $sigla;
+        $estado;
+
+        for ($index = 0; $index < count($vetorpdf); $index++) {
+
+            $estados[] = array(
+                $id = $vetorpdf[$index]->getId(),
+                $nome = $vetorpdf[$index]->getNome(),
+                $sigla = $vetorpdf[$index]->getSigla()
+            );
+        }
+
+        $dados_json = json_encode($estados, JSON_UNESCAPED_UNICODE);
+        // Configurações header para forçar o download
+        // header('Content-Type: text/html; charset=UTF-8');
+
+        header("Expires: Sat, 31 Dec 2011 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Pragma: no-cache");
+        header("Content-Disposition: attachment; filename=\"{$nomeArq}\"");
+        header("Content-Description: PHP Generated Data");
+
+        echo $dados_json;
+        exit;
+    }
+
+    public function RelatEstadosDoc() {
+        $metodos = new metodosJson();
+        header('Content-Type: text/html; charset=utf-8');
+
+
+        $nomeArq = date("Ymd-H-i-s");
+        $nomeArq = $nomeArq . "relatorioDeEstados";
+        $nomeArq = $nomeArq . ".doc";
+
+
+        $sql = $metodos->JsonParaObj();
+        $vetorpdf = $this->PesquisarTodos($sql);
+
+        $id;
+        $nome;
+        $sigla;
+        $estado;
+
+
+
+        $html = '<meta charset="utf-8" />';
+        $html = $html . '<table border="1">';
+        for ($index = 0; $index < count($vetorpdf); $index++) {
+
+            $id = $vetorpdf[$index]->getId();
+            $nome = $vetorpdf[$index]->getNome();
+            $sigla = $vetorpdf[$index]->getSigla();
+
+            $html = $html . '<tr>';
+            $html = $html . '<td>Código do Estado</td>';
+            $html = $html . "<td> $id </td>";
+            $html = $html . '</tr>';
+            $html = $html . '<tr>';
+            $html = $html . '<td> Nome do Estado </td>';
+            $html = $html . "<td> $nome </td>";
+            $html = $html . '</tr>';
+            $html = $html . '<tr>';
+            $html = $html . '<td> Sigla do Estado</td>';
+            $html = $html . "<td> $sigla </td>";
+            $html = $html . '</tr>';
+        }
+
+        header('Content-Type: text/html; charset=UTF-8');
+        header("Expires: Sat, 31 Dec 2011 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Pragma: no-cache");
+        header("Content-type: application/vnd.ms-word");
+        header("Content-Disposition: attachment; filename=\"{$nomeArq}\"");
+        header("Content-Description: PHP Generated Data");
+
+        echo $html;
+        exit;
+    }
+
+    public function RelatEstadosXLS() {
+        $metodos = new metodosJson();
+        header('Content-Type: text/html; charset=utf-8');
+
+
+        $nomeArq = date("Ymd-H-i-s");
+        $nomeArq = $nomeArq . "relatorioDeEstados";
+        $nomeArq = $nomeArq . ".xls";
+
+
+        $sql = $metodos->JsonParaObj();
+        $vetorpdf = $this->PesquisarTodos($sql);
+
+        $id;
+        $nome;
+        $sigla;
+        $estado;
+
+
+
+        $html = '<meta charset="utf-8" />';
+        $html = $html . '<table border="1">';
+        for ($index = 0; $index < count($vetorpdf); $index++) {
+
+            $id = $vetorpdf[$index]->getId();
+            $nome = $vetorpdf[$index]->getNome();
+            $sigla = $vetorpdf[$index]->getSigla();
+
+            $html = $html . '<tr>';
+            $html = $html . '<td>Código do Estado</td>';
+            $html = $html . "<td> $id </td>";
+            $html = $html . '</tr>';
+            $html = $html . '<tr>';
+            $html = $html . '<td> Nome do Estado </td>';
+            $html = $html . "<td> $nome </td>";
+            $html = $html . '</tr>';
+            $html = $html . '<tr>';
+            $html = $html . '<td> Sigla do Estado</td>';
+            $html = $html . "<td> $sigla </td>";
+            $html = $html . '</tr>';
+        }
+
+        header('Content-Type: text/html; charset=UTF-8');
+        header("Expires: Sat, 31 Dec 2011 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Pragma: no-cache");
+        header("Content-type: application/x-msexcel");
+        header("Content-Disposition: attachment; filename=\"{$nomeArq}\"");
+        header("Content-Description: PHP Generated Data");
+
+
+        echo $html;
+        exit;
+    }
+
+    public function RelatEstadosXML() {
+        $metodos = new metodosJson();
+        header('Content-Type: text/html; charset=utf-8');
+
+
+        $nomeArq = date("Ymd-H-i-s");
+        $nomeArq = $nomeArq . "relatorioDeEstados";
+        $nomeArq = $nomeArq . ".xml";
+
+
+        $sql = $metodos->JsonParaObj();
+        $vetorpdf = $this->PesquisarTodos($sql);
+
+        $id;
+        $nome;
+        $sigla;
+        $estado;
+
+
+
+
+        $html = '<estados>';
+
+        for ($index = 0; $index < count($vetorpdf); $index++) {
+
+            $id = $vetorpdf[$index]->getId();
+            $nome = $vetorpdf[$index]->getNome();
+            $sigla = $vetorpdf[$index]->getSigla();
+
+            $html = $html . ' <Código>';
+            $html = $html . $id;
+            $html = $html . ' </Código>';
+            $html = $html . ' <Nome>';
+            $html = $html . $nome;
+            $html = $html . ' </Nome>';
+            $html = $html . ' <Sigla>';
+            $html = $html . $sigla;
+            $html = $html . ' </Sigla>';
+        }
+
+        // header('Content-Type: text/html; charset=UTF-8');
+        header("Expires: Sat, 31 Dec 2011 05:00:00 GMT");
+        header("Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT");
+        header("Cache-Control: no-cache, must-revalidate");
+        header("Pragma: no-cache");
+        header("Content-Disposition: attachment; filename=\"{$nomeArq}\"");
+        header("Content-Description: PHP Generated Data");
+
+        echo $html;
+        exit;
     }
 
 }

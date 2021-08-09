@@ -28,4 +28,6 @@ class metodosJson {
         return $json;
     }
 
+   
+
 }
