@@ -85,9 +85,6 @@ DELIMITER ;
 
 call Inserirnedicao(50);
 
-
-
-
 select * from anodepublicacao;
 select * from autor;
 select * from cliente;
@@ -121,5 +118,12 @@ delete from estado_has_cidade where Cidade_idCidade>=1;
 alter table tipodelivro add column codigo varchar(45) not null;
 
 select * from biblioteca;
+select * from livro;
+select * from editora;
+select * from livro_has_autor;
 
 select * from Estado_has_Cidade where Estado_idEstado= 1 and Cidade_idCidade= 1;
+
+insert into autor(nome)values('john green');
+
+insert into livro_has_autor(Livro_idLivro,Autor_idAutor)values(2,2);

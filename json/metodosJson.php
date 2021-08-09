@@ -28,6 +28,23 @@ class metodosJson {
         return $json;
     }
 
-   
+   public function ObjParaJson1($string) {
+       $nomelocal = "..".DIRECTORY_SEPARATOR."json".DIRECTORY_SEPARATOR;
+        $nomearq = "gravarnumeroautor.json";
+        $nomelocal = $nomelocal.$nomearq;
+        $dados_json = json_encode($string);
+        $fp = fopen($nomelocal, "w");
+        fwrite($fp, $dados_json);
+        fclose($fp);
+    }
+
+    public function JsonParaObj1() {
+         $nomelocal = "..".DIRECTORY_SEPARATOR."json".DIRECTORY_SEPARATOR;
+        $nomearq = "gravarnumeroautor.json";
+        $nomelocal = $nomelocal.$nomearq;
+        $arquivo = file_get_contents($nomelocal);
+        $json = json_decode($arquivo);
+        return $json;
+    }
 
 }

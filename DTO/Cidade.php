@@ -68,7 +68,6 @@ class Cidade implements ICrud {
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
 
         $nome = $vetDados[0];
-        $sigla = $vetDados[1];
 
         //se ainda nao existe o vinculo agente adiciona
 
@@ -87,14 +86,8 @@ class Cidade implements ICrud {
         if ($exists == FALSE) {
             $stmt->execute();
             $stmt2->execute();
-            
-            //passar nome e busca id
-            $valoridcid = $this->buscaIDpeloNome($nome);
-            $valoridest = $this->pegarIDEstado($sigla);
-            
-            
-            $this->vincularEstado_Cidade($valoridcid, $valoridest);
 
+            //passar nome e busca id
             //mensagem de inserido com sucesso!
             $url = "listarcidades.php";
 

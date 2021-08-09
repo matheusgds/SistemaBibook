@@ -205,5 +205,36 @@ class Livro implements ICrud {
         }
         return $vetDados;
     }
+    
+     function alert() {
+        echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
+    }
+
+    function alert2() {
+        echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
+    }
+
+    function redirect($url) {
+        echo "<HTML>\n";
+        echo "<HEAD>\n";
+        echo "<TITLE></TITLE>\n";
+        echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
+        echo "</HEAD>\n";
+        echo "<BODY>\n";
+        echo "</BODY>\n";
+        echo "</HTML>\n";
+    }
+    
+     function buscanome($nome) {
+
+        $nomebusca = "'".$nome."'";
+        $pdo = Conexao::getInstance();
+       
+        $stmt = $pdo->prepare('SELECT idLivro FROM Livro WHERE nome=' . $nomebusca);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idLivro'];
+        }
+    }
 
 }

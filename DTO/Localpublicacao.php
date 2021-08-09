@@ -46,7 +46,7 @@ class Localpublicacao implements ICrud {
 
     public function Existe($vetDados) {
         $pdo = Conexao::getInstance();
-        $sql = "select * from LocalDePublicacao where idEstado= '$vetDados[0]' and idCidade = '$vetDados[1]'";
+        $sql = "select * from LocalDePublicacao where Estado_idEstado= '$vetDados[0]' and Cidade_idCidade = '$vetDados[1]'";
         $consulta = $pdo->query($sql);
 
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
@@ -69,19 +69,8 @@ class Localpublicacao implements ICrud {
         $idCid = $vetDados[1];
 
 
-        $verifica = $pdo->prepare('SELECT * FROM LocalDePublicacao WHERE idEstado = :estado2 and idCidade = :cidade2');
-        $verifica->bindParam(':estado2', $idEst, PDO::PARAM_INT);
-        $verifica->bindParam(':cidade2', $idCid, PDO::PARAM_INT);
-        $verifica->execute();
-        $exists = FALSE;
-        foreach ($verifica as $row) {
-            if (($row['idEstado'] == $idEst) && ($row['idCidade'] == $idCid)) {
-                $exists = TRUE;
-            }
-        }
+        if (!$this->Existe($vetDados)) {
 
-
-        if ($exists == FALSE) {
             $stmt->execute();
             $stmt2->execute();
             //mensagem de inserido com sucesso!
@@ -116,10 +105,39 @@ class Localpublicacao implements ICrud {
             $LocalPublicacao->setIdEstado($linha['Estado_idEstado']);
             $LocalPublicacao->setIdCidade($linha['Cidade_idCidade']);
 
-            
+
             $vetDados[] = $LocalPublicacao;
         }
         return $vetDados;
+    }
+
+    function buscaLocal($codcidade, $codestado) {
+
+        $pdo = Conexao::getInstance();
+        $stmt = $pdo->prepare('SELECT idLocalDePublicacao FROM localdepublicacao WHERE Cidade_idCidade=' . $codcidade . ' and Estado_idEstado=' . $codestado.';');
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idLocalDePublicacao'];
+        }
+    }
+    
+      function alert() {
+        echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
+    }
+
+    function alert2() {
+        echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
+    }
+
+    function redirect($url) {
+        echo "<HTML>\n";
+        echo "<HEAD>\n";
+        echo "<TITLE></TITLE>\n";
+        echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
+        echo "</HEAD>\n";
+        echo "<BODY>\n";
+        echo "</BODY>\n";
+        echo "</HTML>\n";
     }
 
 }

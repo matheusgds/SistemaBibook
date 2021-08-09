@@ -106,5 +106,16 @@ class Anopublicacao implements ICrud {
         }
         return $vetDados;
     }
+    
+    
+    public function buscaAno($ano){
+        $pdo = Conexao::getInstance();
+       
+        $stmt = $pdo->prepare('SELECT idAnoDePublicacao FROM anodepublicacao WHERE ano=' . $ano);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idAnoDePublicacao'];
+        }
+    }
 
 }

@@ -74,7 +74,7 @@ class TipoDeLivro implements ICrud {
 
     public function Existe($valor) {
         $pdo = Conexao::getInstance();
-        $sql = "select idTipoDeLivro from TipoDeLivro where codigo= '$valor' ";
+        $sql = "select idTipoDeLivro from TipoDeLivro where tipo= '$valor' ";
         $consulta = $pdo->query($sql);
 
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
@@ -145,6 +145,36 @@ class TipoDeLivro implements ICrud {
             $vetDados[] = $TipoDeLivro;
         }
         return $vetDados;
+    }
+    
+    function buscaTipoDeLivro($tipagem) {
+        $nomebusca = "'".$tipagem."'";
+        $pdo = Conexao::getInstance();
+      
+        $stmt = $pdo->prepare('SELECT idTipoDeLivro FROM tipodelivro WHERE tipo=' . $nomebusca);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idTipoDeLivro'];
+        }
+    }
+    
+    function alert() {
+        echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
+    }
+
+    function alert2() {
+        echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
+    }
+
+    function redirect($url) {
+        echo "<HTML>\n";
+        echo "<HEAD>\n";
+        echo "<TITLE></TITLE>\n";
+        echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
+        echo "</HEAD>\n";
+        echo "<BODY>\n";
+        echo "</BODY>\n";
+        echo "</HTML>\n";
     }
 
 }

@@ -133,7 +133,6 @@ class Editora implements ICrud {
         return $vetDados;
     }
 
-    
     function alert() {
         echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
     }
@@ -162,4 +161,17 @@ class Editora implements ICrud {
             return $linha['nome'];
         }
     }
+
+    function buscaEditora($edit) {
+
+        $nomebusca = "'".$edit."'";
+        $pdo = Conexao::getInstance();
+       
+        $stmt = $pdo->prepare('SELECT idEditora FROM Editora WHERE nome=' . $nomebusca);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idEditora'];
+        }
+    }
+
 }

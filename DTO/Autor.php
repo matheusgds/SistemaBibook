@@ -169,5 +169,17 @@ class Autor implements ICrud {
             return false;
         }
     }
+    
+    function buscanome($nome) {
+
+        $nomebusca = "'".$nome."'";
+        $pdo = Conexao::getInstance();
+       
+        $stmt = $pdo->prepare('SELECT idAutor FROM Autor WHERE nome=' . $nomebusca);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idAutor'];
+        }
+    }
 
 }

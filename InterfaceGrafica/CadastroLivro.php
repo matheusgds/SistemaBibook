@@ -69,6 +69,11 @@ and open the template in the editor.
 
             <div>
                 <?php
+                require_once ".." . DIRECTORY_SEPARATOR . "json".DIRECTORY_SEPARATOR."metodosJson.php";
+                $qtndautor = $_POST['qtdnomeaut'];
+                $metodos = new metodosJson();
+                $metodos->ObjParaJson1($qtndautor);
+                echo $qtndautor;
                 /*
 
                   session_start();
@@ -169,6 +174,43 @@ and open the template in the editor.
 
 
                         </div>
+
+                        <div style="border-style:double; margin:20px;width: 320px" id="divloc" position:absolute>
+                            <legend>
+                                Autor
+                            </legend>
+
+                            <?php if ($qtndautor == 1) { ?>
+
+                                <label for="nomeaut">Nome Do Autor:</label>
+                                <input type="text" name="nomeaut" id="nomeaut" placeholder="Nome Do Autor" required="true">
+                                <br><br>
+                            <?php } else if ($qtndautor == 2) { ?>
+                                <label for="nomeaut">Nome Do Autor:</label>
+                                <input type="text" name="nomeaut" id="nomeaut" placeholder="Nome Do Autor" required="true">
+                                <br><br>
+                                <label for="nomeaut2">Nome Do Autor2:</label>
+                                <input type="text" name="nomeaut2" id="nomeaut2" placeholder="Nome Do Autor" >
+                                <br><br>
+                            <?php } else if ($qtndautor == 3) { ?>
+                                <label for="nomeaut">Nome Do Autor:</label>
+                                <input type="text" name="nomeaut" id="nomeaut" placeholder="Nome Do Autor" required="true">
+                                <br><br>
+                                <label for="nomeaut2">Nome Do Autor2:</label>
+                                <input type="text" name="nomeaut2" id="nomeaut2" placeholder="Nome Do Autor" >
+                                <br><br>
+                                <label for="nomeaut3">Nome Do Autor3:</label>
+                                <input type="text" name="nomeaut3" id="nomeaut3" placeholder="Nome Do Autor" >
+                                <br><br>
+                            <?php } else { ?>
+                                <label for="nomeaut">Nome Do Autor:</label>
+                                <input type="text" name="nomeaut" id="nomeaut" placeholder="Nome Do Autor" required="true">
+                                <br><br>
+                            <?php } ?>
+
+                        </div>
+
+
                         <button name="acao" value="Salvar" id="acao" type="submit" class="btn btn-primary">Salvar</button>
                         <button name="acao" value="Limpar" id="acao" type="reset" class="btn btn-primary">Limpar Campos</button>
                         <br><br>

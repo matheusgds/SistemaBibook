@@ -36,7 +36,7 @@ class Edicao implements ICrud {
         
     }
 
-    public function Existe($vetDados) {
+    public function Existe($valor) {
         $pdo = Conexao::getInstance();
         $sql = "select idEdicao from Edicao where nedicao= '$valor' ";
         $consulta = $pdo->query($sql);
@@ -63,7 +63,7 @@ class Edicao implements ICrud {
         $verifica->execute();
         $exists = FALSE;
         foreach ($verifica as $row) {
-            if ($row['nedicao'] == $nome) {
+            if ($row['nedicao'] == $numero) {
                 $exists = TRUE;
             }
         }
@@ -108,4 +108,15 @@ class Edicao implements ICrud {
         return $vetDados;
     }
 
+    
+    function buscaEdicao($edic) {
+
+        $pdo = Conexao::getInstance();
+      
+        $stmt = $pdo->prepare('SELECT idEdicao FROM Edicao WHERE nedicao=' . $edic);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idEdicao'];
+        }
+    }
 }
