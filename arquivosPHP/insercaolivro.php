@@ -128,13 +128,55 @@ if ($qtd > 0) {
 
 if ($teste == FALSE) {
 
+    // verificar possibilidades de insercao quando nao houver.. obs: utilizar existe
     $estadocod = $estado->buscaSigla($dadoest);
-    $cidadecod = $cidade->buscaIDpeloNome($dadocid);
-    $anocod = $ano->buscaAno($dadoano);
-    $editoracod = $editora->buscaEditora($nomeed);
-    $edicaocod = $edicao->buscaEdicao($ned);
-    $tipocod = $tipolivro->buscaTipoDeLivro($tipo);
+    if ($cidade->Existe($dadocid)) {
+        $cidadecod = $cidade->buscaIDpeloNome($dadocid);
+    } else {
+        $vetDados = array(
+            $dadocid
+        );
+        $cidade->Inserir($vetDados);
+        $cidadecod = $cidade->buscaIDpeloNome($dadocid);
+    }
 
+    if ($ano->Existe($dadoano)) {
+        $anocod = $ano->buscaAno($dadoano);
+    } else {
+        $vetDados = array(
+            $dadoano
+        );
+        $ano->Inserir($vetDados);
+        $anocod = $ano->buscaAno($dadoano);
+    }
+    if ($editora->Existe($nomeed)) {
+        $editoracod = $editora->buscaEditora($nomeed);
+    } else {
+        $vetDados = array(
+            $nomeed
+        );
+
+        $editora->Inserir($vetDados);
+        $editoracod = $editora->buscaEditora($nomeed);
+    }
+    if ($edicao->Existe($ned)) {
+        $edicaocod = $edicao->buscaEdicao($ned);
+    } else {
+        $vetDados = array(
+            $ned
+        );
+        $edicao->Inserir($vetDados);
+        $edicaocod = $edicao->buscaEdicao($ned);
+    }
+    if ($tipolivro->Existe($tipo)) {
+        $tipocod = $tipolivro->buscaTipoDeLivro($tipo);
+    } else {
+        $vetDados = array(
+            $tipo, $codigotipo
+        );
+        $tipolivro->Inserir($vetDados);
+        $tipocod = $tipolivro->buscaTipoDeLivro($tipo);
+    }
 
     //local de publicacao 
     $vetlocal = array(

@@ -176,5 +176,16 @@ class TipoDeLivro implements ICrud {
         echo "</BODY>\n";
         echo "</HTML>\n";
     }
+    
+    function buscaIDTipo($tipagem) {
+        
+        $pdo = Conexao::getInstance();
+      
+        $stmt = $pdo->prepare('SELECT idTipoDeLivro FROM tipodelivro WHERE codigo=' . $tipagem);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['idTipoDeLivro'];
+        }
+    }
 
 }

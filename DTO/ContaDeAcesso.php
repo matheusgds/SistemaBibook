@@ -2,6 +2,7 @@
 
 require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
+
 class ContaDeAcesso implements ICrud {
 
     private $id;
@@ -174,6 +175,16 @@ class ContaDeAcesso implements ICrud {
         $consulta = $pdo->query($sql);
         $linha = $consulta->fetch(PDO::FETCH_BOTH);
         return $linha;
+    }
+
+    function retornaTipoAcesso($log) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select tipodeacesso from contadeacesso where login= '$log' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['tipodeacesso'];
+        }
     }
 
     function comparacao($valor1, $valor2) {

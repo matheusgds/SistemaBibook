@@ -121,6 +121,7 @@ select * from biblioteca;
 select * from livro;
 select * from editora;
 select * from livro_has_autor;
+select * from contadeacesso;
 
 select * from Estado_has_Cidade where Estado_idEstado= 1 and Cidade_idCidade= 1;
 

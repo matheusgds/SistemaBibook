@@ -112,7 +112,7 @@ and open the template in the editor.
                             <br><br>
 
                             <label for="isbn">ISBN:</label>
-                            <input type="text" name="isbn" id="isbn" placeholder="ISBN" required="true">
+                            <input type="text" name="isbn" id="isbn" placeholder="ISBN" >
                             <br><br>
 
                             <label for="qtdlivros">Quantidade De Livros:</label>

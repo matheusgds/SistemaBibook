@@ -114,7 +114,7 @@ if ($estado->Existe($dadoest)) {
                 $vetDados = array(
                     $dador
                 );
-               
+
                 $ruanova->inserir2Semvinculo($vetDados);
             }
         } else { // se nao existe bairro
@@ -151,11 +151,60 @@ if ($estado->Existe($dadoest)) {
 
     if ($teste == FALSE) {
         $estado = $estado->buscaSigla($dadoest);
-        $cidade = $cidade->buscaIDpeloNome($dadocid);
-        $bairro = $bairro->buscaIDpeloNome($dadob);
-        $rua = $rua->buscaIDpeloNome($dador);
-        $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
-        $contaacess = $contaacess->buscaIDpeloNome($login);
+
+        if ($cidade->Existe($dadocid)) {
+            $cidadecod = $cidade->buscaIDpeloNome($dadocid);
+        } else {
+            $vetDados = array(
+                $dadocid
+            );
+            $cidade->Inserir($vetDados);
+            $cidadecod = $cidade->buscaIDpeloNome($dadocid);
+        }
+
+        if ($bairronovo->Existe($dadob)) {
+            $bairro = $bairro->buscaIDpeloNome($dadob);
+        } else {
+            $vetDados = array(
+                $dadob
+            );
+
+            $bairronovo->inserir2Semvinculo($vetDados);
+            $bairro = $bairro->buscaIDpeloNome($dadob);
+        }
+
+        if ($ruanova->Existe($dador)) {
+            $rua = $rua->buscaIDpeloNome($dador);
+        } else {
+            $vetDados = array(
+                $dador
+            );
+
+            $ruanova->inserir2Semvinculo($vetDados);
+            $rua = $rua->buscaIDpeloNome($dador);
+        }
+
+        if ($NumeroCasa->Existe($numero)) {
+            $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
+        } else {
+            $vetDados = array(
+                $numero
+            );
+
+            $NumeroCasa->Inserir($vetDados);
+            $NumeroCasa = $NumeroCasa->buscaIDpeloNome($numero);
+        }
+
+        if ($contaacesso->Existe($login)) {
+            $contaacess = $contaacess->buscaIDpeloNome($login);
+        } else {
+            $vetDadosConta = array(
+                $login, $pass, $idacesso
+            );
+
+            $contaacesso->Inserir($vetDadosConta);
+            $contaacess = $contaacess->buscaIDpeloNome($login);
+        }
 
 
         //dados do contato
