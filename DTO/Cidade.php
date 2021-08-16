@@ -44,8 +44,8 @@ class Cidade implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listarcidades.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarcidades.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -57,8 +57,8 @@ class Cidade implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarcidades.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarcidades.php";
+        $this->redirectPHP($url);
     }
 
     public function Inserir($vetDados) {
@@ -143,6 +143,10 @@ class Cidade implements ICrud {
         echo "<BODY>\n";
         echo "</BODY>\n";
         echo "</HTML>\n";
+    }
+
+    function redirectPHP($url) {
+        header('Location: ' . $url);
     }
 
     function retornarEstados() {

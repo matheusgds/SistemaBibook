@@ -43,8 +43,8 @@ class Autor implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listarautores.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarautores.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -56,8 +56,8 @@ class Autor implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarautores.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarautores.php";
+        $this->redirectPHP($url);
     }
 
     public function Existe($valor) {
@@ -152,6 +152,10 @@ class Autor implements ICrud {
         echo "</HTML>\n";
     }
 
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
+
     function retornaNome($valor) {
 
         $pdo = Conexao::getInstance();
@@ -169,12 +173,12 @@ class Autor implements ICrud {
             return false;
         }
     }
-    
+
     function buscanome($nome) {
 
-        $nomebusca = "'".$nome."'";
+        $nomebusca = "'" . $nome . "'";
         $pdo = Conexao::getInstance();
-       
+
         $stmt = $pdo->prepare('SELECT idAutor FROM Autor WHERE nome=' . $nomebusca);
         $stmt->execute();
         foreach ($stmt as $row) {

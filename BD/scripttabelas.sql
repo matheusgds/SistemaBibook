@@ -425,7 +425,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `SistemaBibook`.`locacao` (
   `idlocacao` INT NOT NULL AUTO_INCREMENT,
   `data` DATE NOT NULL,
-  `hora` DATE NOT NULL,
+  `hora` DATETIME NOT NULL,
   `dataentrega` DATE NOT NULL,
   `Cliente_idCliente` INT NOT NULL,
   PRIMARY KEY (`idlocacao`),
@@ -444,6 +444,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `SistemaBibook`.`Livro_has_locacao` (
   `Livro_idLivro` INT NOT NULL,
   `locacao_idlocacao` INT NOT NULL,
+  `status` boolean NOT NULL,
   PRIMARY KEY (`Livro_idLivro`, `locacao_idlocacao`),
   INDEX `fk_Livro_has_locacao_locacao1_idx` (`locacao_idlocacao` ASC) ,
   INDEX `fk_Livro_has_locacao_Livro1_idx` (`Livro_idLivro` ASC) ,

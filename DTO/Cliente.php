@@ -167,28 +167,28 @@ class Cliente implements ICrud {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-       // $pdo = Conexao::getInstance();
+        // $pdo = Conexao::getInstance();
         $stmt = $pdo->prepare('update cliente set rg =:novorg where idCliente = :id');
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':novorg', $rg, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-      //  $pdo = Conexao::getInstance();
+        //  $pdo = Conexao::getInstance();
         $stmt = $pdo->prepare('update cliente set datanasc =:novodata where idCliente = :id');
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':novodata', $datanasc, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-       // $pdo = Conexao::getInstance();
+        // $pdo = Conexao::getInstance();
         $stmt = $pdo->prepare('update cliente set sexo =:novosexo where idCliente = :id');
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':novosexo', $sexo, PDO::PARAM_STR);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-       // $pdo = Conexao::getInstance();
+        // $pdo = Conexao::getInstance();
         $stmt = $pdo->prepare('update cliente set situacao =:novosituacao where idCliente = :id');
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':novosituacao', $situacao, PDO::PARAM_INT);
@@ -230,12 +230,12 @@ class Cliente implements ICrud {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
-        
+
         $stmt2->execute();
 
 
-        $url = "../InterfaceGrafica/listarclientes.php";
-         $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarclientes.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -247,8 +247,8 @@ class Cliente implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "../InterfaceGrafica/listarclientes.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarclientes.php";
+        $this->redirectPHP($url);
     }
 
     public function Existe($vetDados) {
@@ -315,19 +315,20 @@ class Cliente implements ICrud {
             $stmt2->execute();
             //mensagem de inserido com sucesso!
 
-            $url = "../InterfaceGrafica/listarclientes.php";
 
+            $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarclientes.php";
             $this->alert2();
-            $this->redirect($url);
+            $this->redirectPHP($url);
         } else {
             $this->alert();
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
-                $url = "../InterfaceGrafica/CadastroCliente.php";
-                $this->redirect($url);
+                $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "CadastroCliente.php";
+                $this->redirectPHP($url);
             } else if ($doc == FALSE) {
-                $url = "../JanelaPrincipal.php";
-                $this->redirect($url);
+
+                $url = ".." . DIRECTORY_SEPARATOR . "JanelaPrincipal.php";
+                $this->redirectPHP($url);
             }
         }
     }
@@ -378,6 +379,10 @@ class Cliente implements ICrud {
         echo "</HTML>\n";
     }
 
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
+
     function retornaObjeto($valor) {
 
         $pdo = Conexao::getInstance();
@@ -385,6 +390,17 @@ class Cliente implements ICrud {
         $consulta = $pdo->query($sql);
         $linha = $consulta->fetch(PDO::FETCH_BOTH);
         return $linha;
+    }
+
+    function retornaClientePeloLogin($valor) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select * from Cliente where ContaDeAcesso_idContaDeAcesso= '$valor' ";
+        $consulta = $pdo->query($sql);
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['idCliente'];
+        }
     }
 
     function comparacao($valor1, $valor2) {

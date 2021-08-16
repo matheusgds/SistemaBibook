@@ -43,8 +43,8 @@ class Bairro implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listarestados.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarbairros.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -56,8 +56,8 @@ class Bairro implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarbairros.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarbairros.php";
+        $this->redirectPHP($url);
     }
 
     public function Inserir($vetDados) {
@@ -142,6 +142,10 @@ class Bairro implements ICrud {
         echo "<BODY>\n";
         echo "</BODY>\n";
         echo "</HTML>\n";
+    }
+
+    function redirectPHP($url) {
+        header('Location: ' . $url);
     }
 
     function pegarIDCidade($sig) {

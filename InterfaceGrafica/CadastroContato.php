@@ -4,6 +4,27 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
+<?php
+session_start();
+
+if ((!isset($_SESSION['loginextra']) == true) and ( !isset($_SESSION['senhaextra']) == true)) {
+    unset($_SESSION['loginextra']);
+    unset($_SESSION['senhaextra']);
+
+    $linkprincipal = ".." . DIRECTORY_SEPARATOR . "index.php";
+    header('location:' . $linkprincipal);
+}
+$logado = $_SESSION['loginextra'];
+
+require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+
+
+//require_once 'DTO/ContaDeAcesso.php';
+
+$class = new ContaDeAcesso();
+
+$tipoacesso = $class->retornaTipoAcesso($logado);
+?>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -38,11 +59,26 @@ and open the template in the editor.
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Cadastrar
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item  bg-light" href="DTO/CadastroEstado.php">Cadastrar um Estado</a>
-                                <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+                                <?php $url1 = "CadastroCliente.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item  bg-light" href=<?php echo $url1 ?>>Cadastrar Cliente</a>
+                                    <?php
+                                } else {
+                                    $url1 = "JanelaPrincipal.php";
+                                }
+                                ?>
+
+                                <?php $url2 = "qtdautor.php"; ?>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url2 ?>>Cadastrar Livro</a>
+                                    <?php
+                                } else {
+                                    $url2 = "JanelaPrincipal.php";
+                                }
+                                ?>
+
                             </div>
                         </li> 
                         <li class="nav-item dropdown">
@@ -50,40 +86,113 @@ and open the template in the editor.
                                 Pesquisar
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="DTO/listarestados.php">Pesquisar Estados</a>
-                                <a class="dropdown-item" href="#">Another action</a>
+                                <?php $url3 = "listarestados.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2) || ($tipoacesso == 3)) { ?>
+                                    <a class="dropdown-item" href= <?php echo $url3; ?>>Pesquisar Estados</a>
+                                    <?php
+                                } else {
+                                    $url3 = "JanelaPrincipal.php";
+                                }
+                                ?>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <?php $url4 = "listarcidades.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2) || ($tipoacesso == 3)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url4; ?>>Pesquisar Cidades</a>
+                                    <?php
+                                } else {
+                                    $url4 = "JanelaPrincipal.php";
+                                }
+                                ?>
+                                <div class="dropdown-divider"></div>
+                                <?php $url5 = "listarbairros.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2) || ($tipoacesso == 3)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url5; ?>>Pesquisar Bairros</a>
+                                    <?php
+                                } else {
+                                    $url5 = "JanelaPrincipal.php";
+                                }
+                                ?>
+                                <div class="dropdown-divider"></div>
+                                <?php $url6 = "listarlivros.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2) || ($tipoacesso == 3)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url6; ?>>Pesquisar Livros</a>
+                                    <?php
+                                } else {
+                                    $url6 = "JanelaPrincipal.php";
+                                }
+                                ?>
+                                <div class="dropdown-divider"></div>
+                                <?php $url7 = "listarclientes.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url7; ?>>Pesquisar Clientes</a>
+                                    <?php
+                                } else {
+                                    $url7 = "JanelaPrincipal.php";
+                                }
+                                ?>
+
+                                <div class="dropdown-divider"></div>
+                                <?php $url8 = "listarmultas.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url8; ?>>Pesquisar Multas</a>
+                                    <?php
+                                } else {
+                                    $url8 = "JanelaPrincipal.php";
+                                }
+                                ?>
+
+                                <div class="dropdown-divider"></div>
+                                <?php $url9 = "listarfornecedores.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url9; ?>>Pesquisar Fornecedores</a>
+                                    <?php
+                                } else {
+                                    $url9 = "JanelaPrincipal.php";
+                                }
+                                ?>
+                                <div class="dropdown-divider"></div>
+                                <?php $url10 = "listarcontasacesso.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url10; ?>>Pesquisar Contas de Acesso</a>
+                                    <?php
+                                } else {
+                                    $url10 = "JanelaPrincipal.php";
+                                }
+                                ?>
                             </div>
-                        </li>       
+                        </li>  
+                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Graficos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              
+                                <?php $url11 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "ClientesPorEstado.php"; ?>
+                                <?php if (($tipoacesso == 1)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url11; ?> target="_blank">Pesquisar Numero Clientes por Estado</a>
+                                    <?php
+                                } else {
+                                    $url11 = "JanelaPrincipal.php";
+                                }
+                                ?>
+                            </div>
+                        </li>
 
                     </ul>
                     <nav class="navbar navbar-light bg-light">
                         <span>
-                            <img src="../IMG/livro32x32p.png" width="30" height="30" class="d-inline-block align-top" alt="">
-                            BEM VINDO <?php /* $logado */ ?>
+                            <?php $linkimg = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
+                            <img src=<?php echo $linkimg ?> width="30" height="30" class="d-inline-block align-top" alt="">
+                            BEM VINDO <?php echo $logado; ?> 
+                            <?php $linkdeslog = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "Deslogar.php" ?>
+                            <form action=<?php echo $linkdeslog ?> method="post">
+                                <input type="submit" value="Deslogar" name="botao">
+                            </form>
                         </span>
                     </nav> 
 
                 </div>
             </nav>
-
-
-            <div>
-                <?php /*
-
-                  session_start();
-
-                  if ((!isset($_SESSION['loginextra']) == true) and ( !isset($_SESSION['senhaextra']) == true)) {
-                  unset($_SESSION['loginextra']);
-                  unset($_SESSION['senhaextra']);
-                  header('location:index.php');
-                  } else {
-                  $logado = $_SESSION['loginextra'];
-                  } */
-                ?>
-            </div>
-
 
             <div class="divform"id="divform">
                 <?php $link = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "insercaocontato.php"; ?>

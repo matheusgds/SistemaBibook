@@ -122,8 +122,62 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
                                     $url6 = "JanelaPrincipal.php";
                                 }
                                 ?>
+                                <div class="dropdown-divider"></div>
+                                <?php $url7 = "listarclientes.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url7; ?>>Pesquisar Clientes</a>
+                                    <?php
+                                } else {
+                                    $url7 = "JanelaPrincipal.php";
+                                }
+                                ?>
+
+                                <div class="dropdown-divider"></div>
+                                <?php $url8 = "listarmultas.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url8; ?>>Pesquisar Multas</a>
+                                    <?php
+                                } else {
+                                    $url8 = "JanelaPrincipal.php";
+                                }
+                                ?>
+
+                                <div class="dropdown-divider"></div>
+                                <?php $url9 = "listarfornecedores.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url9; ?>>Pesquisar Fornecedores</a>
+                                    <?php
+                                } else {
+                                    $url9 = "JanelaPrincipal.php";
+                                }
+                                ?>
+                                <div class="dropdown-divider"></div>
+                                <?php $url10 = "listarcontasacesso.php"; ?>
+                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url10; ?>>Pesquisar Contas de Acesso</a>
+                                    <?php
+                                } else {
+                                    $url10 = "JanelaPrincipal.php";
+                                }
+                                ?>
                             </div>
-                        </li>       
+                        </li>  
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Graficos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <?php $url11 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "ClientesPorEstado.php"; ?>
+                                <?php if (($tipoacesso == 1)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $url11; ?> target="_blank">Pesquisar Numero Clientes por Estado</a>
+                                    <?php
+                                } else {
+                                    $url11 = "JanelaPrincipal.php";
+                                }
+                                ?>
+                            </div>
+                        </li>
 
                     </ul>
                     <nav class="navbar navbar-light bg-light">
@@ -143,6 +197,8 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
 
 
             <div>
+                <?php $linkplanofundo = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgplanodefundo.jpg" ?>
+                <img src=<?php echo $linkplanofundo ?> width="100%"  class="d-inline-block align-top shadow-lg p-3 mb-5 bg-white rounded" alt="">
 
             </div>
         </div>

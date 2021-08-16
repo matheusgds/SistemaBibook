@@ -7,8 +7,8 @@ class Locacao implements ICrud {
     private $id;
     private $data;
     private $hora;
+    private $dataentrega;
     private $idcliente;
-
 
     function getId() {
         return $this->id;
@@ -41,16 +41,15 @@ class Locacao implements ICrud {
     function setIdcliente($idcliente) {
         $this->idcliente = $idcliente;
     }
-    
-    function getVetorLivros() {
-        return $this->vetorLivros;
+
+    function getDataentrega() {
+        return $this->dataentrega;
     }
 
-    function setVetorLivros($vetorLivros) {
-        $this->vetorLivros = $vetorLivros;
+    function setDataentrega($dataentrega) {
+        $this->dataentrega = $dataentrega;
     }
 
-    
     public function __toString() {
         return "ID: " . $this->id . "<br/>ID Cliente: " . $this->idcliente . "<br/> Data: " . $this->data . "<br/> Hora: " . $this->hora . "<br/>";
     }
@@ -60,7 +59,7 @@ class Locacao implements ICrud {
     }
 
     public function Excluir($vetDados) {
-            
+        
     }
 
     public function Existe($vetDados) {
@@ -69,15 +68,17 @@ class Locacao implements ICrud {
 
     public function Inserir($vetDados) {
         $pdo = Conexao::getInstance();
-        $stmt = $pdo->prepare('INSERT INTO locacao (data,hora,Cliente_idCliente) VALUES(:data,:hora,:idcliente)');
+        $stmt = $pdo->prepare('INSERT INTO locacao (data,hora,dataentrega,Cliente_idCliente) VALUES(:data,:hora,:dataentrega,:idcliente)');
         $stmt2 = $pdo->prepare('commit;');
         $stmt->bindParam(':data', $data, PDO::PARAM_STR);
         $stmt->bindParam(':hora', $hora, PDO::PARAM_STR);
-        $stmt->bindParam(':idcliente', $idCliente, PDO::PARAM_INT);
+        $stmt->bindParam(':dataentrega', $dataentr, PDO::PARAM_STR);
+        $stmt->bindParam(':idcliente', $idcliente, PDO::PARAM_INT);
 
         $data = $vetDados[0];
-        $hora = $vetDados[1];   
-        $idcliente = $vetDados[2];
+        $hora = $vetDados[1];
+        $dataentr = $vetDados[2];
+        $idcliente = $vetDados[3];
 
         $stmt->execute();
         $stmt2->execute();
@@ -86,8 +87,7 @@ class Locacao implements ICrud {
         //  $idestado = $this->pegarIDEstado($vetDados[1]);
         //   $idcidade = $this->pegarIDCidade();
         //$this->vincularEstado_Cidade($idcidade, $idestado);
-
-        $this->alert2();
+        //$this->alert2();
         //$this->redirect($url);
     }
 
@@ -101,11 +101,54 @@ class Locacao implements ICrud {
             $Locacao->setId($linha['idlocacao']);
             $Locacao->setData($linha['data']);
             $Locacao->setHora($linha['hora']);
+            $Locacao->setdataentrega($linha['dataentrega']);
             $Locacao->setIdcliente($linha['Cliente_idCliente']);
 
             $vetDados[] = $Locacao;
         }
         return $vetDados;
+    }
+
+    function retornaLocacao($vet) {
+
+        $pdo = Conexao::getInstance();
+        $sql = "select * from locacao where data= '$vet[0]'and Cliente_idCliente = '$vet[3]' ";
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['idlocacao'];
+        }
+    }
+
+    function alert() {
+        echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
+    }
+
+    function alert2() {
+        echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
+    }
+
+    function redirect($url) {
+        echo "<HTML>\n";
+        echo "<HEAD>\n";
+        echo "<TITLE></TITLE>\n";
+        echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
+        echo "</HEAD>\n";
+        echo "<BODY>\n";
+        echo "</BODY>\n";
+        echo "</HTML>\n";
+    }
+
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
+
+    public function retornodata($idlocacao) {
+        $pdo = Conexao::getInstance();
+        $sql = "select * from locacao where idlocacao = ".$idlocacao;
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['dataentrega'];
+        }
     }
 
 }

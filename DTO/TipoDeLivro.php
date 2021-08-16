@@ -55,8 +55,8 @@ class TipoDeLivro implements ICrud {
             $stmt3->execute();
         }
 
-        $url = "listartiposdelivro.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listartiposdelivro.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -68,8 +68,8 @@ class TipoDeLivro implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listartiposdelivro.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listartiposdelivro.php";
+        $this->redirectPHP($url);
     }
 
     public function Existe($valor) {
@@ -146,18 +146,18 @@ class TipoDeLivro implements ICrud {
         }
         return $vetDados;
     }
-    
+
     function buscaTipoDeLivro($tipagem) {
-        $nomebusca = "'".$tipagem."'";
+        $nomebusca = "'" . $tipagem . "'";
         $pdo = Conexao::getInstance();
-      
+
         $stmt = $pdo->prepare('SELECT idTipoDeLivro FROM tipodelivro WHERE tipo=' . $nomebusca);
         $stmt->execute();
         foreach ($stmt as $row) {
             return $row['idTipoDeLivro'];
         }
     }
-    
+
     function alert() {
         echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
     }
@@ -177,10 +177,14 @@ class TipoDeLivro implements ICrud {
         echo "</HTML>\n";
     }
     
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
+
     function buscaIDTipo($tipagem) {
-        
+
         $pdo = Conexao::getInstance();
-      
+
         $stmt = $pdo->prepare('SELECT idTipoDeLivro FROM tipodelivro WHERE codigo=' . $tipagem);
         $stmt->execute();
         foreach ($stmt as $row) {

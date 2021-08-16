@@ -86,7 +86,7 @@ class Livro implements ICrud {
     function setIdtipolivro($idtipolivro) {
         $this->idtipolivro = $idtipolivro;
     }
-    
+
     function getQuantidade() {
         return $this->quantidade;
     }
@@ -95,7 +95,6 @@ class Livro implements ICrud {
         $this->quantidade = $quantidade;
     }
 
-    
     public function __toString() {
         return "ID: " . $this->id . "<br/>Nome: " . $this->nome . "<br/>";
     }
@@ -139,7 +138,7 @@ class Livro implements ICrud {
         $nome = $vetDados[0];
         $subtitulo = $vetDados[1];
         $isbn = $vetDados[2];
-        $qtnd=$vetDados[3];
+        $qtnd = $vetDados[3];
         $idlocal = $vetDados[4];
         $ideditora = $vetDados[5];
         $idedicao = $vetDados[6];
@@ -199,14 +198,14 @@ class Livro implements ICrud {
             $Livro->setIdedicao($linha['Edicao_idEdicao']);
             $Livro->setIdanopublicacao($linha['AnoDePublicacao_idAnoDePublicacao']);
             $Livro->setIdtipolivro($linha['TipoDeLivro_idTipoDeLivro']);
-            
+
 
             $vetDados[] = $Livro;
         }
         return $vetDados;
     }
-    
-     function alert() {
+
+    function alert() {
         echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
     }
 
@@ -224,17 +223,62 @@ class Livro implements ICrud {
         echo "</BODY>\n";
         echo "</HTML>\n";
     }
-    
-     function buscanome($nome) {
 
-        $nomebusca = "'".$nome."'";
+    function buscanome($nome) {
+
+        $nomebusca = "'" . $nome . "'";
         $pdo = Conexao::getInstance();
-       
+
         $stmt = $pdo->prepare('SELECT idLivro FROM Livro WHERE nome=' . $nomebusca);
         $stmt->execute();
         foreach ($stmt as $row) {
             return $row['idLivro'];
         }
+    }
+
+    public function alteraQuantidade($idlivro) {
+        $pdo = Conexao::getInstance();
+        $quantidadetotal = $this->buscaQuantidade($idlivro);
+        $quantidadetotal = $quantidadetotal - 1;
+        $stmt = $pdo->prepare('update livro set quantidade =:novaquantidade where idLivro = :idl');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':novaquantidade', $quantidadetotal, PDO::PARAM_INT);
+        $stmt->bindParam(':idl', $idlivro, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarlivros.php";
+        $this->redirectPHP($url);
+    }
+    
+    public function aumentaQuantidade($idlivro) {
+        $pdo = Conexao::getInstance();
+        $quantidadetotal = $this->buscaQuantidade($idlivro);
+        $quantidadetotal = $quantidadetotal +1;
+        $stmt = $pdo->prepare('update livro set quantidade =:novaquantidade where idLivro = :idl');
+        $stmt2 = $pdo->prepare('commit;');
+        $stmt->bindParam(':novaquantidade', $quantidadetotal, PDO::PARAM_INT);
+        $stmt->bindParam(':idl', $idlivro, PDO::PARAM_INT);
+        $stmt->execute();
+        $stmt2->execute();
+
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarlivros.php";
+        $this->redirectPHP($url);
+    }
+
+    public function buscaQuantidade($idlivro) {
+
+        $pdo = Conexao::getInstance();
+
+        $stmt = $pdo->prepare('SELECT quantidade FROM Livro WHERE idLivro=' . $idlivro);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['quantidade'];
+        }
+    }
+    
+    function redirectPHP($url) {
+        header('Location: ' . $url);
     }
 
 }

@@ -43,10 +43,6 @@ if ($qt == 1) {
     $autor1 = $_POST['nomeaut'];
 }
 
-
-
-$teste = FALSE;
-
 $livro = new Livro();
 $estado = new Estado();
 $cidade = new Cidade();
@@ -56,6 +52,7 @@ $editora = new Editora();
 $edicao = new Edicao();
 $tipolivro = new TipoDeLivro();
 
+/*
 
 if ($qtd > 0) {
     if ($estado->Existe($dadoest)) {
@@ -124,9 +121,9 @@ if ($qtd > 0) {
             $cidade->Inserir($vetDados);
         }
     }
-}
+}*/
 
-if ($teste == FALSE) {
+//if ($teste == FALSE) {
 
     // verificar possibilidades de insercao quando nao houver.. obs: utilizar existe
     $estadocod = $estado->buscaSigla($dadoest);
@@ -343,12 +340,11 @@ if ($teste == FALSE) {
             }
         }
     }
-}
+//}
 
+$livro = new Livro();
 
+$url = "..".DIRECTORY_SEPARATOR."InterfaceGrafica".DIRECTORY_SEPARATOR."listarlivros.php";
 
+$livro->redirectPHP($url);
 
-
-
-
-    

@@ -2,7 +2,6 @@
 
 require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
 
-
 class ContaDeAcesso implements ICrud {
 
     private $id;
@@ -76,8 +75,8 @@ class ContaDeAcesso implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarcontasacesso.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarcontasacesso.php";
+        $this->redirectPHP($url);
     }
 
     public function Inserir($vetDados) {
@@ -158,6 +157,11 @@ class ContaDeAcesso implements ICrud {
         echo "</HTML>\n";
     }
 
+    
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
+    
     function retornaLogin($valor) {
 
         $pdo = Conexao::getInstance();

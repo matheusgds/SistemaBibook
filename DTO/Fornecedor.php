@@ -136,8 +136,8 @@ class Fornecedor implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listarfornecedores.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarfornecedores.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -149,8 +149,8 @@ class Fornecedor implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarfornecedores.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarfornecedores.php";
+        $this->redirectPHP($url);
     }
 
     public function Existe($valor) {
@@ -260,9 +260,9 @@ class Fornecedor implements ICrud {
             return false;
         }
     }
-    
-    function retornaNome($id){
-         $pdo = Conexao::getInstance();
+
+    function retornaNome($id) {
+        $pdo = Conexao::getInstance();
         $sql = "select nome from fornecedor where idFornecedor= '$id' ";
         $consulta = $pdo->query($sql);
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
@@ -270,6 +270,27 @@ class Fornecedor implements ICrud {
         }
     }
     
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
     
+        function alert() {
+        echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
+    }
+
+    function alert2() {
+        echo "<script type='text/javascript'>alert('Inserido Com Sucesso!');</script>";
+    }
+
+    function redirect($url) {
+        echo "<HTML>\n";
+        echo "<HEAD>\n";
+        echo "<TITLE></TITLE>\n";
+        echo "<script language=\"JavaScript\">window.location='" . $url . "';</script>\n";
+        echo "</HEAD>\n";
+        echo "<BODY>\n";
+        echo "</BODY>\n";
+        echo "</HTML>\n";
+    }
 
 }

@@ -112,6 +112,7 @@ delete from anodepublicacao where idAnoDePublicacao>=1;
 alter table anodepublicacao auto_increment =1;
 
 alter table locacao add column dataentrega date after hora;
+alter table locacao modify hora datetime;
 
 delete from estado_has_cidade where Cidade_idCidade>=1;
 
@@ -128,3 +129,24 @@ select * from Estado_has_Cidade where Estado_idEstado= 1 and Cidade_idCidade= 1;
 insert into autor(nome)values('john green');
 
 insert into livro_has_autor(Livro_idLivro,Autor_idAutor)values(2,2);
+
+select * from tipodelivro;
+
+SELECT * FROM livro WHERE TipoDeLivro_idTipoDeLivro = $procurar ORDER BY nome;
+select * from livro l inner join tipodelivro tl on l.TipoDeLivro_idTipoDeLivro = tl.codigo;
+select * from livro l where l.TipoDeLivro_idTipoDeLivro =1;
+
+
+select * from locacao where Cliente_idCliente=1;
+
+SET FOREIGN_KEY_CHECKS = 0;
+delete from locacao where idlocacao>=1;
+alter table locacao auto_increment =1;
+delete from livro_has_locacao where Livro_idLivro>=1;
+
+
+select * from locacao;
+select * from livro_has_locacao;
+select * from estado;
+
+update livro_has_locacao set status = 0 where Livro_idLivro = 3;

@@ -43,8 +43,8 @@ class Rua implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listarruas.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarruas.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -56,8 +56,8 @@ class Rua implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarruas.php";
-        $this->redirect($url);
+       $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarruas.php";
+        $this->redirectPHP($url);
     }
 
     public function Inserir($vetDados) {
@@ -139,6 +139,10 @@ class Rua implements ICrud {
         echo "<BODY>\n";
         echo "</BODY>\n";
         echo "</HTML>\n";
+    }
+    
+    function redirectPHP($url) {
+        header('Location: ' . $url);
     }
 
     function pegarIDBairro($sig) {

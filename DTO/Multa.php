@@ -58,8 +58,8 @@ class Multa implements ICrud {
         $stmt2->execute();
 
 
-        $url = "listarmultas.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarmultas.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -148,4 +148,7 @@ class Multa implements ICrud {
         echo "</HTML>\n";
     }
 
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
 }

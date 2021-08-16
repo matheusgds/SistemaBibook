@@ -43,8 +43,8 @@ class Editora implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listareditoras.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listareditoras.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -56,8 +56,8 @@ class Editora implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listareditoras.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listareditoras.php";
+        $this->redirectPHP($url);
     }
 
     public function Existe($valor) {
@@ -152,6 +152,10 @@ class Editora implements ICrud {
         echo "</HTML>\n";
     }
 
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
+
     function retornaNome($valor) {
 
         $pdo = Conexao::getInstance();
@@ -164,9 +168,9 @@ class Editora implements ICrud {
 
     function buscaEditora($edit) {
 
-        $nomebusca = "'".$edit."'";
+        $nomebusca = "'" . $edit . "'";
         $pdo = Conexao::getInstance();
-       
+
         $stmt = $pdo->prepare('SELECT idEditora FROM Editora WHERE nome=' . $nomebusca);
         $stmt->execute();
         foreach ($stmt as $row) {

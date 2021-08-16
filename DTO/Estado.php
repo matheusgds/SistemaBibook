@@ -70,8 +70,8 @@ class Estado implements ICrud {
             $stmt2->execute();
         }
 
-        $url = "listarestados.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarestados.php";
+        $this->redirectPHP($url);
     }
 
     public function Excluir($vetDados) {
@@ -83,8 +83,8 @@ class Estado implements ICrud {
         $stmt->execute();
         $stmt2->execute();
 
-        $url = "listarestados.php";
-        $this->redirect($url);
+        $url = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "listarestados.php";
+        $this->redirectPHP($url);
     }
 
     public function Inserir($vetDados) {
@@ -120,7 +120,8 @@ class Estado implements ICrud {
             $this->alert();
             $doc = "<script type='text/javascript'>document.write(a)</script>";
             if ($doc == TRUE) {
-                $url = "CadastroEstado.php";
+              
+                $url = "..".DIRECTORY_SEPARATOR."InterfaceGrafica".DIRECTORY_SEPARATOR."CadastroEstado.php";
                 //    $this->redirect($url);
             } else if ($doc == FALSE) {
                 $url = "JanelaPrincipal.php";
@@ -162,6 +163,25 @@ class Estado implements ICrud {
         echo "<BODY>\n";
         echo "</BODY>\n";
         echo "</HTML>\n";
+    }
+
+    function redirectPHP($url) {
+        header('Location: ' . $url);
+    }
+
+    function redirectExtra($url) {
+        echo "<HTML>\n";
+        echo "<HEAD>\n";
+        echo "<TITLE></TITLE>\n";
+        echo "<?php header('location:$url'); ?>";
+        echo "</HEAD>\n";
+        echo "<BODY>\n";
+        echo "</BODY>\n";
+        echo "</HTML>\n";
+    }
+
+    function redirectTest($url) {
+        echo '<meta http-equiv="refresh" content="0;url=$url">';
     }
 
     function comparacao($valor1, $valor2) {
