@@ -360,6 +360,19 @@ class Cliente implements ICrud {
         return $vetDados;
     }
 
+    public function sqlEspecial($sql) {
+        $pdo = Conexao::getInstance();
+        $consulta = $pdo->query($sql);
+        $vetDados = array();
+        $vet = [];
+
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            $vet = [$linha['nome'], $linha['valor']];
+            $vetDados [] = $vet;
+        }
+        return $vetDados;
+    }
+
     function alert() {
         echo "<script type='text/javascript'>var a=confirm('O Objeto Já Existe!');</script>";
     }
@@ -428,5 +441,7 @@ class Cliente implements ICrud {
             return $linha['idCliente'];
         }
     }
+    
+
 
 }

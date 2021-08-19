@@ -144,9 +144,25 @@ delete from locacao where idlocacao>=1;
 alter table locacao auto_increment =1;
 delete from livro_has_locacao where Livro_idLivro>=1;
 
-
+select * from multa;
 select * from locacao;
 select * from livro_has_locacao;
-select * from estado;
+select * from cliente;
+
+insert into multa(valor,status,locacao_idlocacao)values(60,True,4);
+insert into multa(valor,status,locacao_idlocacao)values(30,False,3);
+insert into multa(valor,status,locacao_idlocacao)values(2,False,6);
+
+insert into locacao(data,hora,dataentrega,Cliente_idCliente)values('2021-05-12','2021-05-12 16:12:15','2021-05-14',2);
+insert into livro_has_locacao(Livro_idLivro,locacao_idlocacao,status)values(3,6,False);
+
+insert into locacao(data,hora,dataentrega,Cliente_idCliente)values('2021-06-15','2021-06-15 16:40:12','2021-06-17',2);
+insert into livro_has_locacao(Livro_idLivro,locacao_idlocacao,status)values(3,7,False);
+
+insert into locacao(data,hora,dataentrega,Cliente_idCliente)values('2021-03-01','2021-03-01 15:20:27','2021-03-03',6);
+insert into livro_has_locacao(Livro_idLivro,locacao_idlocacao,status)values(4,8,False);
 
 update livro_has_locacao set status = 0 where Livro_idLivro = 3;
+
+
+select c.nome,m.valor from cliente c inner join locacao lc on lc.Cliente_idCliente = c.idCliente inner join multa m on m.locacao_idlocacao=lc.idlocacao where m.status=1;

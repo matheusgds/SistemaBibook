@@ -1,1 +1,1 @@
-"SELECT * FROM estado WHERE nome LIKE '%' ORDER BY nome;"
+"select c.nome,m.valor from cliente c inner join locacao lc on lc.Cliente_idCliente = c.idCliente inner join multa m on m.locacao_idlocacao=lc.idlocacao where m.status=1;"

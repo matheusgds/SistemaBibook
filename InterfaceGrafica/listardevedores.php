@@ -38,7 +38,7 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
         <?php $dirshort = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
         <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
         <link rel="shortcut icon" href=<?php echo $dirshort ?> >
-        <title>Listar Livros</title>
+        <title>Listar Devedores</title>
     </head>
     <body>
         <div class="container-fluid">
@@ -157,15 +157,6 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
                                     $url10 = "JanelaPrincipal.php";
                                 }
                                 ?>
-                                <div class="dropdown-divider"></div>
-                                <?php $url102 = "listardevedores.php"; ?>
-                                <?php if (($tipoacesso == 1) || ($tipoacesso == 2)) { ?>
-                                    <a class="dropdown-item" href=<?php echo $url10; ?>>Pesquisar Devedores</a>
-                                    <?php
-                                } else {
-                                    $url102 = "JanelaPrincipal.php";
-                                }
-                                ?>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -174,55 +165,16 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                                <?php
-                                $urlGrafico1 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "ClientesPorEstado.php";
-                                ?>
+                                <?php $url11 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "ClientesPorEstado.php"; ?>
                                 <?php if (($tipoacesso == 1)) { ?>
-                                    <a class="dropdown-item" href=<?php echo $urlGrafico1; ?> target="_blank">Pesquisar Numero Clientes por Estado</a>
+                                    <a class="dropdown-item" href=<?php echo $url11; ?> target="_blank">Pesquisar Numero Clientes por Estado</a>
                                     <?php
                                 } else {
-                                    $urlGrafico1 = "JanelaPrincipal.php";
+                                    $url11 = "JanelaPrincipal.php";
                                 }
-                                ?>  
-                                <div class="dropdown-divider"></div>
-                                <?php
-                                $urlGrafico2 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "LivrosMaisAlocados.php";
                                 ?>
-                                <?php if (($tipoacesso == 1)) { ?>
-                                    <a class="dropdown-item" href=<?php echo $urlGrafico2; ?> target="_blank">Pesquisar Livros Mais Alocados</a>
-                                    <?php
-                                } else {
-                                    $urlGrafico2 = "JanelaPrincipal.php";
-                                }
-                                ?>  
-                                <div class="dropdown-divider"></div>
-                                <?php
-                                $urlGrafico3 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "DevedoresMulta.php";
-                                ?>
-                                <?php if (($tipoacesso == 1)) { ?>
-                                    <a class="dropdown-item" href=<?php echo $urlGrafico3; ?> target="_blank">Pesquisar Devedores</a>
-                                    <?php
-                                } else {
-                                    $urlGrafico3 = "JanelaPrincipal.php";
-                                }
-                                ?> 
-                            </div>
-
-                        </li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Devolução De Livros
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                                <?php $url12 = ".." . DIRECTORY_SEPARATOR . "InterfaceGrafica" . DIRECTORY_SEPARATOR . "Devolucao.php"; ?>
-
-                                <a class="dropdown-item" href=<?php echo $url12; ?> target="_blank">Devolver</a>
-                                <?php ?>
                             </div>
                         </li>
-
 
                     </ul>
                     <nav class="navbar navbar-light bg-light">
@@ -241,14 +193,9 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
             </nav>
 
 
-
             <?php
-            include_once "../confs/inc.php";
-            require_once "../confs/Conexao.php";
             $tipo = isset($_POST['tipo']) ? $_POST['tipo'] : "2";
             $procurar = isset($_POST['procurar']) ? $_POST['procurar'] : "";
-
-            /* <?php echo $procurar; ?> */
             ?>
 
 
@@ -267,65 +214,39 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
                 if ($tipo == 3) {
                     echo "checked";
                 }
-                ?>>ISBN<br>
-                <input type="radio" name="tipo" id="tipo" value="4" <?php
-                if ($tipo == 4) {
-                    echo "checked";
-                }
-                ?>>Tipo De Livro (CDD)<br><br>
+                ?>>Sigla<br><br>
                 <input type="text" name="procurar" id="procurar" value=""> 
                 <input type="submit" value="Consultar">
             </form>
             <br>
             <?php
-            $sql = "SELECT * FROM livro ORDER BY idLivro";
-            if ($tipo == 1) {
-                if ($procurar != "") {
-                    $sql = "SELECT * FROM livro WHERE idLivro = $procurar ORDER BY idLivro";
-                } else {
-                    $sql = "SELECT * FROM livro ORDER BY idLivro";
-                }
-            } else if ($tipo == 2) {
-                $sql = "SELECT * FROM livro WHERE nome LIKE '$procurar%' ORDER BY nome";
-            } else if ($tipo == 3) {
-                $sql = "SELECT * FROM livro WHERE isbn = '$procurar' ORDER BY nome";
-            } else if ($tipo == 4) {
-                require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
-                $tipodeli = new TipoDeLivro();
-                if (empty($procurar)) {
-                    $sql = "SELECT * FROM livro";
-                } else {
-                    $codigoid = $tipodeli->buscaIDTipo($procurar);
-                    $sql = "SELECT * FROM livro l WHERE l.TipoDeLivro_idTipoDeLivro = $codigoid ORDER BY nome";
-                }
-            }
+            $sql = "";
             require_once ".." . DIRECTORY_SEPARATOR . "autoload.php";
+            $Cliente = new Cliente();
+            // $sql = "SELECT * FROM estado WHERE idEstado = $procurar ORDER BY idEstado";
+            $sql = "select c.nome,m.valor from cliente c inner join locacao lc on lc.Cliente_idCliente = c.idCliente inner join multa m on m.locacao_idlocacao=lc.idlocacao where m.status=1;";
 
-            $livro = new Livro();
-            $autor = new Autor();
-            $autor_livro = new livro_autor();
+            // $vet = $Cliente->PesquisarTodos($sql); // o vetor da pesquisa esta aqui
 
-            $vet = $livro->PesquisarTodos($sql);
-            $count = count($vet);
+            $vetor = $Cliente->sqlEspecial($sql);
+
+            $metodos = new metodosJson();
+
+            $metodos->ObjParaJson($sql);
+
+            $count = count($vetor);
             ?>
             <br><br>
+
+            <br><br>
+
             <h1>Dados:</h1>
             <br><br>
             <table class="table table-striped table-hover" border="1px" bgcolor="#9dff8c">
                 <thead>
                     <tr> 
-                        <th scope="col" bgcolor="#78ad6f">Código</th>
                         <th scope="col" bgcolor="#78ad6f">Nome</th>
-                        <th scope="col" bgcolor="#78ad6f">Subtitulo</th>
-                        <th scope="col" bgcolor="#78ad6f">ISBN</th>
-                        <th scope="col" bgcolor="#78ad6f">Quantidade</th>
-                        <th scope="col" bgcolor="#78ad6f">Local de Publicação</th>
-                        <th scope="col" bgcolor="#78ad6f">Editora</th>
-                        <th scope="col" bgcolor="#78ad6f">Edição</th>
-                        <th scope="col" bgcolor="#78ad6f">Ano Publicação</th>
-                        <th scope="col" bgcolor="#78ad6f">Tipo De Livro</th>
-                        <th scope="col" bgcolor="#78ad6f">Autores</th>
-                        <th scope="col" bgcolor="#78ad6f">Alocar</th>
+                        <th scope="col" bgcolor="#78ad6f">Valor</th>
 
                     </tr>
                 </thead>
@@ -333,101 +254,38 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
                     <?php for ($index = 0; $index < $count; $index++) {
                         ?>
                         <tr>
-                            <?php if ($vet[$index]->getQuantidade() == 0) { ?>
-                                <td class="table-danger"><?php echo $vet[$index]->getId(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getNome(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getSubtitulo(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getIsbn(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getQuantidade(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getIdlocalpublicacao(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getIdeditora(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getIdedicao(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getIdanopublicacao(); ?></td>
-                                <td class="table-danger"><?php echo $vet[$index]->getIdtipolivro() ?></td>
 
-                                <td class="table-danger">
-                                    <?php $idlivro = $vet[$index]->getId(); ?>
+                            <td class="table-success"><?php echo $vetor[$index][0]; ?></td>
+                            <td class="table-success"><?php echo $vetor[$index][1]; ?></td>
 
-                                    <?php $sqlautor = "select * from livro_has_autor where Livro_idLivro = $idlivro" ?>
-
-                                    <?php $listaautores = $autor_livro->PesquisarTodos($sqlautor); ?>
-
-                                    <?php
-                                    for ($index1 = 0; $index1 < count($listaautores); $index1++) {
-                                        if (count($listaautores) == 1) {
-                                            echo $listaautores[$index1]->getIdautor();
-                                        } else
-                                        if (count($listaautores) > 1) {
-                                            if ($index1 == (count($listaautores) - 1)) {
-                                                echo $listaautores[$index1]->getIdautor();
-                                            } else {
-                                                echo $listaautores[$index1]->getIdautor() . ",";
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                </td>
-                                <?php $number = $vet[$index]->getId(); ?>
-                                <?php $linkimgeditar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgok.gif"; ?>
-                                <?php $linklocacao = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "locacaolivro.php?id=" . $number; ?>
-
-
-                                <td class="table-danger"><a href=<?php echo $linklocacao ?>><img src=<?php echo $linkimgeditar ?> width="30%"> </a></td>
-
-                            <?php } else { ?>
-                                <td class="table-success"><?php echo $vet[$index]->getId(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getNome(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getSubtitulo(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getIsbn(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getQuantidade(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getIdlocalpublicacao(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getIdeditora(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getIdedicao(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getIdanopublicacao(); ?></td>
-                                <td class="table-success"><?php echo $vet[$index]->getIdtipolivro() ?></td>
-
-                                <td class="table-success">
-                                    <?php $idlivro = $vet[$index]->getId(); ?>
-
-                                    <?php $sqlautor = "select * from livro_has_autor where Livro_idLivro = $idlivro" ?>
-
-                                    <?php $listaautores = $autor_livro->PesquisarTodos($sqlautor); ?>
-
-                                    <?php
-                                    for ($index1 = 0; $index1 < count($listaautores); $index1++) {
-                                        if (count($listaautores) == 1) {
-                                            echo $listaautores[$index1]->getIdautor();
-                                        } else
-                                        if (count($listaautores) > 1) {
-                                            if ($index1 == (count($listaautores) - 1)) {
-                                                echo $listaautores[$index1]->getIdautor();
-                                            } else {
-                                                echo $listaautores[$index1]->getIdautor() . ",";
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                </td>
-
-
-                                <?php $number = $vet[$index]->getId(); ?>
-                                <?php $linkimgeditar = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgok.gif"; ?>
-                                <?php $linklocacao = ".." . DIRECTORY_SEPARATOR . "arquivosPHP" . DIRECTORY_SEPARATOR . "locacaolivro.php?id=" . $number; ?>
-
-
-                                <td class="table-success"><a href=<?php echo $linklocacao ?>><img src=<?php echo $linkimgeditar ?> width="30%"> </a></td>
-                                    <?php } ?>
                         </tr>
 
                     <?php } ?>
                 </tbody>
             </table> 
 
+            <div style="border:1px solid black">
+                <legend>Exportar Dados</legend>
+                <?php $linkimgpdf = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgpdf.png"; ?>
+                <?php $linkimgjson = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgjson.png"; ?>
+                <?php $linkimgword = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgword.png"; ?>
+                <?php $linkimgexcel = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgexcel.png"; ?>
+                <?php $linkimgxml = ".." . DIRECTORY_SEPARATOR . "IMG" . DIRECTORY_SEPARATOR . "imgxml.png"; ?>
+
+
+                <a href="downloadrelatdevedorespdf.php" target="_blank"> <img src=<?php echo $linkimgpdf ?>><img></a>
+                <a href="downloadrelatestadosjson.php" target="_blank"> <img src=<?php echo $linkimgjson ?>><img></a>
+                <a href="downloadrelatestadosdoc.php" target="_blank"> <img src=<?php echo $linkimgword ?>><img></a>
+                <a href="downloadrelatestadosxls.php" target="_blank"> <img src=<?php echo $linkimgexcel ?>><img></a>
+                <a href="downloadrelatestadosxml.php" target="_blank"> <img src=<?php echo $linkimgxml ?>><img></a>
+
+
+            </div>
+            <br><br>
         </div>
     </body>
-
     <script type='text/javascript'>
 
-
     </script>
+
 </html>

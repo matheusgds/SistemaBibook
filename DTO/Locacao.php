@@ -144,10 +144,19 @@ class Locacao implements ICrud {
 
     public function retornodata($idlocacao) {
         $pdo = Conexao::getInstance();
-        $sql = "select * from locacao where idlocacao = ".$idlocacao;
+        $sql = "select * from locacao where idlocacao = " . $idlocacao;
         $consulta = $pdo->query($sql);
         while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
             return $linha['dataentrega'];
+        }
+    }
+
+    public function retornaClienteLocacao($locacaoid) {
+        $pdo = Conexao::getInstance();
+        $sql = "select Cliente_idCliente from locacao where idlocacao =" . $locacaoid;
+        $consulta = $pdo->query($sql);
+        while ($linha = $consulta->fetch(PDO::FETCH_BOTH)) {
+            return $linha['Cliente_idCliente'];
         }
     }
 

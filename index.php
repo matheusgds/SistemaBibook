@@ -13,8 +13,8 @@ and open the template in the editor.
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <?php $dir = "IMG" . DIRECTORY_SEPARATOR . "livro32x32p.png"; ?>
-        <?php $dircss = "css" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
-        <?php $dirshort = "IMG" . DIRECTORY_SEPARATOR . "livro32x32i.ico"; ?>
+        <?php $dircss = "CSS" . DIRECTORY_SEPARATOR . "estilo.css"; ?>
+        <?php $dirshort = "IMG" . DIRECTORY_SEPARATOR . "carrinhoanimado.gif"; ?>
         <link rel="stylesheet" type="text/css" href=<?php echo $dircss ?>/>
         <link rel="shortcut icon" href=<?php echo $dirshort ?> >
 

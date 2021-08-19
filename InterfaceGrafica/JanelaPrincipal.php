@@ -176,7 +176,31 @@ $tipoacesso = $class->retornaTipoAcesso($logado);
                                     $url11 = "JanelaPrincipal.php";
                                 }
                                 ?>
+
+                                <div class="dropdown-divider"></div>
+                                <?php
+                                $urlGrafico2 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "LivrosMaisAlocados.php";
+                                ?>
+                                <?php if ($tipoacesso == 1) { ?>
+                                    <a class="dropdown-item" href=<?php echo $urlGrafico2; ?> target="_blank">Pesquisar Livros Mais Alocados</a>
+                                    <?php
+                                } else {
+                                    $urlGrafico2 = "JanelaPrincipal.php";
+                                }
+                                ?> 
+                                <div class="dropdown-divider"></div>
+                                <?php
+                                $urlGrafico3 = ".." . DIRECTORY_SEPARATOR . "Graficos" . DIRECTORY_SEPARATOR . "DevedoresMulta.php";
+                                ?>
+                                <?php if (($tipoacesso == 1)) { ?>
+                                    <a class="dropdown-item" href=<?php echo $urlGrafico3; ?> target="_blank">Pesquisar Devedores</a>
+                                    <?php
+                                } else {
+                                    $urlGrafico3 = "JanelaPrincipal.php";
+                                }
+                                ?> 
                             </div>
+
                         </li>
 
                     </ul>

@@ -277,6 +277,17 @@ class Livro implements ICrud {
         }
     }
     
+     public function buscaNomePeloID($idlivro) {
+
+        $pdo = Conexao::getInstance();
+
+        $stmt = $pdo->prepare('SELECT nome FROM Livro WHERE idLivro=' . $idlivro);
+        $stmt->execute();
+        foreach ($stmt as $row) {
+            return $row['nome'];
+        }
+    }
+    
     function redirectPHP($url) {
         header('Location: ' . $url);
     }

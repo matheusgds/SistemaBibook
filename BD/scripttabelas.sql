@@ -534,3 +534,7 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'admin';
+insert into contadeacesso (login,pass,tipodeacesso) values ('admin','YWRtaW4=',1);
